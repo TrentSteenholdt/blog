@@ -1,0 +1,41 @@
+@import "bootstrap/_functions";
+@import "bootstrap/_variables";
+@import "bootstrap/_mixins";
+
+// Insight colors
+$insight-purple: #ae0a46;
+$insight-purple-dark: #582873;
+$insight-purple-hover: #4e041f;
+$insight-dark-grey: #222;
+$insight-grey: #f7f6f5;
+$light-grey: #dee2e6;
+$very-light-grey: #f8f9fa;
+
+// Social colors
+$twitter: #000000;
+$github: #24292e;
+$rss: #b9501f;
+$linkedin: #0077b5;
+
+$custom-colors: (
+  "insight-purple": $insight-purple,
+  "insight-purple-dark": $insight-purple-dark,
+  "insight-purple-hover": $insight-purple-hover,
+  "insight-dark-grey": $insight-dark-grey,
+  "insight-grey": $insight-grey,
+  "twitter": $twitter,
+  "rss": $rss,
+  "github": $github,
+  "linkedin": $linkedin,
+  "light-gray": $light-grey,
+  "very-light-gray": $very-light-grey
+);
+
+$font-family-sans-serif: "Allumi Pro", "Roboto", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
+$font-family-serif:      Georgia, "Times New Roman", Times, serif !default;
+$font-family-monospace:  Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+$font-family-base:       $font-family-sans-serif !default;
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "bootstrap/bootstrap";

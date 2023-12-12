@@ -1,0 +1,61 @@
+# Build settings
+theme: minima
+
+highlighter: rouge
+title: Cortana Design | Blog
+description: >- 
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+author: Cortana Design
+permalink: /:year/:month/:day/:title
+url: https://blog.cortanadesign.com.au
+locale: en_AU
+logo: /assets/images/cortanadesign.svg
+
+sass:
+  style: :compressed
+  sass_dir: _sass
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/images/site/default-card.png
+
+social:
+  name: Cortana Design | Blog
+  links:
+    - "https://twitter.com/CortanaDesign"
+    - "https://www.linkedin.com/company/cortanadesign/"
+    - "https://www.cortanadesign.com.au/"
+
+plugins:
+  - jekyll-paginate-v2
+  - jekyll-auto-authors
+  - jekyll-seo-tag
+
+pagination:
+  enabled: true
+
+autopages:
+  enabled: true
+
+  categories:
+    enabled: false
+  tags:
+    enabled: false
+  collections:
+    enabled: false
+
+  authors:
+    enabled: true
+    data: "_data/authors.yml"
+    exclude: ["example1", "example2"] # Force skip autopages for author/teammate even if they have posts assigned
+    layouts:
+      - "author.html"
+    title: ":author"
+    permalink: "/author/:author/"
+    slugify:
+      mode: "default"
+      cased: true

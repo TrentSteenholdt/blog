@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parallel deployment jobs with Azure DevOps pipelines | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Parallel deployment jobs with Azure DevOps pipelines | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Parallel deployment jobs with Azure DevOps pipelines" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="This was originally posted here while working for Telstra Purple." />
+<meta property="og:description" content="This was originally posted here while working for Telstra Purple." />
+<link rel="canonical" href="http://localhost:4000/2020/12/21/parallel-deployment-jobs-with-azure-devops-pipelines" />
+<meta property="og:url" content="http://localhost:4000/2020/12/21/parallel-deployment-jobs-with-azure-devops-pipelines" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/b.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-21T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/b.png" />
+<meta property="twitter:title" content="Parallel deployment jobs with Azure DevOps pipelines" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2020-12-21T00:00:00+08:00","datePublished":"2020-12-21T00:00:00+08:00","description":"This was originally posted here while working for Telstra Purple.","headline":"Parallel deployment jobs with Azure DevOps pipelines","image":"http://localhost:4000/assets/images/from_wordpress/b.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/12/21/parallel-deployment-jobs-with-azure-devops-pipelines"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2020/12/21/parallel-deployment-jobs-with-azure-devops-pipelines"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Parallel deployment jobs with Azure DevOps pipelines</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  December 21, 2020
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  7 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#azure">azure</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#azure-devops">azure-devops</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#devops">devops</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#pipelines">pipelines</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#powershell">powershell</a></div>
+    <p><strong><em>This was originally posted <a href="https://purple.telstra.com/blog/parallel-deployment-jobs-with-azure-devops-pipelines">here while working for Telstra Purple</a>.</em></strong></p>
+
+<h2 id="development-of-your-linear-pipeline">Development of your linear pipeline</h2>
+
+<p>After a few days of development, you have successfully put together a comprehensive Azure DevOps pipeline to deploy a whole heap of infrastructure and components for a new service. It’s all working well, but there is just one annoying problem, and that’s how long it’s taking to deploy!</p>
+
+<p>Because of the size of each deployment step which may include some very slow Azure virtual machine deployments that can take anywhere from 30 to 40 minutes, it’s taking way too long! Sometimes, even more than 60 minutes, which means you’re now hitting the timeout limit on a <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&amp;tabs=yaml#timeouts">Microsoft-hosted agent with a private project/repository</a>. Oh no, what now?!</p>
+
+<p><a href="/assets/images/from_wordpress/d.png"><img src="/assets/images/from_wordpress/d-1024x132.png" alt="" /></a></p>
+
+<h2 id="introducing-parallel-pipelines">Introducing parallel pipelines</h2>
+
+<p>If you’re at this point, you’re not alone. Over the past week, I’ve been tackling ways in which I could optimise and improve an Azure DevOps pipeline that is deploying quite a few components. This pipeline was very linear, but it didn’t need to be as there were a few Azure Powershell tasks that didn’t have dependencies on each other, so why not run them in parallel? Here was my thinking to get the pipeline, knowing each steps timings, under 60 minutes again.</p>
+
+<p><a href="/assets/images/from_wordpress/e.png"><img src="/assets/images/from_wordpress/e-1024x323.png" alt="" /></a></p>
+
+<h3 id="layout-and-understand-what-you-can-run-in-parallel">Layout and understand what you can run in parallel</h3>
+
+<p>First, to start optimising your pipeline, I recommend laying out and understanding your dependencies between each deployment step. This understanding can be quite time-consuming, especially if you’re not entirely familiar with each step in a pipeline. However, do take the time to get this right, as it will save you considerable time in the long run as I didn’t do this work upfront myself. Mapping out the pipeline could end up looking something like it did below for me.</p>
+
+<p><a href="/assets/images/from_wordpress/a.png"><img src="/assets/images/from_wordpress/a-1024x409.png" alt="" /></a></p>
+
+<p>As you can see, there were quite a few dependencies on each PowerShell script (step), but there were some things that could run at the same time. As a matter of fact, in my mapping, I actually found where I could have three jobs running at the same time, which helped reduce the pipeline from 60 minutes to about 35 minutes!</p>
+
+<h3 id="making-the-switch-to-parallel-pipelines">Making the switch to parallel pipelines</h3>
+
+<p>To start, I needed to make sure of a couple of things. First and foremost, I made sure I had purchased some additional <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/licensing/concurrent-jobs?view=azure-devops&amp;tabs=ms-hosted">Microsoft-hosted agents parallel jobs</a> as I was running this in a private project/repository. Secondly, I made sure that all of my published variables were <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&amp;tabs=yaml%2Cbatch#set-variables-in-scripts">output variables</a> by setting <strong>isOutput=true</strong> on the <strong>task.setvariable</strong> logging command. Without doing this, variables cannot be passed between jobs.</p>
+
+<p>At this point, I then needed to switch my deployment steps pipeline template (<a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=azure-devops">a pipeline YAML file sitting under <strong>azure-pipelines.yml</strong></a>) to the higher level of a deployment jobs template. Jobs are the lowest point where you can have them running in parallel, and with the added support of <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/runs?view=azure-devops">re-running failed jobs without needing to re-run the entire pipeline</a>, it made a lot of sense to go to this level.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Old Pipeline</th>
+      <th>New Pipeline</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>azure-pipelines.yml   -- deployment-steps.yml</td>
+      <td>azure-pipelines.yml   -- deployment-jobs.yml</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>What was done previously in the <strong>deployment-steps.yml</strong>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>steps:
+  - task: AzurePowerShell@5
+    displayName: Run Identities deployment
+    inputs:
+      azureSubscription: $
+      pwsh: true
+      azurePowerShellVersion: LatestVersion
+      ScriptType: FilePath
+      ScriptPath: $(Pipeline.Workspace)/infrastructure/scripts/Deploy-Identities.ps1
+      ScriptArguments: &gt;-
+        -EnvironmentName '$'
+        -EnvironmentCode '$'
+        -Location '$'
+        -LocationCode '$'
+        -TenantId '$'
+        -SubscriptionId '$'
+        -ConfigFile '$'
+        -Confirm:$false
+  - task: AzurePowerShell@5
+    displayName: Run Network deployment
+    inputs:
+      azureSubscription: $
+      pwsh: true
+      azurePowerShellVersion: LatestVersion
+      ScriptType: FilePath
+      ScriptPath: $(Pipeline.Workspace)/infrastructure/scripts/Deploy-Network.ps1
+      ScriptArguments: &gt;-
+        -EnvironmentName '$'
+        -EnvironmentCode '$'
+        -Location '$'
+        -LocationCode '$'
+        -TenantId '$'
+        -SubscriptionId '$'
+          -ConfigFile '$'
+          -azureADGroupId_resourceGroupContributor '$(azureADGroupId_resourceGroupContributor)'
+          -Confirm:$false
+        -ConfigFile '$'
+        -azureADGroupId_resourceGroupContributor '$(azureADGroupId_resourceGroupContributor)'
+        -Confirm:$false
+</code></pre></div></div>
+
+<p>What is done with the new <strong>deployment-jobs.yml</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jobs:
+  - deployment: deployADPFoundation
+    displayName: Foundation Components
+    environment: ads-dev
+    pool:
+      vmImage: windows-latest
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: AzurePowerShell@5
+              name: Identities
+              displayName: Run Identities deployment
+              inputs:
+                azureSubscription: $
+                pwsh: true
+                azurePowerShellVersion: LatestVersion
+                ScriptType: FilePath
+                ScriptPath: $(Pipeline.Workspace)/infrastructure/scripts/Deploy-Identities.ps1
+                ScriptArguments: &gt;-
+                  -EnvironmentName '$'
+                  -EnvironmentCode '$'
+                  -Location '$'
+                  -LocationCode '$'
+                  -TenantId '$'
+                  -SubscriptionId '$'
+                  -ConfigFile '$'
+                  -Confirm:$false - task: AzurePowerShell@5
+            - task: AzurePowerShell@5
+              name: Core
+              displayName: Run Core deployment
+              inputs:
+                azureSubscription: $
+                pwsh: true
+                azurePowerShellVersion: LatestVersion
+                ScriptType: FilePath
+                ScriptPath: $(Pipeline.Workspace)/infrastructure/scripts/Deploy-Core.ps1
+                ScriptArguments: &gt;-
+                  -EnvironmentName '$'
+                  -EnvironmentCode '$'
+                  -Location '$'
+                  -LocationCode '$'
+                  -TenantId '$'
+                  -SubscriptionId '$'
+                  -ConfigFile '$'
+                  -azureADGroupId_resourceGroupContributor '$(Identities.azureADGroupId_resourceGroupContributor)'
+                  -Confirm:$false
+  - deployment: deployADPNetwork
+    displayName: Networking Components
+    environment: ads-dev
+    dependsOn:
+      - deployADPFoundation
+    pool:
+      vmImage: windows-latest
+    variables:
+      diagnosticsObject: $[ dependencies.deployADPFoundation.outputs['deployADPFoundation.Core.diagnosticsObject'] ]
+      azureADGroupId_resourceGroupContributor: $[ dependencies.deployADPFoundation.outputs['deployADPFoundation.Core. Identities.azureADGroupId_resourceGroupContributor’] ]
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: AzurePowerShell@5
+              name: Network
+              displayName: Run Network deployment
+              inputs:
+                azureSubscription: $
+                pwsh: true
+                azurePowerShellVersion: LatestVersion
+                ScriptType: FilePath
+                ScriptPath: $(Pipeline.Workspace)/infrastructure/scripts/Deploy-Network.ps1
+                ScriptArguments: &gt;-
+                  -EnvironmentName '$'
+                  -EnvironmentCode '$'
+                  -Location '$'
+                  -LocationCode '$'
+                  -TenantId '$'
+                  -SubscriptionId '$'
+                  -ConfigFile '$'
+                  -azureADGroupId_resourceGroupContributor '$(azureADGroupId_resourceGroupContributor)'
+                  -diagnosticsObject '$(diagnosticsObject)'
+                  -Confirm:$false
+</code></pre></div></div>
+
+<h3 id="variable-syntax">Variable syntax</h3>
+
+<p>As you can tell with these YAML extracts, the main change between old and new is how variables are passed between jobs and tasks in the pipeline. In the old <strong>deployment-steps.yml</strong>, the default <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&amp;tabs=yaml%2Cbatch#understand-variable-syntax">macro syntax</a> can be used, but with the new <strong>deployment-jobs.yml</strong> pipelines, the expression needs to include <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&amp;tabs=yaml%2Cbatch#set-variables-in-scripts">the dependency</a> on the previous step/job. For example, the <strong>Deploy-Identities.ps1</strong> produces the variable “azureADGroupId\resourceGroupContributor”. To use this variable elsewhere, you must;</p>
+
+<ul>
+  <li>
+    <p>For a step/task in the same job, you need to specify the name of the previous step/task. i.e:</p>
+
+    <p><em>$(Identities.azureADGroupId\resourceGroupContributor)</em></p>
+  </li>
+  <li>
+    <p>For another jobs step/task, you need to:</p>
+    <ul>
+      <li>
+        <p>First, define the dependsOn to the previous job(s) that must be completed first before starting this job:</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_dependsOn:
+  - deployADPFoundation_  
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Second, define the variable in the receiving job:</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_azureADGroupId\resourceGroupContributor: $[ dependencies.deployADPFoundation.outputs['deployADPFoundation.Core.Identities.azureADGroupId\resourceGroupContributor’] ]  
+_
+</code></pre></div>        </div>
+      </li>
+      <li>
+        <p>Third, use the variable as you would normally with a macro syntax variable:</p>
+
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>_$(azureADGroupId\resourceGroupContributor)_  
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>It’s crucial to note that for deployment jobs in Azure DevOps pipelines, the matrices syntax for runOnce, canary and rolling strategies does vary for variable expression syntax. See the exact syntax you need by reviewing this <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/deployment-jobs?view=azure-devops#support-for-output-variables">Microsoft Docs page (Support for output variables)</a>. I hope you don’t make the same mistake I did where I was not defining the job name! I was mistakenly referring to the <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&amp;tabs=yaml%2Cbatch#use-output-variables-from-tasks">build job documentation,</a> which does not need this defined.</p>
+
+<p>With the variables passing through correctly, we now have a pipeline that runs in almost half the time as it did before, well below any timeout threshold!</p>
+
+<p><a href="/assets/images/from_wordpress/b.png"><img src="/assets/images/from_wordpress/b-1024x485.png" alt="" /></a></p>
+
+<p>Here is a screenshot from the Azure DevOps pipeline in action, running three jobs in parallel!</p>
+
+<p><a href="/assets/images/from_wordpress/c.png"><img src="/assets/images/from_wordpress/c.png" alt="" /></a></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>As you can see, saving almost half the time in a pipeline deployment provides a massive advantage, not only technically but business-impacting as well. Parallel pipelines can help organisations reduce downtime while deploying releases, while also giving peace of mind to developers and operations teams that everything is being deployed in the right order.  </p>
+
+<p>I encourage you to utilise parallel pipelines jobs in the next major update of your Azure DevOps pipeline(s)!</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Parallel deployment jobs with Azure DevOps pipelines&amp;url=http://localhost:4000/2020/12/21/parallel-deployment-jobs-with-azure-devops-pipelines&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2020/12/21/parallel-deployment-jobs-with-azure-devops-pipelines"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

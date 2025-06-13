@@ -1,0 +1,790 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+/* ==========================================================================
+CSS Variables
+========================================================================== */
+:root {
+  /* Colors */
+  --CortanaDesign-blue: #0f5096;
+  --CortanaDesign-blue-dark: #02254a;
+  --CortanaDesign-blue-hover: #0f263f;
+  --CortanaDesign-dark-grey: #0b0b0b;
+  --CortanaDesign-grey: #e0e0e0;
+  --light-grey: #E5F6FF;
+  --very-light-grey: #f5f5f5;
+  --headings: #3A3939;
+  --body: #3A3939;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --success: #198754;
+
+  --blue: #0d6efd;
+  --indigo: #6610f2;
+  --blue: #6f42c1;
+  --pink: #d63384;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #198754;
+  --teal: #20c997;
+  --cyan: #0dcaf0;
+  --white: #ffffff;
+  --black: #000000;
+
+  /* Social colors */
+  --twitter: #000000;
+  --github: #24292e;
+  --rss: #b9501f;
+
+  /* Gradients */
+  --CortanaDesign-gradient: linear-gradient(to right,
+      #042a63 0%,
+      #021a3d 50%,
+      #021b41 100%);
+
+  /* Typography */
+  --h1: 2.5rem;
+  --h2: 2rem;
+  --h3: 1.75rem;
+  --h4: 1.5rem;
+  --h5: 1.25rem;
+  --h6: 1rem;
+  --p: 1rem;
+
+
+}
+
+/* ==========================================================================
+Page setup
+========================================================================== */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: "Rubik", "Roboto", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+  font-weight: 400;
+  color: var(--body);
+  margin: 0;
+  height: 100vh;
+}
+
+/* ==========================================================================
+Typography
+========================================================================== */
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+  font-family: "Rubik", "Roboto", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+  color: var(--heading);
+  line-height: 1.2;
+  font-weight: 600;
+  margin-bottom: 0.5rem !important;
+}
+
+h1,
+.h1 {
+  margin-top: 1rem !important;
+  font-size: calc(0.8 * var(--h1));
+}
+
+h2,
+.h2 {
+  margin-top: 0.5rem !important;
+  font-size: calc(0.8 * var(--h2));
+}
+
+h3,
+.h3 {
+  margin-top: 0.5rem !important;
+  font-size: calc(0.8 * var(--h3));
+}
+
+h4,
+.h4 {
+  margin-top: 0.5rem !important;
+  font-size: calc(0.8 * var(--h4));
+}
+
+h5,
+.h5 {
+  font-size: var(--h5);
+}
+
+h6,
+.h6 {
+  font-size: var(--h6);
+}
+
+p,
+.p {
+  font-size: var(--p);
+}
+
+/* ==========================================================================
+Background
+========================================================================== */
+.bg-CortanaDesign-blue {
+  background-color: var(--CortanaDesign-blue);
+}
+
+.bg-CortanaDesign-blue-dark {
+  background-color: var(--CortanaDesign-blue-dark);
+}
+
+.bg-light-grey {
+  background-color: var(--light-grey);
+}
+
+.bg-danger {
+  background-color: var(--danger);
+}
+
+.bg-warning {
+  background-color: var(--warning);
+}
+
+.bg-success {
+  background-color: var(--success);
+}
+
+.bg-blue {
+  background-color: var(--blue);
+}
+
+.bg-blue {
+  background-color: var(--blue);
+}
+
+.bg-pink {
+  background-color: var(--pink);
+}
+
+.bg-red {
+  background-color: var(--red);
+}
+
+.bg-orange {
+  background-color: var(--orange);
+}
+
+.bg-yellow {
+  background-color: var(--yellow);
+}
+
+.bg-green {
+  background-color: var(--green);
+}
+
+.bg-teal {
+  background-color: var(--teal);
+}
+
+.bg-cyan {
+  background-color: var(--cyan);
+}
+
+.bg-white {
+  background-color: var(--white);
+}
+
+.bg-black {
+  background-color: var(--black);
+}
+
+/* ==========================================================================
+Buttons
+========================================================================== */
+.btn-cortana-dark {
+  background-color: var(--CortanaDesign-blue-dark);
+  color: var(--white);
+  border: none;
+}
+
+.btn-cortana-dark:hover {
+  background-color: var(--CortanaDesign-blue);
+  color: var(--white);
+}
+
+.btn-cortana-dark:focus,
+.btn-cortana-dark:focus-visible {
+  background-color: var(--CortanaDesign-blue-hover) !important;
+  border: none !important;
+  color: var(--white);
+}
+
+.btn-cortana-dark:active {
+  background-color: var(--CortanaDesign-blue-hover) !important;
+  color: var(--white) !important;
+}
+
+/* ==========================================================================
+Header
+========================================================================== */
+header {
+  padding: 1rem 1rem 0.5rem 1rem;
+}
+
+header .container {
+  display: block !important;
+  flex-direction: row !important;
+}
+
+.follow-btns {
+  padding: 1rem 0 0 0.5rem;
+  text-align: center;
+}
+
+.follow-btns .btn+.btn {
+  margin-left: 0.5rem;
+}
+
+/* ==========================================================================
+Nav
+========================================================================== */
+
+
+/* ==========================================================================
+Page Container
+========================================================================== */
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+Containers
+========================================================================== */
+.container {
+  padding: 2rem 1rem 1rem 1rem;
+  margin: 0 auto;
+}
+
+.container main {
+  margin-bottom: 4rem;
+  padding-bottom: 5rem;
+}
+
+/* ==========================================================================
+Main
+========================================================================== */
+nav ul li a {
+  color: var(--white);
+  font-size: 1.25rem;
+}
+
+nav ul li a:hover {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+nav ul li:not(:last-of-type) {
+  margin-right: 1rem;
+}
+
+main img {
+  max-width: 100%;
+  width: auto !important;
+}
+
+article h2 {
+  margin-bottom: 0;
+}
+
+.col {
+  height: auto;
+  display: flex;
+}
+
+.card {
+  height: auto;
+}
+
+.card-body {
+  min-height: 220px !important;
+}
+
+.card .card-img-top .height {
+  max-height: 150px;
+}
+
+.card a {
+  text-align: left !important
+}
+
+/* ==========================================================================
+Posts
+========================================================================== */
+.posts {
+  border-left: 1px dashed #aeaeae;
+  list-style: none;
+  padding-left: 1.25rem;
+}
+
+.posts li {
+  margin-bottom: 1.5rem;
+}
+
+.posts a {
+  font-size: 1.15rem;
+}
+
+.posts .publish-date {
+  font-size: 0.75rem;
+  position: relative;
+}
+
+.publish-date {
+  font-size: 0.9rem;
+  margin-top: 0;
+}
+
+.publish-date::after {
+  border: 1px solid #bdbbbb;
+  border-radius: 50%;
+  background-color: white;
+  content: "";
+  height: 0.5rem;
+  left: -1.5rem;
+  position: absolute;
+  top: calc(50% - 0.2rem);
+  width: 0.5rem;
+}
+
+figure {
+  margin-left: 0;
+  margin-right: 0;
+  text-align: center;
+}
+
+blockquote {
+  position: relative;
+}
+
+blockquote::before {
+  background-color: #32b81f;
+  border-radius: 4px;
+  bottom: 0px;
+  content: "";
+  left: -40px;
+  position: absolute;
+  top: 0px;
+  width: 4px;
+}
+
+/* ==========================================================================
+Tags, Authors and Search 
+========================================================================== */
+.author-container,
+.search-container,
+.tag-container {
+  margin-bottom: 2.5rem;
+}
+
+.items {
+  font-size: 0.9rem;
+}
+
+/* ==========================================================================
+Profile
+========================================================================== */
+.img-profile {
+  border-radius: 50%;
+  max-height: 150px;
+  margin: 3rem 0 1.2rem 0;
+}
+
+.img-profile-small {
+  max-height: 60px;
+  border-radius: 50%;
+  margin-right: 1rem;
+  float: left;
+}
+
+.location {
+  font-weight: bold;
+}
+
+.bio {
+  font-size: 0.9rem;
+}
+
+.handle {
+  font-size: 0.8rem;
+  font-style: italic;
+  margin: 0;
+}
+
+.profile-header {
+  margin-top: 0;
+}
+
+/* ==========================================================================
+Badge
+========================================================================== */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.65rem 0.35rem 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--white);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+a.badge:hover {
+  text-decoration: none;
+  filter: brightness(80%);
+  color: var(--white);
+}
+
+a.badge:not(:last-child) {
+  margin-right: 5px;
+}
+
+/* ==========================================================================
+Strava Card
+========================================================================== */
+.strava-card {
+  background-color: #e6e6e5;
+  padding-left: 26px;
+  border-radius: 6px;
+  padding-top: 26px;
+  padding-bottom: 26px;
+  border: 1px solid #aca39a;
+  background-color: #fff;
+  padding: 30px;
+  margin-top: 10px;
+}
+
+.strava-card .card-header {
+  margin-bottom: 1rem;
+}
+
+.strava-card h3 {
+  margin-bottom: 0;
+  margin-top: 0;
+  font-weight: 300;
+  font-size: 20px;
+}
+
+.strava-card .activity-name {
+  margin-bottom: 1rem;
+}
+
+.strava-card .stats {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.strava-card .label {
+  color: #565656;
+  font-size: 0.75rem;
+}
+
+.strava-card .label+div {
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+
+/* ==========================================================================
+Links
+========================================================================== */
+a {
+  color: var(--CortanaDesign-blue);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--CortanaDesign-blue-hover);
+  text-decoration: underline;
+}
+
+.social-share {
+  margin: 2rem 0 10rem;
+}
+
+.social-share a img.img-button {
+  margin-right: 5px;
+}
+
+.img-button-external {
+  margin-right: 5px;
+}
+
+/* ==========================================================================
+Code
+========================================================================== */
+code {
+  background-color: #f3f3f3;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  padding: 3px 6px;
+  display: inline-block;
+  max-width: 960px;
+}
+
+pre.highlight {
+  padding-left: 0.5rem;
+}
+
+pre {
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+/* ==========================================================================
+Screen Reader Only for Accessibility
+========================================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ==========================================================================
+Search 
+========================================================================== */
+
+.search-container input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--CortanaDesign-dark-grey);
+  background: none;
+  padding: 10px 10px;
+  font-size: 1.3em;
+  font-weight: 300;
+  font-family: "Rubik", "Roboto", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+}
+
+/* ==========================================================================
+Table
+========================================================================== */
+table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border: 1px solid var(--light-grey);
+}
+
+table th,
+table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border: 1px solid var(--light-grey);
+}
+
+table thead th {
+  vertical-align: bottom;
+}
+
+table thead th,
+table thead td {
+  border-bottom: 2px solid var(--light-grey);
+}
+
+table tbody+tbody {
+  border-top: 2px solid var(--light-grey);
+}
+
+/* ==========================================================================
+Footer
+========================================================================== */
+footer {
+  background: var(--CortanaDesign-dark-grey);
+  /* display: block; */
+  margin-top: auto;
+  /* position: absolute; */
+  bottom: 0;
+  width: 100%;
+  padding: 2rem;
+  color: var(--white);
+}
+
+footer .footer-end {
+  margin-top: 2rem;
+}
+
+footer .footer-title {
+  margin-top: 0rem;
+}
+
+/* ==========================================================================
+General utility classes
+========================================================================== */
+.text-center {
+  text-align: center;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+hr {
+  color: var(--light-grey);
+  margin: 2rem auto;
+}
+
+.horizontal-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.horizontal-list li {
+  display: inline-block;
+}
+
+.horizontal-list li:not(:last-child) {
+  margin-right: 1rem;
+}
+
+video {
+  max-width: 100%;
+}
+
+.no-shadow {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.highlight {
+  overflow-x: auto;
+}
+
+.border {
+  border: 1px solid var(--light-grey);
+}
+
+.border-rounded {
+  border: 1px solid var(--light-grey);
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+Responsive Media queries
+========================================================================== */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  /* header {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  } */
+
+  .follow-btns {
+    padding: 0;
+    text-align: right;
+    display: flex;
+  }
+
+  /* 
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  footer .footer-end {
+    margin-top: 0;
+  } */
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+
+  h1,
+  .h1 {
+    font-size: var(--h1);
+  }
+
+  h2,
+  .h2 {
+    font-size: var(--h2);
+  }
+
+  h3,
+  .h3 {
+    font-size: var(--h3);
+  }
+
+  h4,
+  .h4 {
+    font-size: var(--h4);
+  }
+
+  .container {
+    width: 100%;
+    max-width: 992px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  figure {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+
+  .container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: block !important
+  }
+
+  .container main {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+
+  .float-right {
+    float: right;
+    clear: both;
+    max-width: 300px !important;
+  }
+}

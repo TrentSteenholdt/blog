@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Outlook RPC/HTTP impossible with Apache Reverse Proxy | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Outlook RPC/HTTP impossible with Apache Reverse Proxy | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Outlook RPC/HTTP impossible with Apache Reverse Proxy" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="The Apache vs. Microsoft RPC over HTTPS war!" />
+<meta property="og:description" content="The Apache vs. Microsoft RPC over HTTPS war!" />
+<link rel="canonical" href="http://localhost:4000/2014/01/31/outlook-rpchttp-impossible-with-apache-reverse-proxy" />
+<meta property="og:url" content="http://localhost:4000/2014/01/31/outlook-rpchttp-impossible-with-apache-reverse-proxy" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/owa.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2014-01-31T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/owa.png" />
+<meta property="twitter:title" content="Outlook RPC/HTTP impossible with Apache Reverse Proxy" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2014-01-31T00:00:00+08:00","datePublished":"2014-01-31T00:00:00+08:00","description":"The Apache vs. Microsoft RPC over HTTPS war!","headline":"Outlook RPC/HTTP impossible with Apache Reverse Proxy","image":"http://localhost:4000/assets/images/from_wordpress/owa.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2014/01/31/outlook-rpchttp-impossible-with-apache-reverse-proxy"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2014/01/31/outlook-rpchttp-impossible-with-apache-reverse-proxy"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Outlook RPC/HTTP impossible with Apache Reverse Proxy</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  January 31, 2014
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  6 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#apache">apache</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#exchange">exchange</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#rpc-over-http">rpc-over-http</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#rpc-over-https">rpc-over-https</a></div>
+    <p><img src="/assets/images/from_wordpress/RPCerror.png" alt="The Apache vs. Microsoft RPC over HTTPS war!" /><br />
+<em>The Apache vs. Microsoft RPC over HTTPS war!</em></p>
+
+<p>For those who may be thinking of moving to Apache reverse proxy either because they’re looking to replace the now discontinued Microsoft TMG (<a href="http://blogs.technet.com/b/server-cloud/archive/2012/09/12/important-changes-to-forefront-product-roadmaps.aspx">refer here</a>) or are looking to secure their internal CAS/Mailbox servers may need to think again, Outlook RPC/HTTP simply doesn’t work.</p>
+
+<p>This week I was hand balled a project (mid-way through) to move some Exchange services to Amazon for a client. While there was no problem (just the minor configuration issues with virtual directories etc.) with the internal Exchange hosts, the way that they were trying to present Exchange to external users with Apache was ‘broken’.</p>
+
+<p><img src="/assets/images/from_wordpress/exchangeoverview.png" alt="An overview of the Exchange environment in AWS" /><br />
+<em>An overview of the Exchange environment in AWS</em></p>
+
+<p>Troubleshooting was pretty easy… I identified the issue by reviewing the IIS logs on the Exchange 2010 CAS host (C:\inetpub\log\) that there was some traffic, but not all the traffic you’d expect for RPC over HTTPS. It was starting a connection (HTTP 200 GET’s), but no establishing it. Just to make sure that there wasn’t an RPC issue where it couldn’t talk to day Active Directory etc., I ran the “<strong>Test-OutlookConnectivity -Protocol HTTP</strong>” powershell cmdlet and it came back with all “Success”… Hmmm, onto <a href="https://testconnectivity.microsoft.com/">Microsoft Remote Connectivity Analyzer</a> to test for Outlook Anywhere and lo and behold we had a RPC time out (rpc\s\server\unavailable error (0x6ba)). So it’s only external users that will see this problem… So what sits between them and the client Exchange hosts!</p>
+
+<p>The Apache Reverse Proxy <code class="language-plaintext highlighter-rouge">mod_proxy</code> module was identified to be  ‘man handling’ the traffic and dropping it like a hot potato! It was easy to see this within the Apache logs (typically in /var/log/apache2/ on Linux) that the RPC\DATA\IN and RPC\DATA\OUT traffic that is channelled over HTTPS was blocked being by Apache. Poo!</p>
+
+<p><strong>So why is this happening?</strong> Well in the opinion of Apache, Microsoft is not following proper RFC standard when it comes to the HTTP protocol. Take a read of the ‘bug report’ <a href="https://issues.apache.org/bugzilla/show_bug.cgi?id=40029">here</a> and see how it’s been marked as invalid and therefore resolved with no change to the complied module.</p>
+
+<blockquote>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>This is an incorrect use of the http protocol. Bad luck for Microsoft. 
+-- Apache Team
+</code></pre></div>  </div>
+</blockquote>
+
+<p>So what now? What are the options? Well there is a couple… some are okay, some are dirty and some I wouldn’t touch with a 20 foot pole!</p>
+
+<ol>
+  <li>Move to a hardware based appliance like Microsoft/ Exchange team is <a href="http://blogs.technet.com/b/exchange/archive/2013/02/18/exchange-firewalls-and-support-oh-my.aspx">suggesting</a>. They’re not cheap and are overkill for a small client like the one I’m dealing with.</li>
+  <li>You could spin up another Reverse Proxy Server like Squid or HA Proxy that is known to allow the RPC over HTTPS traffic through. This option is okay, but you’re spinning up another server for just Exchange Reverse Proxy, unless of course you move all your other applications and websites to the same service. Is your applications team ready for that type of migration? Do you have enough IPv4 addresses?!</li>
+  <li>You could run up Squid on the same server (assuming the host is Linux). Squid could handle Exchange and then pass everything else to Apache! Pretty neat, but again you’re managing two services that require patching etc. Hmmm, not ideal.</li>
+  <li>You could just be lazy and compromise security by using NAT/PAT rules on your external firewall to an Exchange host that is internet facing. (I.e.. The ExternalURL is set on the virtual directories and Outlook Anywhere is enabled.). I hate this, but I know of a major organisation in Australia doing just this with no security or monitoring of traffic!</li>
+  <li>You could run up an older version of Apache that doesn’t have the ‘fix’ for RPC over HTTPS. Anything version 2.0.X is apparently able to allow the RPC traffic. Yuck! Running out of date Apache is just a disaster waiting to happen. Again, people seem to be falling back to this option.</li>
+  <li>You could go open source and use something like <code class="language-plaintext highlighter-rouge">mod_proxy_msrpc</code>. I personally am not a fan of relying on the ‘interwebs’ for keeping my environment secure! Refer <a href="https://github.com/bombadil/mod_proxy_msrpc">here</a> for <code class="language-plaintext highlighter-rouge">mod_proxy_msrpc</code> if you’re okay with this of course.</li>
+  <li>Give up… Stick with TMG if you’re already on it, or tell the business it’s not possible… Not possible.</li>
+</ol>
+
+<p>Unfortunatley for this client, the horse had already bolted and they were becoming a little impatient that things weren’t working. Added to this, the client insisted I couldn’t move away from the Apache server they had already built. They expected me to get Apache to work /sigh…. The solution I chose after a lot of thinking was option 3. I configured up Squid to deal with Exchange and then let it pass the rest through to Apache for the non-Exchange reverse proxy needs. For reference, here is an example of the config I used:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># CONTOSO Squid Configuration - Trent Steenholdt 30/01/2014
+# =======================================================
+
+# Extensions for Exchange RPC over HTTPS
+extension_methods RPC_IN_DATA RPC_OUT_DATA
+
+# We listen on 123.123.123.123 This is the internet facining IP
+https_port 123.123.123.123:443 accel cert=/LOCATIONOFCERT/contoso_com.crt key=/LOCATIONOFCERTKEY/contoso_com.key defaultsite=contoso.com vhost
+
+# Apache is running locally.
+# Exchange Server is 10.100.7.99 
+cache_peer 127.0.0.1 parent 443 0 proxy-only no-query no-digest originserver login=PASS ssl sslflags=DONT_VERIFY_PEER cert=/LOCATIONOFCERT/otherSANcert_contoso_com.crt key=/LOCATIONOFCERTKEY/otherSANcert_contoso_com.key name=webServer
+cache_peer 10.1.1.14 parent 443 0 proxy-only no-query no-digest originserver login=PASS front-end-https=on ssl sslflags=DONT_VERIFY_PEER cert=/LOCATIONOFCERT/SANcert_contoso_com.crt key=/LOCATIONOFCERTKEY/SANcert_contoso_com.key name=exchangeServer
+
+# List of acceptable URLs to send to the Exchange server
+acl exch_url url_regex -i contoso.com/exchange
+acl exch_url url_regex -i contoso.com/exchweb
+acl exch_url url_regex -i contoso.com/public
+acl exch_url url_regex -i contoso.com/owa
+acl exch_url url_regex -i contoso.com/ecp
+acl exch_url url_regex -i contoso.com/microsoft-server-activesync
+acl exch_url url_regex -i contoso.com/rpc
+acl exch_url url_regex -i contoso.com/rpcwithcert
+acl exch_url url_regex -i contoso.com/exadmin
+
+# Send the Exchange URLs to the Exchange server
+cache_peer_access exchangeServer allow exch_url
+
+# Send everything else to the Apache
+cache_peer_access webServer deny exch_url
+
+# This is to protect Squid
+never_direct allow exch_url
+
+# Logging Configuration
+redirect_rewrites_host_header off
+cache_mem 32 MB
+maximum_object_size_in_memory 128 KB
+cache_log none
+cache_store_log none
+
+access_log /SQUIDLOCATION/access.log squid
+
+# Set the hostname so that we can see Squid in the path (Optional)
+visible_hostname contoso.com/squid
+deny_info TCP_RESET all
+
+# ACL - required to allow
+acl all src 0.0.0.0/0.0.0.0
+
+# Allow everyone through, internal and external connections
+http_access allow all
+miss_access allow all
+</code></pre></div></div>
+
+<p>Cheers,</p>
+
+<p>Trent</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Outlook RPC/HTTP impossible with Apache Reverse Proxy&amp;url=http://localhost:4000/2014/01/31/outlook-rpchttp-impossible-with-apache-reverse-proxy&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2014/01/31/outlook-rpchttp-impossible-with-apache-reverse-proxy"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

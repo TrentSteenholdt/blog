@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Take Azure Migrate data and visualise it in Power BI - Part 2 | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Take Azure Migrate data and visualise it in Power BI - Part 2 | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Take Azure Migrate data and visualise it in Power BI - Part 2" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="This was originally posted here while working for Telstra Purple." />
+<meta property="og:description" content="This was originally posted here while working for Telstra Purple." />
+<link rel="canonical" href="http://localhost:4000/2021/02/26/take-azure-migrate-data-and-visualise-it-in-power-bi-part-2" />
+<meta property="og:url" content="http://localhost:4000/2021/02/26/take-azure-migrate-data-and-visualise-it-in-power-bi-part-2" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/6.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-26T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/6.png" />
+<meta property="twitter:title" content="Take Azure Migrate data and visualise it in Power BI - Part 2" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2021-02-26T00:00:00+08:00","datePublished":"2021-02-26T00:00:00+08:00","description":"This was originally posted here while working for Telstra Purple.","headline":"Take Azure Migrate data and visualise it in Power BI - Part 2","image":"http://localhost:4000/assets/images/from_wordpress/6.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2021/02/26/take-azure-migrate-data-and-visualise-it-in-power-bi-part-2"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2021/02/26/take-azure-migrate-data-and-visualise-it-in-power-bi-part-2"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Take Azure Migrate data and visualise it in Power BI - Part 2</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  February 26, 2021
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  7 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#azure">azure</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#azure-migrate">azure-migrate</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#powerbi">powerbi</a></div>
+    <p><strong><em>This was originally posted <a href="https://purple.telstra.com/blog/azure-migrate-data-in-powerbi-part2">here while working for Telstra Purple</a>.</em></strong></p>
+
+<p>In the second part of this series, I’ll take you through the last few steps to visualise your Azure Migrate data using Power BI. If you haven’t read part one and would like to, click <a href="https://purple.telstra.com/blog/azure-migrate-data-in-powerbi-part1">here</a>.<br />
+<a href="https://purple.telstra.com/blog/azure-migrate-data-in-powerbi-part1"></a></p>
+
+<h2 id="tables">Tables</h2>
+
+<p>In the previous blog post, I didn’t go into great detail about how the combined data sources from the Azure Migrate workbooks should be formatted as tables in Power BI. This is particularly important as the Assessment Summary and Assessment Properties worksheets are formated with information on rows rather than columns. To help with your formatting, here are the queries I used for each table.</p>
+
+<h4 id="all-assessed-machines">All Assessed Machines</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">let
+    </span>Source <span class="o">=</span> Folder.Files<span class="o">(</span><span class="s2">"D:</span><span class="se">\D</span><span class="s2">ownloads"</span><span class="o">)</span>,
+    <span class="c">#"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? &lt;&gt; true),</span>
+    <span class="c">#"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform All Assessed Machines", each #"Transform All Assessed Machines"([Content])),</span>
+    <span class="c">#"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),</span>
+    <span class="c">#"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform All Assessed Machines"}),</span>
+    <span class="c">#"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform All Assessed Machines", Table.ColumnNames(#"Transform All Assessed Machines"(#"Sample File")))</span>
+<span class="k">in</span>
+    <span class="c">#"Expanded Table Column1"</span>
+</code></pre></div></div>
+
+<h4 id="all-assessed-disks">All Assessed Disks</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">let
+    </span>Source <span class="o">=</span> Folder.Files<span class="o">(</span><span class="s2">"D:</span><span class="se">\D</span><span class="s2">ownloads"</span><span class="o">)</span>,
+    <span class="c">#"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? &lt;&gt; true),</span>
+    <span class="c">#"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform All Assessed Disks", each #"Transform All Assessed Disks"([Content])),</span>
+    <span class="c">#"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),</span>
+    <span class="c">#"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform All Assessed Disks"}),</span>
+    <span class="c">#"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform All Assessed Disks", Table.ColumnNames(#"Transform All Assessed Disks"(#"Sample File"))),</span>
+    <span class="c">#"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",`{`{"Monthly cost estimate ", type number}, {"Source disk size(GB)", Int64.Type}, {"Target disk size(GB)", Int64.Type}, {"Disk read(MBPS)", type number}, {"Disk write(MBPS)", type number}, {"Disk read(ops/sec)", Int64.Type}, {"Disk write(ops/sec)", Int64.Type}})</span>
+<span class="k">in</span>
+    <span class="c">#"Changed Type"</span>
+</code></pre></div></div>
+
+<h4 id="assessment-properties">Assessment Properties</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">let
+    </span>Source <span class="o">=</span> Folder.Files<span class="o">(</span><span class="s2">"D:</span><span class="se">\D</span><span class="s2">ownloads"</span><span class="o">)</span>,
+    <span class="c">#"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? &lt;&gt; true),  #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform Assessment Properties", each #"Transform Assessment Properties"([Content])),</span>
+    <span class="c">#"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "File Name"}),</span>
+    <span class="c">#"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"File Name", "Transform Assessment Properties"}),</span>
+    <span class="c">#"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform Assessment Properties", Table.ColumnNames(#"Transform Assessment Properties"(#"Sample File"))),</span>
+    <span class="c">#"Pivoted Column" = Table.Pivot(#"Expanded Table Column1", List.Distinct(#"Expanded Table Column1"[Property]), "Property", "Selected value"),</span>
+    <span class="c">#"Duplicated Column" = Table.DuplicateColumn(#"Pivoted Column", "File Name", "File Name - Copy"),</span>
+    <span class="c">#"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",`{`{"File Name - Copy", "Group Name"}}),</span>
+    <span class="c">#"Replaced Value" = Table.ReplaceValue(#"Renamed Columns",".xlsx","",Replacer.ReplaceText,{"Group Name"}),</span>
+    <span class="c">#"Changed Type" = Table.TransformColumnTypes(#"Replaced Value",`{`{"VM uptime - Day(s) per month", Int64.Type}, {"VM uptime - Hour(s) per day", Int64.Type}})</span>
+<span class="k">in</span>
+    <span class="c">#"Changed Type"</span>
+</code></pre></div></div>
+
+<h4 id="assessment-summary">Assessment Summary</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">let
+    </span>Source <span class="o">=</span> Folder.Files<span class="o">(</span><span class="s2">"D:</span><span class="se">\D</span><span class="s2">ownloads"</span><span class="o">)</span>,
+    <span class="c">#"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? &lt;&gt; true),</span>
+    <span class="c">#"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File", each #"Transform File"([Content])),</span>
+    <span class="c">#"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "File Name"}),</span>
+    <span class="c">#"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"File Name", "Transform File"}),</span>
+    <span class="c">#"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File", Table.ColumnNames(#"Transform File"(#"Sample File"))),</span>
+    <span class="c">#"Filtered Rows1" = Table.SelectRows(#"Expanded Table Column1", each [Azure Migrate] &lt;&gt; null and [Azure Migrate] &lt;&gt; ""),</span>
+    <span class="c">#"Pivoted Column" = Table.Pivot(#"Filtered Rows1", List.Distinct(#"Filtered Rows1"[#"Azure Migrate"]), "Azure Migrate", "Column2"),</span>
+    <span class="c">#"Changed Type" = Table.TransformColumnTypes(#"Pivoted Column",`{`{"Total machines assessed", Int64.Type}, {"Machines not ready for Azure", Int64.Type}, {"Machines ready with conditions", Int64.Type}, {"Machines ready for Azure", Int64.Type}, {"Machines readiness unknown", Int64.Type}, {"Total monthly cost estimate AUD", Currency.Type}, {"Compute monthly cost AUD", Currency.Type}, {"Storage monthly cost AUD", Currency.Type}, {"Standard disks cost AUD", Currency.Type}, {"Standard SSD disks cost AUD", Currency.Type}, {"Premium disks cost AUD", Currency.Type}})</span>
+<span class="k">in</span>
+    <span class="c">#"Changed Type"</span>
+</code></pre></div></div>
+
+<p>As you can see in each of these queries, one of the four custom functions I created previously is used. This function makes it possible to pull data from all the worksheets and merge them into one table from the source directory folder.  </p>
+
+<h2 id="data-model">Data Model</h2>
+
+<p>Power BI will automatically try to match the tables and columns to build a model that works once you have created your tables. Sometimes this can be spot on, but in some circumstances, some manual intervention is needed.</p>
+
+<p><a href="/assets/images/from_wordpress/4-2.png"><img src="/assets/images/from_wordpress/4-2-1024x604.png" alt="" /></a></p>
+
+<p>With the data tables from Azure Migrate, it’s possible that the mapping for All Assessed Disks may get confused and try to map on the Group name. You don’t want this, as assessed disks should match on the associated machine they are attached to. To correct this, change the data model by mapping the following relationships as per the table below.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Table </th>
+      <th>Column</th>
+      <th>Relationship</th>
+      <th>Column</th>
+      <th>Table</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Assessment Summary</td>
+      <td>Group name</td>
+      <td>1 to 1 (both direction)</td>
+      <td>Group name</td>
+      <td>Assessment Properties</td>
+    </tr>
+    <tr>
+      <td>Assessment Summary </td>
+      <td>Group name</td>
+      <td>Many to one (single direction)</td>
+      <td>Group name</td>
+      <td>All Assessed Machines</td>
+    </tr>
+    <tr>
+      <td>All Assessed Machines</td>
+      <td>Machine</td>
+      <td>Many to one (single direction)</td>
+      <td>Machine</td>
+      <td>All Assessed Disks</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="visuals">Visuals</h2>
+
+<p>With your data model ready, you’re now at the point of creating the visuals you need to assess the suitability for migrating workloads to Azure. This is a relatively straight forward task, dragging and dropping the visualisations you’re after in the report.</p>
+
+<p>When creating your reports, consider using slicers and filters as they will help you narrow in on the assessments you created in Azure Migrate while also giving you the ability to get a holistic overview. To demonstrate this, have a look at the screenshots below.</p>
+
+<p><a href="/assets/images/from_wordpress/5-1.png"><img src="/assets/images/from_wordpress/5-1-1024x600.png" alt="" /></a></p>
+
+<p><a href="/assets/images/from_wordpress/6.png"><img src="/assets/images/from_wordpress/6-1024x602.png" alt="" /></a></p>
+
+<h2 id="expanding-the-data-model-with-your-own-data">Expanding the data model with your own data</h2>
+
+<p>The great thing about using Power BI for visualising this data is that it’s now possible to map other data sources in your data model to enrich your dataset, something that isn’t possible in Azure Migrate right now. For example, suppose you can grab an extract from your CMBD or service register. In that case, you should be able to map business-related information like Server/Application Owner to the Azure Migrate data by either using the assessment group name or to the machine names.</p>
+
+<p><a href="/assets/images/from_wordpress/7.png"><img src="/assets/images/from_wordpress/7-1024x605.png" alt="" /></a></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I hope you found this two-part blog series interesting on how you can take Azure Migrate data and enrich it with Power BI and potentially other data sources. If you’re interested in trying this yourself, the Power BI template (PBIT file) can be <a href="https://github.com/trentsteenholdt-readify/data/blob/master/AzMigrate-Template.pbit?raw=true">downloaded here</a>.</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Take Azure Migrate data and visualise it in Power BI - Part 2&amp;url=http://localhost:4000/2021/02/26/take-azure-migrate-data-and-visualise-it-in-power-bi-part-2&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2021/02/26/take-azure-migrate-data-and-visualise-it-in-power-bi-part-2"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leveraging Private Endpoints with Windows DNS | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Leveraging Private Endpoints with Windows DNS | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Leveraging Private Endpoints with Windows DNS" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="This was originally posted here while working for Telstra Purple." />
+<meta property="og:description" content="This was originally posted here while working for Telstra Purple." />
+<link rel="canonical" href="http://localhost:4000/2020/11/15/leveraging-private-endpoints-with-windows-dns" />
+<meta property="og:url" content="http://localhost:4000/2020/11/15/leveraging-private-endpoints-with-windows-dns" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/network.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-11-15T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/network.png" />
+<meta property="twitter:title" content="Leveraging Private Endpoints with Windows DNS" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2020-11-15T00:00:00+08:00","datePublished":"2020-11-15T00:00:00+08:00","description":"This was originally posted here while working for Telstra Purple.","headline":"Leveraging Private Endpoints with Windows DNS","image":"http://localhost:4000/assets/images/from_wordpress/network.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/11/15/leveraging-private-endpoints-with-windows-dns"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2020/11/15/leveraging-private-endpoints-with-windows-dns"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Leveraging Private Endpoints with Windows DNS</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  November 15, 2020
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  6 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#azure-dns">azure-dns</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#dns">dns</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#private-endpoints">private-endpoints</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#sql-managed-instance">sql-managed-instance</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#windows-dns">windows-dns</a></div>
+    <p><strong><em>This was originally posted <a href="https://purple.telstra.com/blog/Leveraging-Private-Endpoints-with-Windows-DNS">here while working for Telstra Purple</a>.</em></strong></p>
+
+<p>In recent weeks, I’ve been working with Private Endpoints for some new Azure SQL server instances as we move some databases from traditional SQL IaaS VMs.</p>
+
+<p>I don’t think I should have to advocate for the usage of <a href="https://docs.microsoft.com/en-us/azure/private-link/private-link-overview">Private Endpoints</a> if an Azure resource type supports it. If you’re not already, then I highly encourage taking all the necessary steps to strengthen and protect your data by bringing all that public and potentially exposed traffic into your internal (networking) environment with this feature. The <a href="https://azure.microsoft.com/en-au/pricing/details/private-link/">cost of using Private Endpoints</a> is only a few cents per GB, so it’s very cost effective for all the benefits it brings.</p>
+
+<p>In this particular story, when we enabled Private Endpoints for the Azure SQL server instances, I pointed a Windows System Administrator to a particular <a href="https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns">Microsoft Doc’s page</a> about configuring DNS correctly so the private, rather than the public, IP address would resolve.</p>
+
+<p>As the Windows System Administrator read the documentation, the several flow diagrams on the page scared him. Seeing all these flow lines going up, down, left and right, I could immediately see his concern that the solution was overly complicated. At that point, I started searching for a simple how-to guide to assist with his scenario. However, I was amazed not to see anything available. So, this is why this blog post now exists. To help with what I considered was a common setup scenario with Azure and on-premises infrastructure. To follow along:</p>
+
+<ul>
+  <li>
+    <p>They are using Windows DNS and Windows Active Directory Directory (AD on-premises).</p>
+  </li>
+  <li>
+    <p>As part of building out their Azure Landing Zone, they have extended their Windows DNS and Windows Active Directory into Azure on a new virtual machine.</p>
+  </li>
+  <li>
+    <p>The Virtual Networks DNS settings in Azure are configured to point to the Windows DNS server(s).</p>
+  </li>
+  <li>
+    <p>AD Sites and Services have been configured for the new sites and subnets in Azure.</p>
+  </li>
+  <li>
+    <p>The domain controller(s) on-premises are replicating without issue to the domain controller(s) in Azure.</p>
+  </li>
+</ul>
+
+<p>Here is a high-level diagram of what the network looks like with just two domain controllers, one in Azure, that also run Windows DNS.</p>
+
+<p><a href="/assets/images/from_wordpress/network.png"><img src="/assets/images/from_wordpress/network-1024x620.png" alt="" /></a></p>
+
+<p>If that sounds like or is similar to you, then this guide will get you set up with being able to resolve private IP address DNS records for any of the Private EndPoint Azure resources you may have.</p>
+
+<p>First, let’s configure your Private DNS Zone for all your virtual networks (vNets). For this customer, they deployed the Azure SQL server instance Private EndPoint into the Production spoke vNet, so when the Private DNS Zone is created automatically, only the spoke vNet was linked. To correct this in your setup, head to the Azure Portal, find the Private DNS Zone and select “Virtual Network links” on the left-hand pane.</p>
+
+<p><a href="/assets/images/from_wordpress/endpoints.png"><img src="/assets/images/from_wordpress/endpoints-1024x728.png" alt="" /></a></p>
+
+<p>From there, you’ll need to link at least the vNet where the Windows DNS/ AD Domain Controller resides. For the purposes of this customer, that was the Hub virtual network.</p>
+
+<p>Once you have done this, you’re now done with Azure and the Azure Portal. All changes here on out will be with the Windows DNS configuration itself.</p>
+
+<p>Start by connecting to the Windows DNS management console first on the server in Azure. <em>If you are using RDP to do this, it might be time to read up on <a href="https://docs.microsoft.com/en-us/windows-server/manage/windows-admin-center/understand/what-is">Windows Admin Centre</a>.</em></p>
+
+<p>On the Windows DNS server in Azure, you’ll need to change the forwarder to <a href="https://docs.microsoft.com/en-us/azure/virtual-network/what-is-ip-address-168-63-129-16">168.63.129.16</a>. You can achieve this by:  </p>
+
+<ol>
+  <li>
+    <p>Right-clicking on the server node and selecting Properties.</p>
+  </li>
+  <li>
+    <p>Selecting the Forwarders tab.</p>
+  </li>
+  <li>
+    <p>On the current IP addresses you may have, select Edit…<br />
+ <img src="/assets/images/from_wordpress/dns1-50.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Update the details as needed, so the servers sole DNS forwarder is 168.63.129.16.
+ <img src="/assets/images/from_wordpress/dns2-50.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Click OK.</p>
+  </li>
+</ol>
+
+<p>It’s important to note that 168.63.129.16 is a highly available virtual IP address. If you’re replacing something like 1.1.1.1 or Google DNS, you really should not see any degradation to DNS performance with this change.</p>
+
+<p>Once you’ve made this change on the Windows DNS Server in Azure, you should be able to nslookup and resolve the private IP address. The below screenshot highlights the same nslookup being made before (red) and after (green) the change in the steps above were made.</p>
+
+<p><a href="/assets/images/from_wordpress/dns4.png"><img src="/assets/images/from_wordpress/dns4-1024x584.png" alt="" /></a></p>
+
+<p>With Windows DNS in Azure now resolving the private IP, we now need to make on-premises Windows DNS aware of how to resolve the same IP. To do this, connect to the DNS management console for your on-premises DNS server(s) and follow the instructions to create a conditional forwarder:</p>
+
+<ol>
+  <li>
+    <p>Open the server node and go to Conditional Forwarders.</p>
+  </li>
+  <li>
+    <p>In the main pane, right-click and select New Conditional Forwarder…</p>
+  </li>
+  <li>
+    <p>In the new window, provide the <a href="https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#azure-services-dns-zone-configuration">Public DNS zone name</a> for the private endpoint you want to be able to resolve the Private IP for. (Note: Repeat this whole process if you want more than one Azure resource type leveraging Private Endpoints).</p>
+  </li>
+  <li>
+    <p>For the IP address of the master server, provide the IP address of your Windows DNS server in Azure. E.g. On-premises, the server is 192.168.254.221. In Azure the server IP is 192.168.250.111 so you use this IP.</p>
+
+    <p><img src="/assets/images/from_wordpress/dns5-50.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Click OK.</p>
+  </li>
+</ol>
+
+<p>That’s it! You’ve configured your environment per Microsoft best practices and using DNS forwarding as mentioned <a href="https://docs.microsoft.com/en-us/azure/private-link/private-endpoint-dns#virtual-network-and-on-premises-workloads-using-a-dns-forwarder">here</a>. What you’ve essentially done is given your on-premises Windows DNS server(s) a bunny hop server (the Windows DNS server in Azure), so it can resolve the 168.63.129.16 records for it and send that result back down the ExpressRoute circuit.</p>
+
+<p>Best of luck securing your Azure workloads!</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Leveraging Private Endpoints with Windows DNS&amp;url=http://localhost:4000/2020/11/15/leveraging-private-endpoints-with-windows-dns&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2020/11/15/leveraging-private-endpoints-with-windows-dns"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home IoT - Part 4 - The ‘final’ solution and the things I learned | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Home IoT - Part 4 - The ‘final’ solution and the things I learned | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Home IoT - Part 4 - The ‘final’ solution and the things I learned" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!" />
+<meta property="og:description" content="This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!" />
+<link rel="canonical" href="http://localhost:4000/2020/09/20/home-iot-part-4-the-final-solution-and-the-things-i-learned" />
+<meta property="og:url" content="http://localhost:4000/2020/09/20/home-iot-part-4-the-final-solution-and-the-things-i-learned" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/image-17.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-20T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/image-17.png" />
+<meta property="twitter:title" content="Home IoT - Part 4 - The ‘final’ solution and the things I learned" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2020-09-20T00:00:00+08:00","datePublished":"2020-09-20T00:00:00+08:00","description":"This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!","headline":"Home IoT - Part 4 - The ‘final’ solution and the things I learned","image":"http://localhost:4000/assets/images/from_wordpress/image-17.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/09/20/home-iot-part-4-the-final-solution-and-the-things-i-learned"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2020/09/20/home-iot-part-4-the-final-solution-and-the-things-i-learned"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Home IoT - Part 4 - The ‘final’ solution and the things I learned</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  September 20, 2020
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  11 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#net-core">net-core</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#arduino">arduino</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#esp32">esp32</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#iot">iot</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#powershell">powershell</a></div>
+    <p>This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!</p>
+
+<ul>
+  <li>
+    <p>Part 1 – <a href="/2020/09/01/home-iot-part-1-the-start-of-the-journey/">The start of the IoT journey</a></p>
+  </li>
+  <li>
+    <p>Part 2 – <a href="/2020/09/03/home-iot-part-2-putting-it-together-and-integration/">Putting it together and integration</a></p>
+  </li>
+  <li>
+    <p>Part 3 – <a href="/2020/09/19/home-iot-part-3-what-about-my-garden-irrigation-system/">What about my garden irrigation system</a></p>
+  </li>
+  <li>
+    <p>Part 4 – This part</p>
+  </li>
+</ul>
+
+<h3 id="last-changes-from-lessons-learnt">Last changes from lessons learnt</h3>
+
+<p>So it’s been a good couple of weeks now with the home IoT setup, and everything has been pretty good. However, it hasn’t been all perfect, and some changes have been made since I last blogged.</p>
+
+<p>Firstly, a weird issue where the Holman BTX-8 Bluetooth server would stop working after a couple of days kept cropping up. I suspect this is because the ESP32 is always connected with it, unlike the phone app which connects only when it writes a characteristic. To mitigate this, I’m simply calling ESP.restart() every night at 2 am via the webserver to give the Holman device some time alone which seems to do the trick.</p>
+
+<p>Another significant change since the last write up is the way I handle the webserver on the ESP32 itself. While part 1’s example code gave me a great starting point, it became annoying when wanting to make small front-end tweaks to the webserver, which resulted in recompiling the C++ code every time. To mitigate this problem, I have since moved the front-end code into a standalone .Net Core web app that makes HTTP Gets to the ESP32.</p>
+
+<p><img src="/assets/images/from_wordpress/image-15.png" alt="" /></p>
+
+<p><sup>.Net Core WebApp communicating with HTTP Get to the ESP32</sup></p>
+
+<p>This approach has made life so much better. Not only do I now essentially have the ESP32 working like an API service, but I can further improve the .Net core web app and allow external access to it backed by Azure AD authentication. Now, with AzureAD permissions, I can grant just me and the stakeholder access to the app which can be accessed anywhere in the world</p>
+
+<p>For those interested to know why I deployed the .Net core app on-premises on an IIS server vs. using Azure, this was because of a cost-saving exercise and being able to use my own private DNS and PKI infrastructure.</p>
+
+<p>The .Net Core app has been super valuable. Not only do I no longer need to carry around with me my garage and gate remotes, but over the past few weeks, I’ve come to find how hit and miss IFTTT can be. Sometimes there is a lengthy 2-3 minute delay making the call to the PowerShell runbook, which is not great when your sitting in your car, waiting for the gate and garage to open. The .Net core app doesn’t have any of these delays!</p>
+
+<p>Below is a code snippet of the ActionResult in the .Net Core WebApp which makes the HTTP get calls. All I’m doing is providing this action with the full URL (base64 encoded) to the call from the front-end with some simple JS and jQuery. Simple, and does the job.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+        public async Task&lt;ActionResult&gt; GetFromExternal(string url)
+        {
+            string urlDecode = Base64Decode(url);
+
+            var client = new HttpClient();
+
+            Task&lt;string&gt; getStringTask =
+                client.GetStringAsync(urlDecode);
+
+            string contents = urlDecode;
+            try
+            {
+                contents = await getStringTask;
+            }
+            catch
+            {
+                contents = "Something went wrong.";
+            }
+            return Content(contents);
+        }
+</code></pre></div></div>
+
+<h3 id="making-the-garden-irrigation-timing-smarter-using-bom-data">Making the garden irrigation timing smarter using BOM data</h3>
+
+<p>Another improvement I’ve made is to the irrigation timings and smarts around changing the running times based on the actual weather.</p>
+
+<p>Like many, every summer, I tend to forget bumping up the watering times or leave it too late, and my garden suffers because of it. To stop this happening ever again, I have put together two PowerShell scripts which also run locally to save on cost.</p>
+
+<p>The first script pulls data from the Bureau of Meteorology of the last few days temperature and evaporation loss. Using that data with a few switch statements the script creates a JSON file with the timings to run the stations for that day. The range could be from not at all, right up to an extreme 40 minutes per station, which would only happen if there were maximum temperatures over 50 degrees for a whole week!</p>
+
+<p>The second script reads the JSON file to water the garden based on that schedule if it’s one of the permitted watering days.</p>
+
+<p><img src="/assets/images/from_wordpress/image-16.png" alt="" /></p>
+
+<p><sup>Two PowerShell scripts using BOM data to trigger irrigation run on the ESP32</sup></p>
+
+<p>Get BOM Data PowerShell script.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;#
+        .SYNOPSIS
+        Downloads BOM data and creates a JSON file.
+
+        .DESCRIPTION
+        This script creates a JSON file with irrigation timings to be invoked with another PowerShell script.
+        The script is designed to get the best irrigation timings based on the tempature in the last X days and some other factors like how often the irrigation would run per WaterCorp regulations.
+
+        .PARAMETER JSONFile
+        Specifies the file name.
+
+        .OUTPUTS
+        JSON File used for the other PowerShell script to schedule irrigation.
+
+        .EXAMPLE
+        C:\PS&gt; Invoke-IrrigationTimings.ps1 -JsonFile "payload.json"
+        File.txt
+
+        .NOTES
+        Requires access to the internet.
+#&gt;
+[CmdletBinding()]
+param (
+    [Parameter(Mandatory=$true)]
+    [string]$JSONFile
+)
+
+Write-Host "`r`nInvoke-IrrigationTimings.ps1 is running" -ForegroundColor Cyan 
+Write-Host "---`r`n" -ForegroundColor Cyan 
+
+$a = "http://www.bom.gov.au/climate/dwo/{0}/text/IDCJDW6111.{0}.csv"
+
+$datelast = (Get-Date).AddMonths(-1);
+$datelast = $datelast.ToString("yyyyMM");
+
+$date = Get-Date -f "yyyyMM"
+
+$combined = @{};
+
+$a -f $date
+$data = (Invoke-WebRequest -Uri ($a -f $date)).Content
+$combined = $data
+
+$a -f $datelast
+$data = (Invoke-WebRequest -Uri ($a -f $datelast)).Content
+$combined += "`r`n"
+$combined += $data
+
+$combined = $combined -replace "�", "" -split "`r`n" | Where-Object { $_ -like ",*" -and $_ -notlike ",`"*" } 
+
+$data = foreach ($point in $combined) {
+
+    $data = $point -split ","
+    New-Object psobject -Property @{
+        Date                  = [datetime]::Parse($data[1])
+        "Maximum temperature" = $data[3]
+        "Minimum temperature" = $data[2]
+        "Rainfall"            = $data[4]
+        "Evaporation"         = $data[5]
+    }
+}
+$data = $data | Sort-Object Date 
+
+$daystocheckdata = switch ( Get-Date -f "%M") {
+    { 11..12 -contains $_ -or 1..2 -contains $_ } { 5 }
+    { 9..10 -contains $_ -or 3..5 -contains $_ } { 7 }
+    { 6 -contains $_ -or 8 -contains $_} { 5 }
+    { 7 -contains $_ } { 0 }
+}
+Write-Host -ForegroundColor Cyan "`r`nHow many days to check =" $daystocheckdata 
+
+$data = ($data | Select-Object -Last ($daystocheckdata + 1)) | Select-Object -First $daystocheckdata
+
+$data | Format-Table
+
+$rainfall = ($data."Rainfall" | Measure-Object -Sum).sum
+$evaporation = ($data."Evaporation" | Measure-Object -Sum).sum
+$mintemp = ($data."Minimum temperature" | Measure-Object -Sum).sum
+$maxtemp = ($data."Maximum temperature" | Measure-Object -Sum).sum
+
+Write-Host "Rainfall =" ([math]::Round($rainfall, 2))
+Write-Host "Evaporation =" ([math]::Round($evaporation, 2))
+Write-Host -ForegroundColor Cyan "Sum of evaporation =" ([math]::Round($rainfall - $evaporation, 2)) "`r`n"
+Write-Host "Sum Min Temp =" $mintemp
+Write-Host "Sum Max Temp =" $maxtemp
+Write-Host -ForegroundColor Cyan "Sum of Temps =" ($mintemp + $maxtemp) "`r`n"
+
+$totalloss = ([math]::Round($rainfall - $evaporation, 2))
+$totaltemp = ($mintemp + $maxtemp)
+
+$calc1 = switch ($totaltemp) {
+    { 401..1000 -contains $_ } { 40 }
+    { 351..400 -contains $_ } { 30 }
+    { 301..350 -contains $_ } { 25 }
+    { 251..300 -contains $_ } { 20 }
+    { 201..250 -contains $_ } { 15 }
+    { 151..200 -contains $_ } { 10 }
+    { 0..150 -contains $_ } { 0 }
+}
+
+$calc2 = switch ($totalloss) {
+    { $_ -le -70 } { 40 }
+    { $_ -le -55 } { 30 }
+    { $_ -le -45 } { 25 }
+    { $_ -le -35 } { 20 }
+    { $_ -le -20 } { 15 }
+    { $_ -gt -20 -and $_ -lt 10 } { 10 }
+    { $_ -ge 10 } { 0 }
+}
+
+$calc = ([array]$calc1, $calc2 | Measure-Object -Maximum).Maximum
+$calc_int = [convert]::ToInt32($calc, 10)
+Write-Host -ForegroundColor Cyan "Recommended station watering =" $calc "minutes `r`n"
+
+$startTime = "07:00 AM"
+
+$arrayStations = @(1, 2, 3, 4)
+
+[int]$count = 0;
+$Object = @()
+
+foreach ($station in $arrayStations) {
+    $properties = @{
+        station = $station
+        time    = [datetime]::ParseExact($startTime, "hh:mm tt", $null).AddMinutes($calc_int * $count);
+        runtime = $calc_int
+    }
+    $count++;
+
+    $Object += New-Object psobject -Property $properties;
+}
+$json = $Object | ConvertTo-Json 
+
+$json
+$path = Join-Path $PSScriptRoot -ChildPath $JSONFile
+
+Write-Host "`r`nWriting JSON file..." $path
+
+$json | Set-Content $path
+
+Write-Host "`r`nScript completed."
+</code></pre></div></div>
+
+<h3 id="the-end-solution">The end solution</h3>
+
+<p>The below diagram gives a great overview of how the whole solution has come together over these last few weeks.</p>
+
+<p><img src="/assets/images/from_wordpress/image-17.png" alt="" /></p>
+
+<p><sup>The entire solution</sup></p>
+
+<h4 id="so-what-did-i-learn-through-this-project">So what did I learn through this project?</h4>
+
+<ul>
+  <li>
+    <p>There are a lot of great tutorials out there that will get you started. They definitely helped me so I’d like to think anyone with IT and some coding experience should be able to pick this up. Caution though, some examples do naughty things like unencrypted MQTT!</p>
+  </li>
+  <li>
+    <p>Arduino sketches are pretty easy to put together once you’ve got the IDE configured correctly. E.g. Libraries, example sketches etc. Much like anything, make sure your tooling works first, before doing anything big.</p>
+  </li>
+  <li>
+    <p>Azure IoT Hub is probably a bit too big for this project. I’m contemplating switching MQTT over to <a href="/2020/09/01/home-iot-part-1-the-start-of-the-journey/">Adafruit.io</a> as it would probably make integration with IFTTT a lot easier.</p>
+  </li>
+  <li>
+    <p>Make sure to check out <a href="http://homeassistant.io/">HomeAssistant</a> and <a href="https://esphome.io/">ESPHome</a> first as it may cater to all your needs. I learnt about these services mid-way through the project so I kept on the same course of doing my own sketch on the ESP32.</p>
+  </li>
+  <li>
+    <p>Think about your ESP32 as an API endpoint or as something that just listens to MQTT subscriptions to do an action. Having it be a front-end webserver became far too unwieldy after a while, especially with no over-the-air (OTA) updates.</p>
+  </li>
+  <li>
+    <p>IFTTT recently announced a <a href="https://ifttt.com/pro">paid pro model</a>, which limits what you can do with the free version. Consider and factor in running costs of your IoT solution, especially if actions can be triggered simply using on-prem scripts and cron jobs like I did.</p>
+  </li>
+</ul>
+
+<p>In final, I absolutely loved this challenge and learned so much on this journey. If you’re not sure about doing your first IoT project, I hope this series has helped you in jumping right in!</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Home IoT - Part 4 - The ‘final’ solution and the things I learned&amp;url=http://localhost:4000/2020/09/20/home-iot-part-4-the-final-solution-and-the-things-i-learned&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2020/09/20/home-iot-part-4-the-final-solution-and-the-things-i-learned"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

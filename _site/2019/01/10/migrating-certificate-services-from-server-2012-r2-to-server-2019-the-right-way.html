@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Migrating Certificate Services from Server 2012 R2 to Server 2019, the right way. | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Migrating Certificate Services from Server 2012 R2 to Server 2019, the right way. | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Migrating Certificate Services from Server 2012 R2 to Server 2019, the right way." />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="So firstly, it’s been about 4 years since my last blog post so I think an apology is in order. Honestly I thought the Ubuntu Server GuestVM I had this site running on was deleted years ago when I moved house. Turns out it wasn’t and I just had it mis-configured with the wrong DNS settings (Reverse Proxy; yada, yada, yada). I can’t believe this server has been here all this time with no one (including myself) ever seeing it, particularly when I’m always periodically looking at my Hyper-V console." />
+<meta property="og:description" content="So firstly, it’s been about 4 years since my last blog post so I think an apology is in order. Honestly I thought the Ubuntu Server GuestVM I had this site running on was deleted years ago when I moved house. Turns out it wasn’t and I just had it mis-configured with the wrong DNS settings (Reverse Proxy; yada, yada, yada). I can’t believe this server has been here all this time with no one (including myself) ever seeing it, particularly when I’m always periodically looking at my Hyper-V console." />
+<link rel="canonical" href="http://localhost:4000/2019/01/10/migrating-certificate-services-from-server-2012-r2-to-server-2019-the-right-way" />
+<meta property="og:url" content="http://localhost:4000/2019/01/10/migrating-certificate-services-from-server-2012-r2-to-server-2019-the-right-way" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/default-card.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-01-10T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/default-card.png" />
+<meta property="twitter:title" content="Migrating Certificate Services from Server 2012 R2 to Server 2019, the right way." />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2019-01-10T00:00:00+08:00","datePublished":"2019-01-10T00:00:00+08:00","description":"So firstly, it’s been about 4 years since my last blog post so I think an apology is in order. Honestly I thought the Ubuntu Server GuestVM I had this site running on was deleted years ago when I moved house. Turns out it wasn’t and I just had it mis-configured with the wrong DNS settings (Reverse Proxy; yada, yada, yada). I can’t believe this server has been here all this time with no one (including myself) ever seeing it, particularly when I’m always periodically looking at my Hyper-V console.","headline":"Migrating Certificate Services from Server 2012 R2 to Server 2019, the right way.","image":"http://localhost:4000/assets/images/default-card.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/01/10/migrating-certificate-services-from-server-2012-r2-to-server-2019-the-right-way"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2019/01/10/migrating-certificate-services-from-server-2012-r2-to-server-2019-the-right-way"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Migrating Certificate Services from Server 2012 R2 to Server 2019, the right way.</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  January 10, 2019
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  5 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#active-directory">active-directory</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#adcs">adcs</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#adds">adds</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#certificate-services">certificate-services</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#server">server</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#server-2019">server-2019</a></div>
+    <p>So firstly, it’s been about 4 years since my last blog post so I think an apology is in order. Honestly I thought the Ubuntu Server GuestVM I had this site running on was deleted years ago when I moved house. Turns out it wasn’t and I just had it mis-configured with the wrong DNS settings (Reverse Proxy; yada, yada, yada). I can’t believe this server has been here all this time with no one (including myself) ever seeing it, particularly when I’m always periodically looking at my Hyper-V console.</p>
+
+<p>Anyways, as the title suggests I’m currently in the midst of a server refresh, because you know, you have to do that everyone once and a while. This task in-particular is for Active Directory Certificate Services and moving it to Server 2019 Core.</p>
+
+<p>The server I’m moving from is Server 2012 R2 Core. So you can already get a sense the instructions that <a href="https://blogs.technet.microsoft.com/canitpro/2014/11/11/step-by-step-migrating-the-active-directory-certificate-service-from-windows-server-2003-to-2012-r2/">everyone uses</a> because it works with any edition of Window Server wont work here because yep, I don’t have a GUI. <a href="https://cloudblogs.microsoft.com/windowsserver/2018/07/05/server-core-and-server-with-desktop-which-one-is-best-for-you/">I shouldn’t need to tell you why in 2019, Server GUI is a bad, lazy way to so Server stuff</a>.</p>
+
+<p>Because I’m already running a SHA256 root CA the process is a bit more straight forward. If for whatever you’re still running SHA1, then I’d suggest move the Certificate Services database first <a href="https://blogs.technet.microsoft.com/askds/2015/10/26/sha1-key-migration-to-sha256-for-a-two-tier-pki-hierarchy/">then do the changes and certificate reissue for the new root.</a> <em>Tip: The GUI steps in this link are done command line below!</em></p>
+
+<p>So let’s start with building our new Server 2019. Get the operating installed and go ahead and join it to the domain. On top of those, install the like-for-like Certificate Services role from the old server on the new server but don’t configure them just yet! You can easily do a side-by-side comparison with running “Get-WindowsFeature” on the old and then just installing those roles with “Install-WindowsFeature” on the new.</p>
+
+<p><img src="/assets/images/from_wordpress/image.png" alt="" /></p>
+
+<p><sup>When your new server has the new roles, Server Manager will show it like this. Leave it as is.  </sup></p>
+
+<p>Moving onto the Root Certificate and Certificate Service Database backup phase now. Get onto your old server and start up an administrative PowerShell window (<em>TIP: just type powershell.exe</em>). Run the following PS cmdlets:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd C:\mkdir C:\CertificateServicesBackupBackup-CARoleService c:\CertificateServicesBackup  -Password (Read-Host -prompt "Password:" -AsSecureString) 
+</code></pre></div></div>
+
+<p>When prompted, provide a password that you’ll remember. You’ll need it later.</p>
+
+<p><a href="https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/manage/component-updates/ca-backup-and-restore-windows-powershell-cmdlets">https://docs.microsoft.com/en-us/windows-server/identity/ad-ds/manage/component-updates/ca-backup-and-restore-windows-powershell-cmdlets</a></p>
+
+<p>Okay, so backup of Certificate Root and Database done, now to backup some important registry settings. In the same PS window, lets backup the important registry now.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>reg export HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\CertSvc C:\CertificateServicesBackup\backup.reg
+</code></pre></div></div>
+
+<p>Great! Now take a copy of the C:\CertificateServicesBackup folder and keep it safe, maybe even on the new server. (<em>TIP: “xcopy /e /s C:\CertificateServicesBackup \\newserver.fqdn.com\c$”</em>)</p>
+
+<p>At this point we’ve got what we need, everything is backed up. Now for what people would think is the scary bit and that’s the removal of the old server! This is an important step because doing this later, not at all or after the migration will seriously screw up Active Directory… so don’t do that. Let’s remove it now and be done with it.</p>
+
+<p>Safely remove the old certficate server roles with the “Remove-WindowsFeature” cmdlet. Once that’s done, remove the server from domain.</p>
+
+<p>Now it’s onto the new. With Server Manger or Windows Admin Center lets now click that link to complete the set up we said we would never touch. Tricked you! Go through the wizard until you get to this screen…</p>
+
+<p><img src="/assets/images/from_wordpress/image-1.png" alt="" /></p>
+
+<p><sup>Look familiar? It should, because we’re following the same step as the everyone uses blog!  </sup></p>
+
+<p>As the <a href="https://blogs.technet.microsoft.com/canitpro/2014/11/11/step-by-step-migrating-the-active-directory-certificate-service-from-windows-server-2003-to-2012-r2/">everyone uses</a> blog article suggests, we’re going to provide an existing certificate and private key (protected by password). That certificate is the one you backed up earlier and the password you remembered.</p>
+
+<p>Now, continue through the wizard with all the defaults, including the questions about the database to use as we’ll restore over the new database with the backed up data. When the wizard is done, jump onto the server and launch an administrative PowerShell window again. This time we’re running the restore PS cmdlet.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Stop-Service certsvc  Restore-CARoleService c:\CertificateServicesBackup -Password (read-host -prompt "Password:" -AsSecureString) -Force 
+</code></pre></div></div>
+
+<p>Again the password is the one we remembered. With that done, we just needed to import the registry settings in. Before you do this, I suggest you open the .reg file in notepad.exe and just check to make sure there is no FQDN’s, Hostnames or IP’s that need updating. If they do, so that before import the registry file by running the below.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>reg import HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\CertSvc C:\CertificateServicesBackup\backup.reg
+</code></pre></div></div>
+
+<p>At this point you’re basically done! Start the service and make sure it comes up.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Start-Service certsvcGet-EventLog (for errors)
+</code></pre></div></div>
+
+<p>Your last task is to re-issue your certificate templates into Active Directory. Easy to just do this with the certsrv.msc management console go to “Certificate Templates (right click) &gt; New &gt; Certificate Template to issue”</p>
+
+<p><img src="/assets/images/from_wordpress/image-2.png" alt="" /></p>
+
+<p><sup>The last step! Hooray!</sup></p>
+
+<p>That’s it from me, have a splendid day!</p>
+
+<p>Cheers,</p>
+
+<p>Trent</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Migrating Certificate Services from Server 2012 R2 to Server 2019, the right way.&amp;url=http://localhost:4000/2019/01/10/migrating-certificate-services-from-server-2012-r2-to-server-2019-the-right-way&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2019/01/10/migrating-certificate-services-from-server-2012-r2-to-server-2019-the-right-way"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home IoT - Part 3 - What about my garden irrigation system | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Home IoT - Part 3 - What about my garden irrigation system | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Home IoT - Part 3 - What about my garden irrigation system" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!" />
+<meta property="og:description" content="This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!" />
+<link rel="canonical" href="http://localhost:4000/2020/09/19/home-iot-part-3-what-about-my-garden-irrigation-system" />
+<meta property="og:url" content="http://localhost:4000/2020/09/19/home-iot-part-3-what-about-my-garden-irrigation-system" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/image-12.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-19T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/image-12.png" />
+<meta property="twitter:title" content="Home IoT - Part 3 - What about my garden irrigation system" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2020-09-19T00:00:00+08:00","datePublished":"2020-09-19T00:00:00+08:00","description":"This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!","headline":"Home IoT - Part 3 - What about my garden irrigation system","image":"http://localhost:4000/assets/images/from_wordpress/image-12.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/09/19/home-iot-part-3-what-about-my-garden-irrigation-system"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2020/09/19/home-iot-part-3-what-about-my-garden-irrigation-system"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Home IoT - Part 3 - What about my garden irrigation system</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  September 19, 2020
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  9 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#arduino">arduino</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#css">css</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#esp32">esp32</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#html-2">html-2</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#iot">iot</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#js">js</a></div>
+    <p>This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!</p>
+
+<ul>
+  <li>
+    <p>Part 1 – <a href="/2020/09/01/home-iot-part-1-the-start-of-the-journey/">The start of the IoT journey</a></p>
+  </li>
+  <li>
+    <p>Part 2 – <a href="/2020/09/03/home-iot-part-2-putting-it-together-and-integration/">Putting it together and integration</a></p>
+  </li>
+  <li>
+    <p>Part 3 – This part</p>
+  </li>
+  <li>
+    <p>Part 4 – <a href="/2020/09/20/home-iot-part-4-the-final-solution-and-the-things-i-learned/">The ‘final’ solution and the things I learned</a></p>
+  </li>
+</ul>
+
+<h3 id="i-was-about-to-fall-asleep-and-then-it-hit-me">I was about to fall asleep, and then it hit me</h3>
+
+<p>So after a late night just completing <a href="/2020/09/03/home-iot-part-2-putting-it-together-and-integration/">part 2</a>, I was laying in bed when my mind was wondering of all the things I could do with my ESP32. <em>Hrmm, could I convince my key stakeholder to wire up the lights in the house to this controller? Nah, she was pretty clear with the rule, nothing inside the house. Hrmm, what is there outside the house?</em> My mind went blank as I started to drift to sleep when I forgot about watering the pots in the patio. <em>Crap! I’ll do it tomorrow.</em></p>
+
+<p>Just as I’m about to nod off, it hits me like a train. <em>WAIT FOR A SECOND, I hate that darn Android app for my Bluetooth garden irrigation system</em>. <em>The ESP32 has a Bluetooth radio! Maybe I can make the same calls to replace the app and water those pots? Maybe I can say to Google, hey, water my garden for 10 minutes.</em> I was excited about the challenge! Okay, after some long, painful nights, I have successfully got my ESP32 making Bluetooth Low Energy (BLE) calls to the Holman BTX-8 Outdoor Garden Irrigation System. For details on the Holman unit, it’s just one that you can find at your local <a href="https://www.bunnings.com.au/holman-btx8-8-station-bluetooth-controller_p0011579">Bunnings store</a>.</p>
+
+<p>Here’s how I IoT enabled my garden irrigation system.</p>
+
+<h3 id="capturing-ble-packets-on-my-android-phone">Capturing BLE packets on my Android Phone</h3>
+
+<p>So to start with this, I first needed to capture the BLE calls the phone was sending and receiving. If I was to have any chance of replacing the app, I first needed to know what the app does. Turning on developer mode and capturing HCI logs was relatively straight forward on my Samsung S9 phone. I followed this <a href="https://www.bluetooth.com/blog/debugging-bluetooth-with-an-android-app/\">guide</a>) and was able to get the logs into WireShark where I could start seeing the important parts that make up Bluetooth client to server communication like Service UUID and the Characteristic UUID.</p>
+
+<p><img src="/assets/images/from_wordpress/image-11.png" alt="" /></p>
+
+<p><sup>WireShark view of the logs</sup></p>
+
+<p>Not long after finding the right write characteristic, I could see the hexadecimal calls being made. Thankfully this write characteristic didn’t look to be based on a read value of something else, so the challenge was simplified a bit. Being honest though, this step took a while, with lots of trial and error, calling to stop and start stations so I could pick up the patterns in the captured logs. I could see numbers changing, but I was only 90% sure I had the logic right. At this point, I felt I had a chance of not making a bad write characteristic to the Holman device which could, though unlikely, scramble its brain. To test locally on my PC first before going all-in on coding it on the ESP32, I ended up getting an app called <a href="https://github.com/IanSavchenko/BleLab">Bluetooth LE Lab</a>. This app was great. I recommended it to anyone trying to reverse engineer Bluetooth calls.</p>
+
+<p><img src="/assets/images/from_wordpress/image-12.png" alt="" /></p>
+
+<p><sup>Bluetooth BLE Lab App</sup></p>
+
+<p>After some fun figuring out some of the other values, I concluded that there was a 10-byte hex value that made the Holman device do something. This value broken down looks like:</p>
+
+<ul>
+  <li>Turns off all the solenoids.
+    <ul>
+      <li>00 00 00 00 00 00 00 00 00 00 -</li>
+    </ul>
+  </li>
+  <li>To run a station (open a solenoid)
+    <ul>
+      <li>
+        <p>01 (run)</p>
+      </li>
+      <li>
+        <p>00 (station 1, starting at 0)</p>
+      </li>
+      <li>
+        <p>13 (19 hrs in hex)</p>
+      </li>
+      <li>
+        <p>12 (18 mins in hex)</p>
+      </li>
+      <li>
+        <p>00 00 00 00 00 00 (used for scheduling a station at day/time, instead of immediately running it)</p>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>To state the obvious because it would have been silly, I did not run a station for 19 hours and 18 minutes! During the testing and validation, I also decided that I didn’t need to schedule the station to run as I had a plan to manage those smarts outside of the controller itself.</p>
+
+<h3 id="coding-it-up-in-the-esp32">Coding it up in the ESP32</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+// The remote service we wish to connect to.
+static BLEUUID serviceUUID("C521F000-0D70-4D4F-X-X");
+// The characteristic of the remote service we are interested in.
+static BLEUUID charUUID("0000F006-0000-1000-X-X");
+
+static boolean doConnect = false;
+static boolean connected = false;
+static boolean doScan = false;
+static BLERemoteCharacteristic* pRemoteCharacteristic;
+static BLEAdvertisedDevice* myDevice;
+
+class MyClientCallback : public BLEClientCallbacks {
+    void onConnect(BLEClient* pclient) {
+    }
+
+    void onDisconnect(BLEClient* pclient) {
+      connected = false;
+      Serial.println("onDisconnect");
+    }
+};
+
+void connectToServer() {
+  Serial.print("BLE - Forming a connection to ");
+  Serial.println(myDevice-&gt;getAddress().toString().c_str());
+
+  BLEClient*  pClient  = BLEDevice::createClient();
+  Serial.println("BLE - Created client.");
+
+  pClient-&gt;setClientCallbacks(new MyClientCallback());
+
+  // Connect to the remove BLE Server.
+  pClient-&gt;connect(myDevice);  // if you pass BLEAdvertisedDevice instead of address, it will be recognized type of peer device address (public or private)
+  Serial.println("BLE - Client connected.");
+
+  delay(1000);
+
+  // Obtain a reference to the service we are after in the remote BLE server.
+  BLERemoteService* pRemoteService = pClient-&gt;getService(serviceUUID);
+  if (pRemoteService == nullptr) {
+    Serial.print("BLE - Failed to find our service UUID: ");
+    Serial.println(serviceUUID.toString().c_str());
+    connected = false;
+  }
+  Serial.println("BLE - Found our service");
+
+  pRemoteCharacteristic = pRemoteService-&gt;getCharacteristic(charUUID);
+  if (pRemoteCharacteristic == nullptr) {
+    Serial.print("BLE - Failed to find our characteristic UUID: ");
+    Serial.println(charUUID.toString().c_str());
+    connected = false;
+  }
+  Serial.println("BLE - Found our characteristic");
+  connected = true;
+}
+
+class MyAdvertisedDeviceCallbacks: public BLEAdvertisedDeviceCallbacks {
+    void onResult(BLEAdvertisedDevice advertisedDevice) {
+      Serial.print("BLE - Advertised Device found: ");
+      Serial.println(advertisedDevice.toString().c_str());
+
+      if (advertisedDevice.haveServiceUUID() &amp;&amp; advertisedDevice.isAdvertisingService(serviceUUID)) {
+        BLEDevice::getScan()-&gt;stop();
+
+        Serial.println("BLE - Correct device found.");
+        myDevice = new BLEAdvertisedDevice(advertisedDevice);
+        doConnect = true;
+        doScan = true;
+      }
+    }
+};
+
+bool makeBLECall(uint8_t* value)
+{
+  char dataString[30] = {0};
+  sprintf(dataString, "%02X %02X %02X %02X%", value[0], value[1], value[2], value[3]);
+  String output = dataString;
+
+  Serial.print("BLE ");
+  Serial.println(output);
+
+  if (connected) {
+    Serial.println(" BLE - Call made.");
+    pRemoteCharacteristic-&gt;writeValue(value, 4);
+    return true;
+  }
+  return false;
+}
+
+void BLEEnable(){
+  if (BLEDevice::getInitialized() == false){
+    esp_bt_controller_mem_release(ESP_BT_MODE_CLASSIC_BT);
+    BLEDevice::init("Cortana Design IoT");
+    BLEDevice::setPower(ESP_PWR_LVL_P9);
+
+    Serial.println("BLE - Enabling.");
+    BLEScan* pBLEScan = BLEDevice::getScan();
+    pBLEScan-&gt;setAdvertisedDeviceCallbacks(new MyAdvertisedDeviceCallbacks());
+    pBLEScan-&gt;setActiveScan(true);
+    pBLEScan-&gt;start(5, false);
+
+    Serial.println("BLE - Delaying for 3 seconds.");
+    delay(3000);
+
+    if (doConnect == true) {
+      connectToServer();
+      doConnect = false;
+    }
+
+    Serial.println("BLE - Delaying for 3 seconds.");
+    delay(3000);
+  }
+}
+
+void BLEDisable(){
+  if (BLEDevice::getInitialized() == true){
+    Serial.println("BLE - Disabling.");
+    BLEDevice::deinit(false);
+  }
+}
+
+void setup() {
+      server.on("/irrigation", HTTP_GET, [] (AsyncWebServerRequest *request) {
+    String inputMessage0;
+    String inputParam0;
+    String inputMessage1;
+    String inputParam1;
+    String inputMessage2;
+    String inputParam2;
+    String inputMessage3;
+    String inputParam3;
+    if (request-&gt;hasParam(PARAM_INPUT_3) &amp; request-&gt;hasParam(PARAM_INPUT_4) &amp; request-&gt;hasParam(PARAM_INPUT_5) &amp; request-&gt;hasParam(PARAM_INPUT_6)) {
+      inputMessage0 = request-&gt;getParam(PARAM_INPUT_3)-&gt;value();
+      inputParam0 = PARAM_INPUT_3;
+      inputMessage1 = request-&gt;getParam(PARAM_INPUT_4)-&gt;value();
+      inputParam1 = PARAM_INPUT_4;
+      inputMessage2 = request-&gt;getParam(PARAM_INPUT_5)-&gt;value();
+      inputParam2 = PARAM_INPUT_5;
+      inputMessage3 = request-&gt;getParam(PARAM_INPUT_6)-&gt;value();
+      inputParam3 = PARAM_INPUT_6;
+
+      uint8_t value[4] = {inputMessage0.toInt(),(inputMessage1.toInt()-1),inputMessage2.toInt(),inputMessage3.toInt()};
+      if (makeBLECall(value)){
+        request-&gt;send(/200, "text/plain", "OK");
+      }
+      else{
+        request-&gt;send(400, "text/plain", "Something went wrong.");
+      }
+    }
+    else {
+      inputMessage0 = "BLE - Incorrect message sent.";
+      inputParam0 = "none";
+      Serial.println(inputMessage0);
+      request-&gt;send(400, "text/plain", "Bad Request");
+    }
+  });
+}
+</code></pre></div></div>
+
+<p>When it came to coding this up, I learnt a tough lesson about the importance of keeping your ESP32 codebase small, efficient and optimised as much as possible. It turns out the BLE library for ESP32 is quite big, and when trying to run that with WiFi, a WebServer and MQTT subscription and publishing to Azure IoT Hub, I was overflowing on the 4mb memory of the controller. To solve this, I had to change the memory partitions, but this meant that over the air (OTA) updates were now no longer possible.</p>
+
+<p>This change made updating my C++ code and the webserver inside it only possible over USB, which made progress tedious and a lot slower. I also ran into another issue that as I kept moving the ESP32 back to where I wanted it to be, it couldn’t see or scan for the Holman device. This issue was quite problematic to troubleshoot as I wasn’t able to see the serial output as it wasn’t near my PC. But when I brought it back which subsequently meant it was nearer to the Holman device (located outside on the office PC wall), it worked fine! It took a good day to realise I needed to bump up the power gain settings on the ESP32 to reach the distance I wanted it to.</p>
+
+<p>With a few changes to the webserver, I now had the irrigation controlled via this much simpler interface, which actually works. <em>Did I mention the Holman app is horrible?!</em> Though this webserver was still only on the network, so I also created a new subscriber in Azure IoT too.</p>
+
+<p>It’s now possible, through the ESP32, to control my Bluetooth irrigation system from anywhere in the world!</p>
+
+<p><img src="/assets/images/from_wordpress/image-13.png" alt="" /></p>
+
+<p><sup>ESP32 Webserver with the irrigation controls</sup></p>
+
+<p><img src="/assets/images/from_wordpress/image-14.png" alt="" /></p>
+
+<p><sup>Integration of the irrigation using IFTTT, the WebHook + Runbook and Azure IoT Hub</sup></p>
+
+<p>In the last blog post, I’ll share the final solution and recap some learnings that I’ve taken away from this project. Stay tuned!</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Home IoT - Part 3 - What about my garden irrigation system&amp;url=http://localhost:4000/2020/09/19/home-iot-part-3-what-about-my-garden-irrigation-system&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2020/09/19/home-iot-part-3-what-about-my-garden-irrigation-system"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

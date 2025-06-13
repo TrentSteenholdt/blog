@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Is DevOps the plight of those who can do both Infrastructure (Ops) and Development? | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Is DevOps the plight of those who can do both Infrastructure (Ops) and Development? | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Is DevOps the plight of those who can do both Infrastructure (Ops) and Development?" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="There is something that is bothering me, something I want to share… I look at the industry today and I worry that the divide between Developers and Operators doesn’t appear to be closing. If anything, it appears to be expanding and I’m lost in the middle of it!" />
+<meta property="og:description" content="There is something that is bothering me, something I want to share… I look at the industry today and I worry that the divide between Developers and Operators doesn’t appear to be closing. If anything, it appears to be expanding and I’m lost in the middle of it!" />
+<link rel="canonical" href="http://localhost:4000/2019/09/19/is-devops-the-plight-of-those-who-can-do-both-infrastructure-ops-and-development" />
+<meta property="og:url" content="http://localhost:4000/2019/09/19/is-devops-the-plight-of-those-who-can-do-both-infrastructure-ops-and-development" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/default-card.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-09-19T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/default-card.png" />
+<meta property="twitter:title" content="Is DevOps the plight of those who can do both Infrastructure (Ops) and Development?" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2019-09-19T00:00:00+08:00","datePublished":"2019-09-19T00:00:00+08:00","description":"There is something that is bothering me, something I want to share… I look at the industry today and I worry that the divide between Developers and Operators doesn’t appear to be closing. If anything, it appears to be expanding and I’m lost in the middle of it!","headline":"Is DevOps the plight of those who can do both Infrastructure (Ops) and Development?","image":"http://localhost:4000/assets/images/default-card.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/09/19/is-devops-the-plight-of-those-who-can-do-both-infrastructure-ops-and-development"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2019/09/19/is-devops-the-plight-of-those-who-can-do-both-infrastructure-ops-and-development"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Is DevOps the plight of those who can do both Infrastructure (Ops) and Development?</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  September 19, 2019
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  4 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#devops">devops</a></div>
+    <p>There is something that is bothering me, something I want to share… I look at the industry today and I worry that the divide between Developers and Operators doesn’t appear to be closing. If anything, it appears to be expanding and I’m lost in the middle of it!</p>
+
+<p>For those who haven’t, I highly recommending reading the <a href="https://www.amazon.com/Phoenix-Project-DevOps-Helping-Business/dp/0988262592">Phoenix Project</a>. It’s an amazing book that talks about IT in general, DevOps and setting up a business for success. It’s a book that gave me a lot to think about and gave me a good understanding of where I live in the world of IT.</p>
+
+<p>So full disclaimer, I am at times a Brent. For those who haven’t read the book, Brent is a perfectionist and someone that must pull all the levers on everything he can get his hands on. The fact that the names Trent and Brent are similar is one thing, but the nickname of Trenticles which was donned on me many moons ago does imply that I have a fingers in a lot of pies. Some will say that’s me taking on too much or unable to say no but I must divulge, I think it’s because I’m simply misunderstood. Here is my story…</p>
+
+<p>My journey in IT started like most, on a help-desk. This help-desk was actually a one man shop where I was responsible for looking after a public high school in Perth. I did that job because I in fact graduated from that very high school and was causing a lot of pain for the Managed Service Provider they had looking after their systems (hacking forward proxies were fun!). I did that job for about a year and when an opportunity came up in sleepy Fremantle (6 mins from home, a dream for 19 year old me), I moved to Notre Dame University to join their IT team.</p>
+
+<p>It wasn’t long at Notre Dame (9 months) before I was one of the third tier System Administrators. I was given the chance of a life time and was taken under the wings of someone amazing that taught me the ropes of being an amazing System Administrator. Learning the importance of doing IT for the businesses needs, being responsible with costs, being security mindful and thinking about automation first on everything I do.</p>
+
+<blockquote>
+  <p>Automation first… If I could automate my entire life, I would consider it!</p>
+</blockquote>
+
+<p>Unlike what the industry would consider as a ‘conventional’ System Administrator, with an automation first mindset, I learnt super early to code. It was something I never thought I’d need and it certainly wasn’t in my job JD’s as a skill I needed, but without any doubt, it has changed the way I work for the better. It’s helped me build some awesome solutions that I’m very proud of which without code, I’d still be tiring to put together. I even loathe myself like any other developer when I look back at some of the code I put together.</p>
+
+<p>Some examples of learning to develop.</p>
+
+<ul>
+  <li>Fully automated deployments of <a href="https://docs.microsoft.com/en-us/azure/architecture/vdc/">Azure Virtual Datacentres</a> for numerous business in Australia.</li>
+  <li>Built a <a href="https://www.microsoft.com/en-au/p/fuelcheckwa/9nblggh07zlz?activetab=pivot:overviewtab">FuelWatch app for Windows Phone and Windows PC</a> (I miss my Windows Phone).</li>
+  <li>Created a product called the <a href="https://matchofficialsystem.com/login">Match Official System</a> (Self assessment and learning system for match officials, used by ~650 users a month).</li>
+  <li>Helping fellow Cricket umpires with a <a href="https://www.linkedin.com/posts/trentsteenholdt_electron-javascript-developerlife-activity-6572496487132041216-AkXx">TV Umpire Decision Player Application</a>.</li>
+</ul>
+
+<p>So here we are with the skills of both Infrastructure and Development it’s a complicated mess. We’re seen by some as both (fingers in too many pies), neither (he can’t help us here) or siloed into one (he’s only a developer).</p>
+
+<p>So I have to ask, what are we in this DevOps world where we have both ‘Dev’ and ‘Ops’ knowledge? Is there a role for us or are we in a lost void? I would love to hear what others have to say about this?!</p>
+
+<p><em>My thoughts right now.</em> I’m a fraudulent Developer, wanting to continue to automate my applications and infrastructure code. I feel the power to automate this is resting in the hands of Developers, and not both!</p>
+
+<p>Some good reads:</p>
+
+<ul>
+  <li><a href="https://www.theserverside.com/tip/Are-your-days-as-a-SysAdmin-numbered-Learn-to-program-automated-systems">https://www.theserverside.com/tip/Are-your-days-as-a-SysAdmin-numbered-Learn-to-program-automated-systems</a></li>
+  <li><a href="https://devops.com/still-fighting-problems-devops-15-years-ago/">https://devops.com/still-fighting-problems-devops-15-years-ago/</a></li>
+</ul>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Is DevOps the plight of those who can do both Infrastructure (Ops) and Development?&amp;url=http://localhost:4000/2019/09/19/is-devops-the-plight-of-those-who-can-do-both-infrastructure-ops-and-development&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2019/09/19/is-devops-the-plight-of-those-who-can-do-both-infrastructure-ops-and-development"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

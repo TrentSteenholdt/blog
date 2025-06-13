@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azure Networking Changes are coming! Are you ready for Private Subnets? | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Azure Networking Changes are coming! Are you ready for Private Subnets? | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Azure Networking Changes are coming! Are you ready for Private Subnets?" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="Azure’s landscape is evolving, and with the announcement of the retirement of default route behaviour in Azure Virtual Networks, set for September 2025, the impact will resonate across the board. From those local fish and chip shop owners who rely on cloud services for their daily business operations to the tech giants who juggle enormous amounts of data daily, everyone must brace for this pivotal shift." />
+<meta property="og:description" content="Azure’s landscape is evolving, and with the announcement of the retirement of default route behaviour in Azure Virtual Networks, set for September 2025, the impact will resonate across the board. From those local fish and chip shop owners who rely on cloud services for their daily business operations to the tech giants who juggle enormous amounts of data daily, everyone must brace for this pivotal shift." />
+<link rel="canonical" href="http://localhost:4000/2023/11/27/azure-networking-changes-are-coming-are-you-ready-for-private-subnets" />
+<meta property="og:url" content="http://localhost:4000/2023/11/27/azure-networking-changes-are-coming-are-you-ready-for-private-subnets" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/explicit-outbound-options.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-11-27T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/explicit-outbound-options.png" />
+<meta property="twitter:title" content="Azure Networking Changes are coming! Are you ready for Private Subnets?" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2023-11-27T00:00:00+08:00","datePublished":"2023-11-27T00:00:00+08:00","description":"Azure’s landscape is evolving, and with the announcement of the retirement of default route behaviour in Azure Virtual Networks, set for September 2025, the impact will resonate across the board. From those local fish and chip shop owners who rely on cloud services for their daily business operations to the tech giants who juggle enormous amounts of data daily, everyone must brace for this pivotal shift.","headline":"Azure Networking Changes are coming! Are you ready for Private Subnets?","image":"http://localhost:4000/assets/images/from_wordpress/explicit-outbound-options.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2023/11/27/azure-networking-changes-are-coming-are-you-ready-for-private-subnets"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2023/11/27/azure-networking-changes-are-coming-are-you-ready-for-private-subnets"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Azure Networking Changes are coming! Are you ready for Private Subnets?</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  November 27, 2023
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  2 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#azure">azure</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#networking">networking</a></div>
+    <p>Azure’s landscape is evolving, and with the announcement of the retirement of default route behaviour in Azure Virtual Networks, set for September 2025, the impact will resonate across the board. From those local fish and chip shop owners who rely on cloud services for their daily business operations to the tech giants who juggle enormous amounts of data daily, everyone must brace for this pivotal shift.</p>
+
+<hr />
+
+<h2 id="the-inevitable-change">The Inevitable Change</h2>
+
+<p><img src="/assets/images/from_wordpress/image-32.png" alt="Networking options post September 2025. Credit - Microsoft Docs" /></p>
+
+<p>The change in default route behaviour signifies a move away from the implicit, less secure, and unpredictable means of outbound connectivity. It’s like Microsoft have finally caved into the pressure set on it for years by the way traffic is handled in AWS! This move reflects a wider Microsoft commitment at Ignite 2023 to enhancing security and network manageability. Read more about this update on Azure’s official <a href="https://azure.microsoft.com/en-us/updates/default-outbound-access-for-vms-in-azure-will-be-retired-transition-to-a-new-method-of-internet-access/">update page</a>.</p>
+
+<h2 id="whos-affected">Who’s Affected?</h2>
+
+<p>Virtually every organisation utilising Azure Virtual Networks must take heed. The diversity of businesses affected underscores the importance of Azure’s network services in today’s cloud-reliant economy. For the years I’ve been working in the Azure space, nearly every organisation as allowed outbound network access with little control.</p>
+
+<h2 id="preparing-for-transition">Preparing for Transition</h2>
+
+<p>It’s time to assess your cloud environments and consider the most suitable options for transitioning to a more secure networking setup. Although the private subnet feature is currently in public preview and not recommended for production workloads yet, it’s an opportune time to start planning. For more information, visit the <a href="https://azure.microsoft.com/en-us/updates/public-preview-private-subnet/">public preview page</a>.</p>
+
+<h2 id="a-personal-recommendation">A Personal Recommendation</h2>
+
+<p>Directly attaching an Azure Public IP to a virtual machine is generally not advisable due to the potential for dangerous ingress traffic flows. Instead, steering towards solutions that provide secure and controlled access is paramount; such as the other two paths suggested by Microsoft.</p>
+
+<p>NAT gateways emerge as a leading solution based on the Microsoft approach, offering a blend of security, scalability, and manageability. For those without a clear strategy, it’s an opportune time to consult with networking teams or external experts who can help in that space.</p>
+
+<h2 id="start-now">Start Now</h2>
+
+<p>The 2025 deadline may seem distant, but it’s crucial to act promptly. Transitioning network configurations and ensuring compliance with new security models will require time and deliberate planning. Begin your journey by understanding the <a href="https://learn.microsoft.com/en-us/azure/virtual-network/ip-services/default-outbound-access">default outbound access</a> on Microsoft’s documentation site.</p>
+
+<p>In summary, the changes to Azure’s networking are not just a future concern but an immediate call to action. Organisations must begin preparations now to navigate this change successfully, ensuring their cloud environments remain robust, secure, and efficient in the evolving digital landscape.</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Azure Networking Changes are coming! Are you ready for Private Subnets?&amp;url=http://localhost:4000/2023/11/27/azure-networking-changes-are-coming-are-you-ready-for-private-subnets&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2023/11/27/azure-networking-changes-are-coming-are-you-ready-for-private-subnets"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

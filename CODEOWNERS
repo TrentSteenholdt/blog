@@ -1,0 +1,6 @@
+# CODEOWNERS are used in Branch Protection to enforce review
+# Owners can be teams, users and emails
+# Order is important, later rules take precedence
+
+# Default Owners
+* @TrentSteenholdt

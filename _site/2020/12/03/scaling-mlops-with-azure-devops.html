@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scaling MLOps with Azure DevOps | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Scaling MLOps with Azure DevOps | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Scaling MLOps with Azure DevOps" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="This was originally posted here while working for Telstra Purple." />
+<meta property="og:description" content="This was originally posted here while working for Telstra Purple." />
+<link rel="canonical" href="http://localhost:4000/2020/12/03/scaling-mlops-with-azure-devops" />
+<meta property="og:url" content="http://localhost:4000/2020/12/03/scaling-mlops-with-azure-devops" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/teams-3.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-03T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/teams-3.png" />
+<meta property="twitter:title" content="Scaling MLOps with Azure DevOps" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2020-12-03T00:00:00+08:00","datePublished":"2020-12-03T00:00:00+08:00","description":"This was originally posted here while working for Telstra Purple.","headline":"Scaling MLOps with Azure DevOps","image":"http://localhost:4000/assets/images/from_wordpress/teams-3.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/12/03/scaling-mlops-with-azure-devops"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2020/12/03/scaling-mlops-with-azure-devops"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Scaling MLOps with Azure DevOps</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  December 3, 2020
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  8 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#agile">agile</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#devops">devops</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#machine-learning">machine-learning</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#mlops">mlops</a></div>
+    <p><strong><em>This was originally posted <a href="https://purple.telstra.com/blog/scaling-mlops-with-azure-devops">here while working for Telstra Purple</a>.</em></strong></p>
+
+<p>As organisations build more custom and tailored solutions to solve their most complex business problems, the scalability of supporting platforms and systems are always tested. Unfortunately, when it comes to Azure DevOps, they are tested in ways that contradict best practices and the correct way to scale an organisation. This article will hopefully bring some light into how, with the MLOps methodology, you can scale an Azure DevOps organisation effectively without causing significant double up!</p>
+
+<h2 id="what-is-azure-devops-best-practice-for-scaling">What is Azure DevOps best practice for scaling?</h2>
+
+<p>First, let’s talk about the repeated problem in the IT industry. It’s common, almost folklore, that when a new IT development team starts a new initiative or program of work, they go to their Azure DevOps organisation and click the big giant “New Project” button. <em>That is a no-no!</em> As <a href="https://docs.microsoft.com/en-us/azure/devops/organizations/projects/about-projects?view=azure-devops">Microsoft Docs</a> best practice suggests, the best way to scale an organisation is to consider projects in Azure DevOps as Business Units to your organisation. What does that mean exactly? Well, a business unit could be your entire IT division, or an essential function like Machine Learning, all in one project! From that one project, you then split it up with multiple teams to the various vertical and horizontal pieces of work they are tasked with.</p>
+
+<p>The one project per business unit approach comes with several benefits. These include:</p>
+
+<ul>
+  <li>
+    <p>Supporting various teams in adopting <a href="https://docs.microsoft.com/en-us/azure/devops/boards/plans/agile-culture?view=azure-devops">Agile practices</a> that are universal and consistent. E.g. All teams have the same cadence, ceremonies and structure to stories or backlog items.</p>
+  </li>
+  <li>
+    <p>Allowing for better reporting. Azure DevOps Projects are the highest possible level metrics are surfaced before you would need to start building custom reporting solutions. For C-Level executives, building dashboards and leveraging PowerBI at a Project level is an excellent way for them to understand and track all the work in progress.</p>
+  </li>
+  <li>
+    <p>Allowing for more organic, cross-team collaboration. Teams still using their own boards, can share stories amongst other area-paths (teams) in their business unit without having to duplicate the item.</p>
+  </li>
+</ul>
+
+<p>Here are a couple of screenshots of a good and bad Azure DevOps organisation set up. First is a bad example organisation, with lots of small projects for niche things but no real consistency of what and who should have access to them.</p>
+
+<p><a href="/assets/images/from_wordpress/image-25-1024x684-1.png"><img src="/assets/images/from_wordpress/image-25-1024x684-1.png" alt="" /></a></p>
+
+<p>Then here is a good example organisation, where they have used business units. The CIO of the IT division can get a visualisation of all things happening in IT by going into their project, and each team within that has their own board, repositories and so on. Then with the Finance System project, the CFO has the same level of visibility into the various teams managing it.</p>
+
+<p><a href="/assets/images/from_wordpress/t.png"><img src="/assets/images/from_wordpress/t-1024x684.png" alt="" /></a></p>
+
+<h2 id="taking-best-practice-and-applying-it-to-mlops">Taking best practice and applying it to MLOps</h2>
+
+<p>Now with that understanding of the best practice, let’s think about how that works in MLOps. MLOps is defined as the collaboration between data scientists and operation professionals. These two teams play very distinct roles in making MLOps happen, and sometimes it can be complicated with multiple data scientists teams working with the single group of operation professionals. So, how do we scale this without giving data scientists access to say production deployment pipelines but still have the ability to collaborate?</p>
+
+<p>The best way to manage this is to have multiple teams for each group of the MLOps makeup and then use custom role-based access controls (RBAC) in an Azure DevOps Project. A custom RBAC solution would then limit data scientist teams from controlling pipelines, repositories or other artefacts they shouldn’t need to touch.</p>
+
+<h3 id="example-configuration">Example Configuration</h3>
+
+<p>Let’s hypothetically have two separate data scientist teams, building their own unique models with just the one centralised operations team, as shown in this diagram below.</p>
+
+<p><a href="/assets/images/from_wordpress/image-26-1024x454-1.png"><img src="/assets/images/from_wordpress/image-26-1024x454-1.png" alt="" /></a></p>
+
+<p>To get them collaborating in a highly governed manner, the first thing to do is to <a href="https://docs.microsoft.com/en-us/azure/devops/organizations/settings/add-teams?view=azure-devops&amp;tabs=preview-page">create them all a team</a> inside the same Azure DevOps Project. When you are creating your teams, consider the following:</p>
+
+<ul>
+  <li>
+    <p>Make sure to select the checkbox to create an associated an area-path. This is important for teams to share stories and backlog items between boards.</p>
+  </li>
+  <li>
+    <p>For the data scientist teams, grant them no permission as we’ll do custom RBAC. For the centralised Ops Team, giving them the default Contributor permission rights is suitable.</p>
+  </li>
+</ul>
+
+<p><a href="/assets/images/from_wordpress/Create-Team.png"><img src="/assets/images/from_wordpress/Create-Team.png" alt="" /></a></p>
+
+<p>With your teams created, now create the supporting artefacts in Azure DevOps they’ll use. That’s things like <a href="https://docs.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops#:~:text=In%20the%20Project%20area%20in,a%20README%20and%20create%20a%20.">repositories</a>, <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&amp;tabs=java%2Ctfs-2018-2%2Cbrowser">pipelines</a> and <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&amp;tabs=yaml">service connections</a>. I recommend keeping these artefacts at a 1:1 ratio with a team as it allows for better governance with the custom RBAC model, but nothing is stopping you from creating more than one for a team.</p>
+
+<p><a href="/assets/images/from_wordpress/teams-2.png"><img src="/assets/images/from_wordpress/teams-2-1024x488.png" alt="" /></a></p>
+
+<p>With all these artefacts created, you now need to grant the data scientist teams explicit permission to these artefacts. By default, without any permission, these teams have no access to any of the artefacts you’ve just created. The centralised Ops team do because they are <strong>Contributors</strong>, but that’s a good thing as their job will be to make sure governance is kept up not only in the ML environments but in Azure DevOps too.</p>
+
+<p>To make the data scientist teams have just enough permission to build out and train models (continuous integration/ continuous testing), complete the following for each of them:</p>
+
+<p><strong>TIP:</strong> <em><a href="https://dev.azure.com/YourOrgName/YourProjectName">https://dev.azure.com/YourOrgName/YourProjectName</a> needs to be replaced with your details. E.g. <a href="https://dev.azure.com/Contoso/MLOps">https://dev.azure.com/Contoso/MLOps</a></em></p>
+
+<ol>
+  <li>
+    <p><strong>For Azure DevOps access.</strong> On <a href="https://dev.azure.com/YourOrgName/YourProjectName/\settings/permissions">https://dev.azure.com/YourOrgName/YourProjectName/\settings/permissions</a>, open up their team and set the <strong>View project-level Information</strong> to <strong>Allow</strong>. All other settings should be left as default/ <strong>Not Set</strong>.</p>
+  </li>
+  <li>
+    <p><strong>For Git Repository access</strong>. On <a href="https://dev.azure.com/YourOrgName/YourProjectName/\settings/repositories">https://dev.azure.com/YourOrgName/YourProjectName/\settings/repositories</a>, select the repository created for the data scientist team then go to the <strong>Permissions</strong> tab. In the main pane area, grant the data scientist team the same level of permissions as the Contributor permission has.</p>
+  </li>
+  <li>
+    <p><strong>For Pipeline access</strong>. On <a href="https://dev.azure.com/YourOrgName/YourProjectName/\build?view=folders">https://dev.azure.com/YourOrgName/YourProjectName/\build?view=folders</a>, create folders for all your teams, including the Ops team for organisational reasons. Then on the folder for the data scientist team, select the vertical ellipses, and then <strong>manage security</strong> where once again you’ll assign the same level of permissions as the Contributor has.</p>
+  </li>
+  <li>
+    <p><strong>For Azure Board access</strong>. Lastly, but most importantly, on <a href="https://dev.azure.com/YourOrgName/YourProjectName">https://dev.azure.com/YourOrgName/YourProjectName</a> /\settings/work-team?\a=areas, select your data scientist team in the top menu, then select the ellipses of the area-path and select <strong>Security</strong>. In the pop-up menu, once again, you’ll grant that data scientist team the same permissions as the Contributor permission set.</p>
+  </li>
+</ol>
+
+<p><a href="/assets/images/from_wordpress/ml1.png"><img src="/assets/images/from_wordpress/ml1-1024x629.png" alt="" /></a></p>
+
+<p>Once you have done this for each data scientist team, you have set up a custom RBAC model in your Azure DevOps Project, as shown in the diagram below.</p>
+
+<p><a href="/assets/images/from_wordpress/teams-3.png"><img src="/assets/images/from_wordpress/teams-3-1024x504.png" alt="" /></a></p>
+
+<ul>
+  <li>
+    <p>Green lines denote paths that permission has been granted, and</p>
+  </li>
+  <li>
+    <p>Red lines show paths that can’t be accessed.  </p>
+  </li>
+</ul>
+
+<p>This custom RBAC model makes it impossible for either data scientist team to see the Ops team or other data scientist team repositories or pipelines. Ideal and very suitable if the data scientist teams work independently of one another and need to safeguard any sensitive data sets they may be working on. As only an example, your organisation’s needs may be different, so I encourage you to implement an MLOps custom RBAC model that works best for you.</p>
+
+<p>I hope this blog article helps illustrate that you can, and should, have just one Azure DevOps Project for the MLOps methodology and the business unit function that it is. Doing so brings so many benefits, and I guarantee, that over time with several machine learning model deployments, getting design consistency with something over multiple projects would be a nightmare. It would also make tracking change volumes, success/failure rates and deployment times harder too, something your C-Level executives won’t like when they need to validate their MLOps return on investment and total cost ownership!</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Scaling MLOps with Azure DevOps&amp;url=http://localhost:4000/2020/12/03/scaling-mlops-with-azure-devops&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2020/12/03/scaling-mlops-with-azure-devops"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

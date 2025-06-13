@@ -1,0 +1,51 @@
+<article>
+    <div id="content">
+        <p class="text-muted">This content is protected. Please enter the password to view it.</p>
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <input id="password" type="password" class="form-control" placeholder="Enter password" />
+            </div>
+            <div class="col-auto">
+                <button onclick="decrypt()" class="btn btn-primary">Decrypt</button>
+            </div>
+        </div>
+        <p id="errmsg" class="text-danger mt-2"></p>
+    </div>
+</article>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.2/dist/purify.min.js" crossorigin="anonymous"></script>
+<script>
+    function decrypt() {
+        var protectedContent = "{{ page.protected_content }}";
+        var password = document.getElementById('password').value;
+
+        var payload = protectedContent.split("|");
+        var iv = payload[0];
+        var hmac = payload[1];
+        var cipherText = payload[2];
+
+        var passphraseDgst = CryptoJS.SHA256(password).toString();
+        var decryptedhmac = CryptoJS.HmacSHA256(cipherText, CryptoJS.enc.Hex.parse(passphraseDgst)).toString().trim();
+        if (CryptoJS.enc.Base64.parse(hmac).toString() === decryptedhmac) {
+            var decrypted = CryptoJS.AES.decrypt(
+                { ciphertext: CryptoJS.enc.Base64.parse(cipherText) },
+                CryptoJS.enc.Hex.parse(passphraseDgst),
+                { iv: CryptoJS.enc.Base64.parse(iv) }
+            );
+            var content = CryptoJS.enc.Utf8.stringify(decrypted);
+            document.getElementById('content').innerHTML = content;
+        } else {
+            document.getElementById('errmsg').innerHTML = "Wrong password";
+        }
+    }
+
+    var passwordInput = document.getElementById('password');
+    passwordInput.addEventListener("keyup", function (event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            decrypt();
+        }
+    })
+</script>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Windows 10 1511 update on WSUS error (Retry Loop) | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Windows 10 1511 update on WSUS error (Retry Loop) | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Windows 10 1511 update on WSUS error (Retry Loop)" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="A quick post today for those who may be struggling with WSUS and Windows 10 1511 updates. It turns out there is one missing component/ step in order to get WSUS to deliver these new type of updates." />
+<meta property="og:description" content="A quick post today for those who may be struggling with WSUS and Windows 10 1511 updates. It turns out there is one missing component/ step in order to get WSUS to deliver these new type of updates." />
+<link rel="canonical" href="http://localhost:4000/2015/12/22/window-10-1511-update-on-wsus-error-retry-loop" />
+<meta property="og:url" content="http://localhost:4000/2015/12/22/window-10-1511-update-on-wsus-error-retry-loop" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/default-card.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-12-22T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/default-card.png" />
+<meta property="twitter:title" content="Windows 10 1511 update on WSUS error (Retry Loop)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2015-12-22T00:00:00+08:00","datePublished":"2015-12-22T00:00:00+08:00","description":"A quick post today for those who may be struggling with WSUS and Windows 10 1511 updates. It turns out there is one missing component/ step in order to get WSUS to deliver these new type of updates.","headline":"Windows 10 1511 update on WSUS error (Retry Loop)","image":"http://localhost:4000/assets/images/default-card.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2015/12/22/window-10-1511-update-on-wsus-error-retry-loop"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2015/12/22/window-10-1511-update-on-wsus-error-retry-loop"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Windows 10 1511 update on WSUS error (Retry Loop)</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  December 22, 2015
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  1 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#windows-10">windows-10</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#windows-update">windows-update</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#wsus">wsus</a></div>
+    <p>A quick post today for those who may be struggling with WSUS and Windows 10 1511 updates. It turns out there is one missing component/ step in order to get WSUS to deliver these new type of updates.</p>
+
+<p>Lets assume you are the administrator, knowing enough about WSUS to have already completed the following:</p>
+
+<ol>
+  <li>On the WSUS server(s), running Windows Server 2012 or later, installed the required manual update. <a href="https://support.microsoft.com/en-us/kb/3095113">https://support.microsoft.com/en-us/kb/3095113</a></li>
+  <li>On the same WSUS server(s), made appropriate changes to see Upgrade classification patches from the Windows catalog.</li>
+  <li>Have approve the appropriate Windows 10 1511 Upgrade patches and have them successfully download onto the WSUS server(s).</li>
+  <li>Attempted a client-side Windows Update.</li>
+</ol>
+
+<p>On step 4, non-1511 Windows 10 client are seeing this error with a simply retry button.</p>
+
+<blockquote>
+  <p>There were problems installing some updates, but we’ll try again later. If you keep seeing this and want to search the web or contact support for information, this may help:</p>
+</blockquote>
+
+<p>The solution comes from a bit of digging in the WindowsUpdate.log/ Get-WindowsUpdateLog. It appears that the Windows update client is unable to find a file with the suffix *.esd. For me this was 6F5CDF12827FAE0E37739F3222603EAF38808H12.esd.</p>
+
+<p>Looking at the WSUS server, and in particular the IIS component of WSUS I could see this file was in fact in the directory so the client should get it… Hrmm, let’s try the direct URL to the file, ah! 404! That’s no good.</p>
+
+<p>Let’s check the MIME types to see if this file type can be downloaded from IIS. Nope! IIS is unable to dish out the file because *.esd files are a new MIME type that is not configured in IIS.</p>
+
+<p>Okay, I’ll quickly add this and give it another go.</p>
+
+<p><a href="/assets/images/from_wordpress/2.png"><img src="/assets/images/from_wordpress/2.png" alt="2" /></a></p>
+
+<p>Sure enough success!</p>
+
+<p><a href="/assets/images/from_wordpress/1.png"><img src="/assets/images/from_wordpress/1.png" alt="1" /></a></p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Windows 10 1511 update on WSUS error (Retry Loop)&amp;url=http://localhost:4000/2015/12/22/window-10-1511-update-on-wsus-error-retry-loop&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2015/12/22/window-10-1511-update-on-wsus-error-retry-loop"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

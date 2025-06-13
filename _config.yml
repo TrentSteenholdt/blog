@@ -1,0 +1,71 @@
+highlighter: rouge
+title: Cortana Design
+description:
+author: Cortana Design
+permalink: /:year/:month/:day/:title
+url: https://blog.cortanadesign.com.au
+locale: en_AU
+logo: /assets/images/CortanaDesign-logo.svg
+
+sass:
+  style: :compressed
+  sass_dir: _sass
+
+timezone: Australia/Perth
+
+defaults:
+  - scope:
+      path: "_posts"
+      type: "posts"
+      categories: "published"
+    values:
+      future: false
+      image: /assets/images/default-card.png
+
+collections:
+  protected:
+
+social:
+  name: Cortana Design
+  links:
+    - "https://twitter.com/CortanaDesign"
+    - "https://www.linkedin.com/company/CortanaDesign/"
+
+plugins:
+  - jekyll-paginate-v2
+  - jekyll-auto-authors
+  - jekyll-seo-tag
+
+pagination:
+  enabled: true
+  per_page: 9
+  permalink: "/page:num/"
+  sort_field: "date"
+  filters:
+    - category: ["drafts"]
+  filter_condition: "exclude"
+  trail:
+    before: 2
+    after: 2
+
+autopages:
+  enabled: true
+
+  categories:
+    enabled: false
+  tags:
+    enabled: false
+  collections:
+    enabled: false
+
+  authors:
+    enabled: true
+    data: "_data/authors.yaml"
+    exclude: ["example1", "example2"] # Force skip autopages for author/teammate even if they have posts assigned
+    layouts:
+      - "author.html"
+    title: ":author"
+    permalink: "/author/:author/"
+    slugify:
+      mode: "default"
+      cased: true

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exchange 2007 and 2013 environment - Public Folders on 2007 "Get-PublicFolder" cmdlet fails. | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Exchange 2007 and 2013 environment - Public Folders on 2007 “Get-PublicFolder” cmdlet fails. | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Exchange 2007 and 2013 environment - Public Folders on 2007 “Get-PublicFolder” cmdlet fails." />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="Recently I was tasked with a Public Folder migration project moving the public folders from Exchange 2007 to 2013. This particular company had been on Exchange 2013 for pretty much everything except Public Folders for well over a year which provides a good segue into this issue! When the administrators tried to manage Public Folders on Exchange 2007 they’re were getting no where! Both the Exchange 2007 Public Folders Management Console would not load any of the public folders (500+ of them) and the Get-PublicFolder cmdlet would fail with:" />
+<meta property="og:description" content="Recently I was tasked with a Public Folder migration project moving the public folders from Exchange 2007 to 2013. This particular company had been on Exchange 2013 for pretty much everything except Public Folders for well over a year which provides a good segue into this issue! When the administrators tried to manage Public Folders on Exchange 2007 they’re were getting no where! Both the Exchange 2007 Public Folders Management Console would not load any of the public folders (500+ of them) and the Get-PublicFolder cmdlet would fail with:" />
+<link rel="canonical" href="http://localhost:4000/2015/10/22/exchange-2007-and-2013-environment-public-folders-on-2007-get-publicfolder-cmdlet-fails" />
+<meta property="og:url" content="http://localhost:4000/2015/10/22/exchange-2007-and-2013-environment-public-folders-on-2007-get-publicfolder-cmdlet-fails" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/default-card.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2015-10-22T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/default-card.png" />
+<meta property="twitter:title" content="Exchange 2007 and 2013 environment - Public Folders on 2007 “Get-PublicFolder” cmdlet fails." />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2015-10-22T00:00:00+08:00","datePublished":"2015-10-22T00:00:00+08:00","description":"Recently I was tasked with a Public Folder migration project moving the public folders from Exchange 2007 to 2013. This particular company had been on Exchange 2013 for pretty much everything except Public Folders for well over a year which provides a good segue into this issue! When the administrators tried to manage Public Folders on Exchange 2007 they’re were getting no where! Both the Exchange 2007 Public Folders Management Console would not load any of the public folders (500+ of them) and the Get-PublicFolder cmdlet would fail with:","headline":"Exchange 2007 and 2013 environment - Public Folders on 2007 “Get-PublicFolder” cmdlet fails.","image":"http://localhost:4000/assets/images/default-card.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2015/10/22/exchange-2007-and-2013-environment-public-folders-on-2007-get-publicfolder-cmdlet-fails"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2015/10/22/exchange-2007-and-2013-environment-public-folders-on-2007-get-publicfolder-cmdlet-fails"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Exchange 2007 and 2013 environment - Public Folders on 2007 "Get-PublicFolder" cmdlet fails.</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  October 22, 2015
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  6 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#exchange">exchange</a></div>
+    <p>Recently I was tasked with a Public Folder migration project moving the public folders from Exchange 2007 to 2013. This particular company had been on Exchange 2013 for pretty much everything except Public Folders for well over a year which provides a good segue into this issue! When the administrators tried to manage Public Folders on Exchange 2007 they’re were getting no where! Both the Exchange 2007 Public Folders Management Console would not load any of the public folders (500+ of them) and the Get-PublicFolder cmdlet would fail with:</p>
+
+<p><strong>There is no existing PublicFolder that matches the following Identity: ‘\’. Please make sure that you specified the correct PublicFolder Identity and that you have the necessary permissions to view PublicFolder.</strong></p>
+
+<p>Yikes! Well that’s no good! So how is it possible that PublicFolders are online and working for end users yet the administrators can’t manage them! Let the investigation begin. Funnily enough “Get-PublicFolderStatistics” still worked!</p>
+
+<p>After talking to the engineers previously tasked with the migration to Exchange 2013 work, it was when the last remaining mailbox database in Exchange 2007 was removed that Public Folders management broke. This immidiately led me to believe either one of two things:</p>
+
+<ol>
+  <li>It’s a permission issue with the administrative accounts they’re using.</li>
+  <li>Something isn’t quite right with objects in AD referencing Public Folders in Exchange 2007.</li>
+</ol>
+
+<p>After a quick look around I confirmed that while the permissions for managing Exchange infrastructure was a bit all over the place, it wouldn’t have been the root cause. Their accounts had the right permissions to Organizational Management and/or the Public Folders Owner security group in AD.</p>
+
+<p>Taking a dive in AD with ADSI/ LDP (If you’re using ADSI, connect with a non-domain admin account to prevent accidental changes) I could again see things were a bit messy with two administrative groups, but everything was in order. The Folder Hierarchy CN was there and its references were correct.</p>
+
+<p>Hitting TechNet with searches on “Exchange 2007” lead me to issues around the HomeMDB being nulled when the last mailbox database is removed for each Exchange 2007 server for the Microsoft System Attendant object. Sure enough this attribute was null so I immediately tested by creating a new fresh Exchange 2007 mailbox database to see if that was the issue. HomeMBD was instantly populated for the Microsoft System Attendant object when I created the databases but alas, still the above issue!</p>
+
+<p>At this point I was really clutching at straws and therefore started checking the ‘interwebs’ and found all sorts of whacky recommendations and fixes! There are some shockers out there and it does scare me that someone with no background experience in Exchange/ AD could follow them and make a real mess of their environment. Sadly, you can’t help those who can’t help themselves!</p>
+
+<p>None of them really fitted well with the issue I had and/ or made practical sense to even action. So with that in mind I made a call to Microsoft.</p>
+
+<p>After a bit of coming and going as you do with Microsoft tier 1 support the suggestion was to populate the Exchange 2013 servers Microsoft System Attendant object with a HomeMDB attribute to the Exchange 2007 mailbox databases. As you can appreciate with my comments already above I found this a bit baffling and refuted it. However that didn’t stop me from looking at it a bit more…</p>
+
+<p>On one of the Exchange 2007 Servers I got going the troubleshooting tool and selected trace control. From there I proceeded beyond the warning messages about running traces when only recommended by an Exchange support engineer.</p>
+
+<p><a href="/assets/images/from_wordpress/3.png"><img src="/assets/images/from_wordpress/3.png" alt="3" /></a></p>
+
+<p>Leaving all the trace file configuration pretty much default, I did want to capture only Store trace errors (similar to <a href="https://support.microsoft.com/en-us/kb/971878">https://support.microsoft.com/en-us/kb/971878</a>) so I made this selection. For trace types I selected all of them.</p>
+
+<p>For the trace tags, I took a stab in the dark a couple of times to see what I wanted to check against. After much trial and error I got it down to three which found me the issue…. These were:</p>
+
+<ul>
+  <li>tagDSError</li>
+  <li>tagInformation</li>
+  <li>tagRpcIntfLogon</li>
+</ul>
+
+<p><a href="/assets/images/from_wordpress/2.png"><img src="/assets/images/from_wordpress/2.png" alt="2" /></a></p>
+
+<p><a href="/assets/images/from_wordpress/1.png"><img src="/assets/images/from_wordpress/1.png" alt="1" /></a></p>
+
+<p>While the trace was running I then opened up an Exchange 2007 management shell and ran “Get-PublicFolder” to let it fail. Stopping the trace and running the report on the trace highlighted my issue!</p>
+
+<h2 id="-">-–</h2>
+
+<p><strong>tagDSError - Mailbox /o=Y/ou=Exchange Administrative Group (FYDIBOHF23SPDLT)/cn=Configuration/cn=Servers/cn=XXX/cn=Microsoft System Attendant, does not have either a Home MDB or a GUID</strong></p>
+
+<p><strong>tagInformation - EcConnect2: User /o=Y/ou=Exchange Administrative Group (FYDIBOHF23SPDLT)/cn=Configuration/cn=Servers/cn=XXX/cn=Microsoft System Attendant, does not have a Home MDB/GUID attribute</strong></p>
+
+<p><strong>tagRpcIntfLogon -Connect as /o=Y/ou=Exchange Administrative Group (FYDIBOHF23SPDLT)/cn=Configuration/cn=Servers/cn=XX/cn=Microsoft System Attendant failed; connect flags were 0x1</strong></p>
+
+<p><strong>-–
+-</strong></p>
+
+<p>XXX CN was an Exchange 2013 server! Aha, Microsoft tier 1 support are onto something. Okay, well I don’t believe them about the Exchange 2007 mailbox database though! So I thought what’s stopped me putting in an Exchange 2013 mailbox database, at least that way the information would be accurate and not legacy!</p>
+
+<p>So I jumped into ADSI edit this time as Domain Admin and found one of the mailbox databases in Exchange 2013. This is under ADSI -&gt; Configuration -&gt; Services -&gt; Microsoft Exchange -&gt; Administrative Groups -&gt; Exchange Administrative Groups -&gt; Databases. I copied out the DN attribute and then went to each of the Exchange 2013 servers and set the homeMBD as that DN. Note that if you have multiple AD sites to pick a mailbox database local to that sites server.</p>
+
+<p>I gave it 15mins to replicate in AD (that’s the replication time for this client) and run the “Get-PublicFolder” cmdlet and sure enough… it worked! Now we’re ready to migrate to Exchange 2013!</p>
+
+<p>That’s it for now, until next time.</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Exchange 2007 and 2013 environment - Public Folders on 2007 "Get-PublicFolder" cmdlet fails.&amp;url=http://localhost:4000/2015/10/22/exchange-2007-and-2013-environment-public-folders-on-2007-get-publicfolder-cmdlet-fails&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2015/10/22/exchange-2007-and-2013-environment-public-folders-on-2007-get-publicfolder-cmdlet-fails"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

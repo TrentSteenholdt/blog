@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creating an Interactive Activity Board for My Daughter Using an ESP32 Dev Board | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Creating an Interactive Activity Board for My Daughter Using an ESP32 Dev Board | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Creating an Interactive Activity Board for My Daughter Using an ESP32 Dev Board" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="Introduction" />
+<meta property="og:description" content="Introduction" />
+<link rel="canonical" href="http://localhost:4000/2023/03/27/creating-an-interactive-activity-board-for-my-daughter-using-an-esp32-dev-board" />
+<meta property="og:url" content="http://localhost:4000/2023/03/27/creating-an-interactive-activity-board-for-my-daughter-using-an-esp32-dev-board" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/Screenshot-2023-03-27-110513.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-03-27T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/Screenshot-2023-03-27-110513.png" />
+<meta property="twitter:title" content="Creating an Interactive Activity Board for My Daughter Using an ESP32 Dev Board" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2023-03-27T00:00:00+08:00","datePublished":"2023-03-27T00:00:00+08:00","description":"Introduction","headline":"Creating an Interactive Activity Board for My Daughter Using an ESP32 Dev Board","image":"http://localhost:4000/assets/images/from_wordpress/Screenshot-2023-03-27-110513.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2023/03/27/creating-an-interactive-activity-board-for-my-daughter-using-an-esp32-dev-board"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2023/03/27/creating-an-interactive-activity-board-for-my-daughter-using-an-esp32-dev-board"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Creating an Interactive Activity Board for My Daughter Using an ESP32 Dev Board</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  March 27, 2023
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  17 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#esp32">esp32</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#iot">iot</a></div>
+    <h2 id="introduction">Introduction</h2>
+
+<p>In this blog post, I will be sharing my experience in creating an interactive activity board for my daughter, Leila. The activity board is built using an ESP32 dev board, allowing me to wire buttons to various GPIO pins and play custom sounds like Elmo and other fun audio clips. In addition, I’ve created a separate Single Page Application (SPA) web app that allows me to interact with the sounds remotely via HTTP requests. Let’s dive into the details!</p>
+
+<p>Before diving into the technical aspects of the code, let me share a bit about the process of building the activity board itself. I wanted to create something durable and fun for my daughter Leila to interact with. To achieve this, I turned to <a href="https://www.bunnings.com.au/">Bunnings</a> for materials like wood, screws, and paint to create the base and structure of the board. <a href="https://www.jaycar.com.au/">Jaycar</a> proved the perfect source for electronic components, such as buttons, LEDs, and capacitors for the ESP32. With all the materials and components in hand, I embarked on a DIY journey to create an engaging and interactive activity board that would bring a smile to my daughter’s face.</p>
+
+<p><a href="/assets/images/from_wordpress/Screenshot-2023-03-27-110513.png"><img src="/assets/images/from_wordpress/Screenshot-2023-03-27-110513.png" alt="" /></a></p>
+
+<p><sup>The initial activity board</sup></p>
+
+<h2 id="using-an-esp32-dev-board">Using an ESP32 Dev Board</h2>
+
+<p>The heart of this project is an <a href="https://www.espressif.com/en/products/devkits">ESP32 dev board</a>, which offers various features such as Wi-Fi and Bluetooth connectivity, low power consumption, and a large number of GPIO pins. The ESP32 is a powerful microcontroller that is perfect for creating interactive IoT projects like this activity board.</p>
+
+<h2 id="wiring-buttons-to-the-appropriate-gpio-pins">Wiring Buttons to the Appropriate GPIO Pins</h2>
+
+<p>The activity board consists of several buttons wired to different GPIO pins on the ESP32 dev board. In the code, I defined the following pins for each button:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#define BUTTON_A_PIN  21
+#define BUTTON_B_PIN  12
+#define BUTTON_C_PIN  13
+#define BUTTON_D_PIN  17
+#define BUTTON_E_PIN  23
+</code></pre></div></div>
+
+<p>Each button is configured to trigger a specific set of sounds or functions. For example, button A plays sounds related to Elmo, Teletubbies, and Formula, while button B plays sounds related to my own interactions with Leila.</p>
+
+<h2 id="adding-custom-sounds-with-xtdacaudio-library">Adding Custom Sounds with XT\DAC\Audio Library</h2>
+
+<p>To play the custom sounds, I used the <a href="https://www.youtube.com/watch?v=IthsYBmWk00">XT\DAC\Audio</a> library. This library enables playing WAV files stored in the ESP32’s flash memory. I converted the desired sound clips to the required format and stored them as constant unsigned char arrays in separate header files. In the code, I’ve assigned each sound to a corresponding name and duration (in seconds) within struct NameAndSeconds.</p>
+
+<p>To get the sound files in the right format, all I did was use <a href="https://www.audacityteam.org/">Audacity</a>, convert all the sound files to Mono and convert them to a bitrate of about 8000. Then I simply opened the WAV files in a <a href="https://mh-nexus.de/en/hxd/">HEX editor</a> and copied that to the unsigned char header files.</p>
+
+<h2 id="interacting-with-the-activity-board-via-a-spa-web-app">Interacting with the Activity Board via a SPA Web App</h2>
+
+<p><a href="/assets/images/from_wordpress/aaaa.png"><img src="/assets/images/from_wordpress/aaaa.png" alt="" /></a></p>
+
+<p><sup>SPA with the sound selection</sup></p>
+
+<p>I wanted to have the ability to interact with the activity board remotely, so I created a Single Page Application (SPA) web app that communicates with the ESP32 through HTTP requests. The ESP32 acts as a web server and responds to HTTP GET requests sent by the web app.</p>
+
+<p>The server handles requests for playing sounds. When the web app sends a request to “/sound”, the server parses the sound name and duration parameters and plays the corresponding sound on the activity board.</p>
+
+<p>I don’t include the code to the SPA in this blog post as I use it for things like my irrigation system and gate/garage door controls. <a href="/2020/09/01/home-iot-part-1-the-start-of-the-journey/">Check out that blog series here to learn</a> more about the SPA development.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>This project demonstrates creating a fun and interactive activity board for your child using an ESP32 dev board, buttons, and custom sounds. The addition of a SPA web app allows you to control the activity board remotely and adds another layer of interactivity. This activity board has brought joy and entertainment to my daughter Leila, and I hope it inspires you to create similar projects for your loved ones. Happy coding!</p>
+
+<p><strong><em>Code for the ESP32. You’ll need to change a few lines to make it work in your network.</em></strong></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#include "teletubbies.h"</span>
+<span class="c">#include "trentbooboo.h"</span>
+<span class="c">#include "formula.h"</span>
+<span class="c">#include "elmo.h"</span>
+<span class="c">#include "trentgigi.h"</span>
+<span class="c">#include "trentleila.h"</span>
+<span class="c">#include "mareegigi.h"</span>
+<span class="c">#include "mareeleila.h"</span>
+<span class="c">#include "mama.h"</span>
+<span class="c">#include "nanna.h"</span>
+<span class="c">#include "pop.h"</span>
+<span class="c">#include "mareebooboo.h"</span>
+<span class="c">#include "telephone.h"</span>
+<span class="c">#include "mareemobile.h"</span>
+<span class="c">#include "trentmobile.h"</span>
+<span class="c">#include "daddy.h"</span>
+<span class="c">#include "XT_DAC_Audio.h"</span>
+<span class="c">#include "Button2.h"</span>
+<span class="c">#include "WiFi.h"</span>
+<span class="c">#include "ESPAsyncWebServer.h"</span>
+
+struct NameAndSeconds <span class="o">{</span>
+    String name<span class="p">;</span>
+    double seconds<span class="p">;</span>
+<span class="o">}</span><span class="p">;</span>
+
+const NameAndSeconds ArrayButtonA[] <span class="o">=</span> <span class="sb">`</span><span class="o">{</span><span class="sb">`</span><span class="o">{</span><span class="s2">"elmo"</span>, 28<span class="o">}</span>, <span class="o">{</span><span class="s2">"teletubbies"</span>, 15.5<span class="o">}</span>, <span class="o">{</span><span class="s2">"formula"</span>, 19<span class="o">}}</span><span class="p">;</span>
+const NameAndSeconds ArrayButtonB[] <span class="o">=</span> <span class="sb">`</span><span class="o">{</span><span class="sb">`</span><span class="o">{</span><span class="s2">"trentgigi"</span>, 0.7<span class="o">}</span>, <span class="o">{</span><span class="s2">"trentleila"</span>, 1<span class="o">}</span>, <span class="o">{</span><span class="s2">"trentbooboo"</span>, 0.7<span class="o">}</span>, <span class="o">{</span><span class="s2">"daddy"</span>, 0.7<span class="o">}}</span><span class="p">;</span>
+const NameAndSeconds ArrayButtonC[] <span class="o">=</span> <span class="sb">`</span><span class="o">{</span><span class="sb">`</span><span class="o">{</span><span class="s2">"mareegigi"</span>, 0.7<span class="o">}</span>, <span class="o">{</span><span class="s2">"mareeleila"</span>, 0.7<span class="o">}</span>, <span class="o">{</span><span class="s2">"mareebooboo"</span>, 1<span class="o">}</span>, <span class="o">{</span><span class="s2">"mama"</span>, 1<span class="o">}}</span><span class="p">;</span>
+const NameAndSeconds ArrayButtonD[] <span class="o">=</span> <span class="sb">`</span><span class="o">{</span><span class="sb">`</span><span class="o">{</span><span class="s2">"trentmobile"</span>, 2.8<span class="o">}</span>, <span class="o">{</span><span class="s2">"mareemobile"</span>, 2.8<span class="o">}</span>, <span class="o">{</span><span class="s2">"telephone"</span>, 7<span class="o">}</span>, <span class="o">{</span><span class="s2">"nanna"</span>, 2<span class="o">}</span>, <span class="o">{</span><span class="s2">"pop"</span>, 1.7<span class="o">}}</span><span class="p">;</span>
+
+<span class="c">#define BUTTON_A_PIN  21</span>
+<span class="c">#define BUTTON_B_PIN  12</span>
+<span class="c">#define BUTTON_C_PIN  13</span>
+<span class="c">#define BUTTON_D_PIN  17</span>
+<span class="c">#define BUTTON_E_PIN  23</span>
+
+Button2 buttonA, buttonB, buttonC, buttonD, buttonE<span class="p">;</span>
+
+<span class="c">#define LED_PIN_1 18 </span>
+<span class="c">#define LED_PIN_2 16</span>
+<span class="c">#define BLINK_INTERVAL_1 1000  // interval at which to blink LED (milliseconds)</span>
+<span class="c">#define BLINK_INTERVAL_2  500   // interval at which to blink LED 2 (milliseconds)</span>
+
+int ledState_1 <span class="o">=</span> HIGH<span class="p">;</span>  
+int ledState_2 <span class="o">=</span> HIGH<span class="p">;</span>  
+unsigned long previousMillis_1 <span class="o">=</span> 0<span class="p">;</span>   // will store last <span class="nb">time </span>LED 1 was updated
+unsigned long previousMillis_2 <span class="o">=</span> 0<span class="p">;</span>   // will store last <span class="nb">time </span>LED 2 was updated
+
+// Replace with your network credentials
+const char<span class="k">*</span> ssid <span class="o">=</span> <span class="s2">"IoT SSID"</span><span class="p">;</span>
+const char<span class="k">*</span> password <span class="o">=</span> <span class="s2">"Password"</span><span class="p">;</span>
+unsigned long previousMillis <span class="o">=</span> 0<span class="p">;</span>   // Wifi checker
+
+const char<span class="k">*</span> PARAM_INPUT_1 <span class="o">=</span> <span class="s2">"sound"</span><span class="p">;</span>
+const char<span class="k">*</span> PARAM_INPUT_2 <span class="o">=</span> <span class="s2">"seconds"</span><span class="p">;</span>
+const char<span class="k">*</span> PARAM_INPUT_3 <span class="o">=</span> <span class="s2">"isOn"</span><span class="p">;</span>
+unsigned long interval <span class="o">=</span> 30000<span class="p">;</span>
+
+String soundWebServerName<span class="p">;</span>
+double soundWebServerSeconds<span class="p">;</span>
+
+boolean soundWebServer <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+boolean flashingLed <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+// Create AsyncWebServer object on port 80
+AsyncWebServer server<span class="o">(</span>80<span class="o">)</span><span class="p">;</span>
+
+XT_DAC_Audio_Class DacAudio<span class="o">(</span>/25,0<span class="o">)</span><span class="p">;</span>  
+
+void WiFiEnable<span class="o">(){</span>
+  Serial.println<span class="o">(</span><span class="s2">"WIFI - Enabling."</span><span class="o">)</span><span class="p">;</span>
+  // Connect to Wi-Fi
+  WiFi.begin<span class="o">(</span>ssid, password<span class="o">)</span><span class="p">;</span>
+  <span class="k">while</span> <span class="o">(</span>WiFi.status<span class="o">()</span> <span class="o">!=</span> WL_CONNECTED<span class="o">)</span> <span class="o">{</span>
+    delay<span class="o">(</span>1000<span class="o">)</span><span class="p">;</span>
+    Serial.println<span class="o">(</span><span class="s2">"Connecting to the network"</span><span class="o">)</span><span class="p">;</span>
+  <span class="o">}</span>
+
+  // Print ESP32 Local IP Address
+  Serial.print<span class="o">(</span><span class="s2">"NETWORK IP: "</span><span class="o">)</span><span class="p">;</span>
+  Serial.println<span class="o">(</span>WiFi.localIP<span class="o">())</span><span class="p">;</span>
+<span class="o">}</span>
+
+void WiFiDisable<span class="o">(){</span>
+  Serial.println<span class="o">(</span><span class="s2">"WIFI - Disabling."</span><span class="o">)</span><span class="p">;</span>
+  WiFi.mode<span class="o">(</span>WIFI_OFF<span class="o">)</span><span class="p">;</span>
+<span class="o">}</span>
+
+NameAndSeconds getRandomPair<span class="o">(</span>const NameAndSeconds<span class="k">*</span> const array, const int array_size<span class="o">)</span> <span class="o">{</span>
+    srand<span class="o">(</span><span class="nb">time</span><span class="o">(</span>NULL<span class="o">))</span><span class="p">;</span> // initialize random seed
+
+    int random_index <span class="o">=</span> rand<span class="o">()</span> % array_size<span class="p">;</span> // generate random index
+    NameAndSeconds random_pair <span class="o">=</span> array[random_index]<span class="p">;</span> // access pair at random index
+
+    <span class="k">return </span>random_pair<span class="p">;</span>
+<span class="o">}</span>
+
+void playRandomAudio<span class="o">(</span>const NameAndSeconds<span class="k">*</span> const array, const int array_size<span class="o">)</span> <span class="o">{</span>
+    flashingLed <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    digitalWrite<span class="o">(</span>LED_PIN_1, HIGH<span class="o">)</span><span class="p">;</span>
+    digitalWrite<span class="o">(</span>LED_PIN_2, HIGH<span class="o">)</span><span class="p">;</span>
+
+    NameAndSeconds random_pair <span class="o">=</span> getRandomPair<span class="o">(</span>array, array_size<span class="o">)</span><span class="p">;</span>
+    playAudio<span class="o">(</span>random_pair.seconds,<span class="o">(</span>random_pair.name<span class="o">)</span>.c_str<span class="o">())</span><span class="p">;</span>
+<span class="o">}</span>
+
+void click<span class="o">(</span>Button2&amp; btn<span class="o">)</span> <span class="o">{</span>
+    Serial.println<span class="o">(</span>btn.getPin<span class="o">())</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="o">(</span>btn <span class="o">==</span> buttonA<span class="o">)</span> <span class="o">{</span>
+        Serial.println<span class="o">(</span><span class="s2">"Button A pressed"</span><span class="o">)</span><span class="p">;</span>
+        const int array_size <span class="o">=</span> sizeof<span class="o">(</span>ArrayButtonA<span class="o">)</span> / sizeof<span class="o">(</span>ArrayButtonA[0]<span class="o">)</span><span class="p">;</span>
+        playRandomAudio<span class="o">(</span>ArrayButtonA, array_size<span class="o">)</span><span class="p">;</span>
+    <span class="o">}</span> <span class="k">else if</span> <span class="o">(</span>btn <span class="o">==</span> buttonB<span class="o">)</span> <span class="o">{</span>
+        Serial.println<span class="o">(</span><span class="s2">"Button B pressed"</span><span class="o">)</span><span class="p">;</span>
+        const int array_size <span class="o">=</span> sizeof<span class="o">(</span>ArrayButtonB<span class="o">)</span> / sizeof<span class="o">(</span>ArrayButtonB[0]<span class="o">)</span><span class="p">;</span>
+        playRandomAudio<span class="o">(</span>ArrayButtonB, array_size<span class="o">)</span><span class="p">;</span>
+    <span class="o">}</span> <span class="k">else if</span> <span class="o">(</span>btn <span class="o">==</span> buttonC<span class="o">)</span> <span class="o">{</span>
+        const int array_size <span class="o">=</span> sizeof<span class="o">(</span>ArrayButtonC<span class="o">)</span> / sizeof<span class="o">(</span>ArrayButtonC[0]<span class="o">)</span><span class="p">;</span>
+        Serial.println<span class="o">(</span><span class="s2">"Button C pressed"</span><span class="o">)</span><span class="p">;</span>
+        playRandomAudio<span class="o">(</span>ArrayButtonC, array_size<span class="o">)</span><span class="p">;</span>
+    <span class="o">}</span> <span class="k">else if</span> <span class="o">(</span>btn <span class="o">==</span> buttonD<span class="o">)</span> <span class="o">{</span>
+        Serial.println<span class="o">(</span><span class="s2">"Button D pressed"</span><span class="o">)</span><span class="p">;</span>
+        const int array_size <span class="o">=</span> sizeof<span class="o">(</span>ArrayButtonD<span class="o">)</span> / sizeof<span class="o">(</span>ArrayButtonD[0]<span class="o">)</span><span class="p">;</span>
+        playRandomAudio<span class="o">(</span>ArrayButtonD, array_size<span class="o">)</span><span class="p">;</span>
+    <span class="o">}</span> <span class="k">else if</span> <span class="o">(</span>btn <span class="o">==</span> buttonE<span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span>flashingLed<span class="o">){</span>
+          digitalWrite<span class="o">(</span>LED_PIN_1, HIGH<span class="o">)</span><span class="p">;</span>
+          digitalWrite<span class="o">(</span>LED_PIN_2, HIGH<span class="o">)</span><span class="p">;</span>
+          flashingLed <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="o">}</span> <span class="k">else</span><span class="o">{</span>
+          flashingLed <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+void playAudio<span class="o">(</span>double seconds, const char<span class="k">*</span> sound<span class="o">)</span> <span class="o">{</span>
+  double i <span class="o">=</span> 0.00<span class="p">;</span>
+  double twentyms <span class="o">=</span> 0.02<span class="p">;</span>
+  double timetoPlay <span class="o">=</span> seconds / twentyms<span class="p">;</span>
+
+  const unsigned char<span class="k">*</span> soundData<span class="p">;</span>
+
+  <span class="k">if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"elmo"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> elmo<span class="p">;</span>
+  <span class="o">}</span> 
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"teletubbies"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> teletubbies<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"daddy"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> daddy<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"mareemobile"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> mareemobile<span class="p">;</span>
+  <span class="o">}</span> 
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"trentmobile"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> trentmobile<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"formula"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> formula<span class="p">;</span>
+  <span class="o">}</span> 
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"trentbooboo"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> trentbooboo<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"trentleila"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> trentleila<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"trentgigi"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> trentgigi<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"mareegigi"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> mareegigi<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"mareeleila"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> mareeleila<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"mama"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> mama<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"nanna"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> nanna<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"pop"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> pop<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"mareebooboo"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> mareebooboo<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else if</span> <span class="o">(</span>strcmp<span class="o">(</span>sound, <span class="s2">"telephone"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">)</span> <span class="o">{</span>
+      soundData <span class="o">=</span> telephone<span class="p">;</span>
+  <span class="o">}</span>
+  <span class="k">else</span> <span class="o">{</span>
+    Serial.println<span class="o">(</span><span class="s2">"No file found with name: "</span> + String<span class="o">(</span>sound<span class="o">))</span><span class="p">;</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="o">}</span>
+
+  Serial.println<span class="o">(</span><span class="s2">"Playing sound: "</span> + String<span class="o">(</span>sound<span class="o">))</span><span class="p">;</span>
+  Serial.println<span class="o">(</span><span class="s2">"Duaration in seconds: "</span> + String<span class="o">(</span>seconds<span class="o">))</span><span class="p">;</span>
+
+  XT_Wav_Class Sound<span class="o">(</span>soundData<span class="o">)</span><span class="p">;</span>
+
+  <span class="k">while</span><span class="o">(</span>i&lt;timetoPlay<span class="o">)</span> <span class="o">{</span>
+    DacAudio.FillBuffer<span class="o">()</span><span class="p">;</span>                
+    <span class="k">if</span><span class="o">(</span>Sound.Playing<span class="o">==</span><span class="nb">false</span><span class="o">)</span>    
+      DacAudio.Play<span class="o">(</span>&amp;Sound<span class="o">)</span><span class="p">;</span>       
+    delay<span class="o">(</span>/20<span class="o">)</span><span class="p">;</span>
+    i++<span class="p">;</span>
+   <span class="o">}</span>
+
+  Serial.println<span class="o">(</span><span class="s2">"Finished sound: "</span> + String<span class="o">(</span>sound<span class="o">))</span><span class="p">;</span>
+  flashingLed <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="o">}</span>
+
+void setup<span class="o">()</span> <span class="o">{</span>
+  // initialize serial communication at 9600 bits per second:
+  Serial.begin<span class="o">(</span>115200<span class="o">)</span><span class="p">;</span>
+  delay<span class="o">(</span>5000<span class="o">)</span><span class="p">;</span>
+
+  Serial.println<span class="o">(</span><span class="s2">""</span><span class="o">)</span><span class="p">;</span>
+  Serial.println<span class="o">(</span><span class="s2">"-----"</span><span class="o">)</span><span class="p">;</span>
+  Serial.println<span class="o">(</span><span class="s2">" Your IoT"</span><span class="o">)</span><span class="p">;</span>
+  Serial.println<span class="o">(</span><span class="s2">"-----"</span><span class="o">)</span><span class="p">;</span>
+  Serial.println<span class="o">(</span><span class="s2">" Starting..."</span><span class="o">)</span><span class="p">;</span> 
+
+  WiFiEnable<span class="o">()</span><span class="p">;</span>
+  // <span class="nb">set </span>the digital pin as output:
+  pinMode<span class="o">(</span>LED_PIN_1, OUTPUT<span class="o">)</span><span class="p">;</span>
+  pinMode<span class="o">(</span>LED_PIN_2, OUTPUT<span class="o">)</span><span class="p">;</span>
+
+  // Route <span class="k">for </span>root / web page
+  server.on<span class="o">(</span><span class="s2">"/"</span>, HTTP_GET, <span class="o">[](</span>AsyncWebServerRequest <span class="k">*</span>request<span class="o">){</span>
+    request-&gt;send<span class="o">(</span>/200, <span class="s2">"text/plain"</span>, <span class="s2">"Cortana Design IoT"</span><span class="o">)</span><span class="p">;</span>
+  <span class="o">})</span><span class="p">;</span>
+
+  server.on<span class="o">(</span><span class="s2">"/restart"</span>, HTTP_GET, <span class="o">[](</span>AsyncWebServerRequest <span class="k">*</span>request<span class="o">){</span>
+    Serial.println<span class="o">(</span><span class="s2">"ESP - Restarting"</span><span class="o">)</span><span class="p">;</span>
+    request-&gt;send<span class="o">(</span>/200, <span class="s2">"text/plain"</span>, <span class="s2">"OK"</span><span class="o">)</span><span class="p">;</span>
+    delay<span class="o">(</span>/2000<span class="o">)</span><span class="p">;</span>
+    ESP.restart<span class="o">()</span><span class="p">;</span>
+
+  <span class="o">})</span><span class="p">;</span>
+
+  server.on<span class="o">(</span><span class="s2">"/reset"</span>, HTTP_GET, <span class="o">[](</span>AsyncWebServerRequest <span class="k">*</span>request<span class="o">){</span>
+    Serial.println<span class="o">(</span><span class="s2">"ESP - Resetting"</span><span class="o">)</span><span class="p">;</span>
+    request-&gt;send<span class="o">(</span>/200, <span class="s2">"text/plain"</span>, <span class="s2">"OK"</span><span class="o">)</span><span class="p">;</span>
+    delay<span class="o">(</span>/2000<span class="o">)</span><span class="p">;</span>
+    WiFiDisable<span class="o">()</span><span class="p">;</span>
+    ESP.restart<span class="o">()</span><span class="p">;</span>
+  <span class="o">})</span><span class="p">;</span>
+
+  server.on<span class="o">(</span><span class="s2">"/sound"</span>, HTTP_GET, <span class="o">[]</span> <span class="o">(</span>AsyncWebServerRequest <span class="k">*</span>request<span class="o">)</span> <span class="o">{</span>
+    String inputParam0<span class="p">;</span>
+    String inputParam1<span class="p">;</span>
+    String inputMessage0<span class="p">;</span>
+    String inputMessage1<span class="p">;</span> 
+    <span class="k">if</span> <span class="o">(</span>request-&gt;hasParam<span class="o">(</span>PARAM_INPUT_1<span class="o">)</span> &amp; request-&gt;hasParam<span class="o">(</span>PARAM_INPUT_2<span class="o">))</span> <span class="o">{</span>
+      inputMessage0 <span class="o">=</span> request-&gt;getParam<span class="o">(</span>PARAM_INPUT_1<span class="o">)</span>-&gt;value<span class="o">()</span><span class="p">;</span>
+      inputMessage1 <span class="o">=</span> request-&gt;getParam<span class="o">(</span>PARAM_INPUT_2<span class="o">)</span>-&gt;value<span class="o">()</span><span class="p">;</span>
+      request-&gt;send<span class="o">(</span>/200, <span class="s2">"text/plain"</span>, <span class="s2">"OK"</span><span class="o">)</span><span class="p">;</span>
+      soundWebServer <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      soundWebServerName <span class="o">=</span> inputMessage0.c_str<span class="o">()</span><span class="p">;</span>
+      soundWebServerSeconds <span class="o">=</span> std::stod<span class="o">(</span>inputMessage1.c_str<span class="o">()</span>, nullptr<span class="o">)</span><span class="p">;</span>
+    <span class="o">}</span>
+  <span class="o">})</span><span class="p">;</span>
+
+    server.on<span class="o">(</span><span class="s2">"/flashled"</span>, HTTP_GET, <span class="o">[]</span> <span class="o">(</span>AsyncWebServerRequest <span class="k">*</span>request<span class="o">)</span> <span class="o">{</span>
+    String inputParam3<span class="p">;</span>
+    String inputMessage3<span class="p">;</span> 
+    <span class="k">if</span> <span class="o">(</span>request-&gt;hasParam<span class="o">(</span>PARAM_INPUT_3<span class="o">))</span> <span class="o">{</span>
+      inputMessage3 <span class="o">=</span> request-&gt;getParam<span class="o">(</span>PARAM_INPUT_3<span class="o">)</span>-&gt;value<span class="o">()</span><span class="p">;</span>
+      request-&gt;send<span class="o">(</span>/200, <span class="s2">"text/plain"</span>, <span class="s2">"OK"</span><span class="o">)</span><span class="p">;</span>
+      <span class="k">if</span> <span class="o">(</span>strcmp<span class="o">(</span>inputMessage3.c_str<span class="o">()</span>, <span class="s2">"true"</span><span class="o">)</span> <span class="o">==</span> 0<span class="o">){</span>
+        flashingLed <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="o">}</span>
+      <span class="k">else</span><span class="o">{</span>
+        flashingLed <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">})</span><span class="p">;</span>
+
+  DefaultHeaders::Instance<span class="o">()</span>.addHeader<span class="o">(</span><span class="s2">"Access-Control-Allow-Origin"</span>, <span class="s2">"*"</span><span class="o">)</span><span class="p">;</span>
+  server.begin<span class="o">()</span><span class="p">;</span>
+
+  buttonA.begin<span class="o">(</span>BUTTON_A_PIN<span class="o">)</span><span class="p">;</span>
+  buttonA.setTapHandler<span class="o">(</span>click<span class="o">)</span><span class="p">;</span>
+
+  buttonB.begin<span class="o">(</span>BUTTON_B_PIN<span class="o">)</span><span class="p">;</span>
+  buttonB.setTapHandler<span class="o">(</span>click<span class="o">)</span><span class="p">;</span>
+  
+  buttonC.begin<span class="o">(</span>BUTTON_C_PIN<span class="o">)</span><span class="p">;</span>
+  buttonC.setTapHandler<span class="o">(</span>click<span class="o">)</span><span class="p">;</span>
+
+  buttonD.begin<span class="o">(</span>BUTTON_D_PIN<span class="o">)</span><span class="p">;</span>
+  buttonD.setTapHandler<span class="o">(</span>click<span class="o">)</span><span class="p">;</span>
+
+  buttonE.begin<span class="o">(</span>BUTTON_E_PIN<span class="o">)</span><span class="p">;</span>
+  buttonE.setTapHandler<span class="o">(</span>click<span class="o">)</span><span class="p">;</span>
+<span class="o">}</span>
+
+void loop<span class="o">()</span> <span class="o">{</span>
+  // <span class="nb">read </span>the state of the switch/button:
+  buttonA.loop<span class="o">()</span><span class="p">;</span>
+  buttonB.loop<span class="o">()</span><span class="p">;</span>
+  buttonC.loop<span class="o">()</span><span class="p">;</span>
+  buttonD.loop<span class="o">()</span><span class="p">;</span>
+  buttonE.loop<span class="o">()</span><span class="p">;</span>
+
+  unsigned long currentMillis <span class="o">=</span> millis<span class="o">()</span><span class="p">;</span>
+
+  <span class="k">if</span><span class="o">(</span>flashingLed<span class="o">)</span>
+  <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span>currentMillis - previousMillis_1 <span class="o">&gt;=</span> BLINK_INTERVAL_1<span class="o">)</span> <span class="o">{</span>
+      ledState_1 <span class="o">=</span> <span class="o">(</span>ledState_1 <span class="o">==</span> LOW<span class="o">)</span> ? HIGH : LOW<span class="p">;</span>
+      digitalWrite<span class="o">(</span>LED_PIN_1, ledState_1<span class="o">)</span><span class="p">;</span>
+      previousMillis_1 <span class="o">=</span> currentMillis<span class="p">;</span>
+    <span class="o">}</span>
+
+    <span class="k">if</span> <span class="o">(</span>currentMillis - previousMillis_2 <span class="o">&gt;=</span> BLINK_INTERVAL_2<span class="o">)</span> <span class="o">{</span>
+      ledState_2 <span class="o">=</span> <span class="o">(</span>ledState_2 <span class="o">==</span> LOW<span class="o">)</span> ? HIGH : LOW<span class="p">;</span>
+      digitalWrite<span class="o">(</span>LED_PIN_2, ledState_2<span class="o">)</span><span class="p">;</span>
+      previousMillis_2 <span class="o">=</span> currentMillis<span class="p">;</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="k">else</span><span class="o">{</span>
+    digitalWrite<span class="o">(</span>LED_PIN_1, HIGH<span class="o">)</span><span class="p">;</span>
+    digitalWrite<span class="o">(</span>LED_PIN_2, HIGH<span class="o">)</span><span class="p">;</span>
+  <span class="o">}</span>
+  
+  <span class="k">if</span><span class="o">(</span>soundWebServer<span class="o">){</span>
+    const char<span class="k">*</span> soundWebServerNameConst <span class="o">=</span> soundWebServerName.c_str<span class="o">()</span><span class="p">;</span>
+    playAudio<span class="o">(</span>soundWebServerSeconds,soundWebServerNameConst<span class="o">)</span><span class="p">;</span>
+    soundWebServer <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="o">}</span>
+
+  <span class="k">if</span> <span class="o">((</span>WiFi.status<span class="o">()</span> <span class="o">!=</span> WL_CONNECTED<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="o">(</span>currentMillis - previousMillis <span class="o">&gt;=</span>interval<span class="o">))</span> <span class="o">{</span>
+    Serial.print<span class="o">(</span>millis<span class="o">())</span><span class="p">;</span>
+    Serial.println<span class="o">(</span><span class="s2">"Reconnecting to WiFi..."</span><span class="o">)</span><span class="p">;</span>
+    WiFi.disconnect<span class="o">()</span><span class="p">;</span>
+    WiFi.reconnect<span class="o">()</span><span class="p">;</span>
+    previousMillis <span class="o">=</span> currentMillis<span class="p">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><strong><em>Code example of the file ‘daddy.h’</em></strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>const unsigned char daddy[16106] = {
+ 0x52, 0x49, 0x46, 0x46, 0xE2, 0x3E, 0x00, 0x00, 0x57, 0x41, 0x56, 0x45,
+ 0x66, 0x6D, 0x74, 0x20, 0x10, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00,
+ 0x80, 0x3E, 0x00, 0x00, 0x80, 0x3E, 0x00, 0x00, 0x01, 0x00, 0x08, 0x00,
+ 0x64, 0x61, 0x74, 0x61, 0x54, 0x3E, 0x00, 0x00, 0x81, 0x82, 0x82, 0x82,
+ 0x82, 0x82, 0x81, 0x82, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81,
+ 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x7F, 0x7F, 0x7F, 0x7F, 0x7F,... truncated here}
+</code></pre></div></div>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Creating an Interactive Activity Board for My Daughter Using an ESP32 Dev Board&amp;url=http://localhost:4000/2023/03/27/creating-an-interactive-activity-board-for-my-daughter-using-an-esp32-dev-board&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2023/03/27/creating-an-interactive-activity-board-for-my-daughter-using-an-esp32-dev-board"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+@import "bootstrap/_functions";
+@import "bootstrap/_variables";
+@import "bootstrap/_mixins";
+
+// Cortana Design blue hues
+$CortanaDesign-blue: #0f5096; // primary blue
+$CortanaDesign-blue-dark: #02254a; // darker blue
+$CortanaDesign-blue-hover: #052344; // hover state blue
+$CortanaDesign-dark-grey: #222;
+$CortanaDesign-grey: #f7f6f5;
+$light-grey: #dee2e6;
+$very-light-grey: #f8f9fa;
+
+// Social colors
+$twitter: #000000;
+$github: #24292e;
+$rss: #b9501f;
+$linkedin: #0077b5;
+
+$custom-colors: (
+  "CortanaDesign-blue": $CortanaDesign-blue,
+  "CortanaDesign-blue-dark": $CortanaDesign-blue-dark,
+  "CortanaDesign-blue-hover": $CortanaDesign-blue-hover,
+  "CortanaDesign-dark-grey": $CortanaDesign-dark-grey,
+  "CortanaDesign-grey": $CortanaDesign-grey,
+  "twitter": $twitter,
+  "rss": $rss,
+  "github": $github,
+  "linkedin": $linkedin,
+  "light-gray": $light-grey,
+  "very-light-gray": $very-light-grey,
+);
+
+// Use only Roboto and fallbacks
+$font-family-sans-serif: "Rubik", "Roboto", "Helvetica Neue", "Helvetica", Arial,
+  sans-serif !default;
+$font-family-base: $font-family-sans-serif !default;
+
+// Merge custom colours into Bootstrap theme
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "bootstrap/bootstrap";

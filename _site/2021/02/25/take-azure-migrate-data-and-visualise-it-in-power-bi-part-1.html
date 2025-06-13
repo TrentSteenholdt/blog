@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Take Azure Migrate data and visualise it in Power BI - Part 1 | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Take Azure Migrate data and visualise it in Power BI - Part 1 | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Take Azure Migrate data and visualise it in Power BI - Part 1" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="This was originally posted here while working for Telstra Purple." />
+<meta property="og:description" content="This was originally posted here while working for Telstra Purple." />
+<link rel="canonical" href="http://localhost:4000/2021/02/25/take-azure-migrate-data-and-visualise-it-in-power-bi-part-1" />
+<meta property="og:url" content="http://localhost:4000/2021/02/25/take-azure-migrate-data-and-visualise-it-in-power-bi-part-1" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/1-1.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-25T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/1-1.png" />
+<meta property="twitter:title" content="Take Azure Migrate data and visualise it in Power BI - Part 1" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2021-02-25T00:00:00+08:00","datePublished":"2021-02-25T00:00:00+08:00","description":"This was originally posted here while working for Telstra Purple.","headline":"Take Azure Migrate data and visualise it in Power BI - Part 1","image":"http://localhost:4000/assets/images/from_wordpress/1-1.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2021/02/25/take-azure-migrate-data-and-visualise-it-in-power-bi-part-1"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2021/02/25/take-azure-migrate-data-and-visualise-it-in-power-bi-part-1"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Take Azure Migrate data and visualise it in Power BI - Part 1</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  February 25, 2021
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  10 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#azure">azure</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#azure-migrate">azure-migrate</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#powerbi">powerbi</a></div>
+    <p><strong><em>This was originally posted <a href="https://purple.telstra.com/blog/azure-migrate-data-in-powerbi-part1">here while working for Telstra Purple</a>.</em></strong></p>
+
+<p>In this two-part series, I’ll take you through the necessary steps to take data from Azure Migrate and visualise it in a much friendlier way in Power BI. In this first part, I’ll share how I worked through Azure Migrate’s problems and started putting together the data sources in Power BI.</p>
+
+<h2 id="azure-migrate">Azure Migrate</h2>
+
+<p>Azure Migrate is a great tool to help businesses lift-and-shift workloads into Azure pretty quickly. Unfortunately though, it’s use case kind of stops there at present. While useful features are being added all the time, there is still a bit of work to get it up to feature parity with competing products like Cloudamize that support tagging and better workload separation.</p>
+
+<p>Sadly, these current limitations are most evident in how cumbersome it is to grab data out in a way that makes sense for a business. Microsoft recommends <a href="https://docs.microsoft.com/en-us/azure/migrate/how-to-create-a-group">creating groups</a> to break down servers/workloads logically but then gives absolutely no way to visualise a holistic overview of the entire digital estate! This is a major pain point if you’re looking to present your Azure Migrate data to key stakeholders interested in different things. For example, a CFO may want to know the entire running cost of the digital estate or a subset of logical groupings. But at the same time, an application owner would probably only care about making sure their workloads are compatible with Azure.  </p>
+
+<p>At this point, you really only have two options. One is to create just one big group and get all the workloads in one report. Or the other is to create lots of groups using a logical separation and deal with the multiple reports generated somehow.</p>
+
+<p>For my use case, and most likely for yours, many Azure Migrate groups still make the most sense. Creating groups based on applications and the environment (e.g. “Intranet – Dev”) provide greater visibility if that application is suitable for Azure. After all, not every workload in your digital estate can be moved at once!</p>
+
+<p>When creating the Azure Migrate groups, keep in mind that any <a href="https://docs.microsoft.com/en-us/azure/migrate/how-to-create-assessment">assessments</a> you create are bounded by the group. So while you have got a nice break down of your digital estate, you now got the problem of tieing it all together. This is where Power BI can help!</p>
+
+<h3 id="exporting-azure-migrate-assessments-with-the-rest-api">Exporting Azure Migrate Assessments with the REST API</h3>
+
+<p>Once you have created all your groups and assessments in Azure Migrate, you now need to get your data somewhere so Power BI can use it. Assessment exports (Excel) are possible but depending on how many assessments you’ve created, there will be multiple files to download. The problem, however, is the UI in the Azure Portal is horrible in terms of getting this data out! It’s at least five (5) clicks to get to the assessment export button, and there is no guarantee when you click on it that it downloads! Thankfully, you can get to these Excel files pretty quickly with the REST API. Here’s a simple script that does it for you.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;#
+        .SYNOPSIS
+        Downloads all Excel file assessments to a folder specified.
+        .DESCRIPTION
+        This script gets all current assessments in Azure Migrate and downloads them to a folder for easy viewing.
+        .PARAMETER AssessmentProjectName
+        Name of the Azure Migrate Assessment Project. Note this is not the name of the Azure Migrate Project itself! You need to pull this first. See https://docs.microsoft.com/en-us/rest/api/migrate/assessment/projects
+        .PARAMETER SubscriptionID
+        The Azure Subscription ID of where the Azure Migrate Project is.
+        .PARAMETER ResourceGroupName
+        The name the Resource Group of where the Azure Migrate Project is.
+        .PARAMETER CustomerName
+        The name of the customer this script is being run for.
+        .EXAMPLE
+        C:\PS&gt; Export-AzMigrateAssessmentsExcelAllToFolder.ps1 -AssessmentProjectName "MyProject" -SubscriptionID "00000000-0000-000-0000-0000-0000" -ResourceGroupName "MyResourceGroup" -ExportFolder "D:\Downloads"
+        .NOTES
+        Requires:
+          - Contributor rights to the Azure Migrate Project resource and resource group.
+          - Latest Az Module.
+          - Invoke-WebRequest is used. Make sure you’re proxy setting allows the files to be downloaded.
+          - Connect-AzAccount to be run first and logged in with an account or Service Principle with the access noted above. 
+#&gt;
+[CmdletBinding()]
+param (
+    [Parameter(Mandatory = $true)]
+    [string]$AssessmentProjectName,
+
+    [Parameter(Mandatory = $true)]
+    [string]$SubscriptionID,
+
+    [Parameter(Mandatory = $true)]
+    [string]$ResourceGroupName,
+
+    [Parameter(Mandatory = $true)]
+    [ValidateScript( { Test-Path $_ })]
+    [string]$ExportFolder
+)
+
+Write-Host "`r`nExport-AzMigrateAssessmentsExcelAllToFolder.ps1 script is starting."
+Write-Host "---`r`n"
+
+$token = (Get-AzAccessToken).Token
+
+$authToken = @{ 'Content-Type' = 'application/json'
+    'Authorization'            = 'Bearer ' + $token
+}
+
+$allGroups = (Invoke-RestMethod -Method GET -Uri "https://management.azure.com/subscriptions/$($SubscriptionID)/resourceGroups/$($ResourceGroupName)/providers/Microsoft.Migrate/assessmentprojects/$($AssessmentProjectName)/groups?api-version=2019-10-01" -Headers $authToken).value
+$allGroupswithAssessment = $allGroups | Where-Object { $_.properties.assessments -ne $null }
+
+$downloads = @{}
+foreach ($group in $allGroupswithAssessment) { 
+    Write-Host "Getting assessment for $($group.name)"; 
+    $url = ("https://management.azure.com" + $group.properties.assessments + "/downloadUrl?api-version=2019-10-01"); 
+    $downloads += @{$group.name = (Invoke-RestMethod -Method POST -Uri $url -Headers $authToken).assessmentReportUrl } 
+}
+
+foreach (
+    $download in $downloads.GetEnumerator()) { 
+    $file = Join-Path $ExportFolder ($download.name + ".xlsx")
+    Invoke-WebRequest $download.value -OutFile $file
+}
+
+Write-Host "`r`nExport-AzMigrateAssessmentsExcelAllToFolder.ps1 script is starting."
+Write-Host "---`r`n" 
+</code></pre></div></div>
+
+<h2 id="source">Source</h2>
+
+<p>With potentially hundreds of Excel files to manage because of the number of assessments you’ve made, the next step will be to bring these files into Power BI. There are two ways you could do this from a data source perspective. These are:</p>
+
+<ol>
+  <li>
+    <p>Use a folder path data source for files on local storage, or</p>
+  </li>
+  <li>
+    <p>Move the files to a SharePoint Online document library and use a SharePoint site data source.</p>
+  </li>
+</ol>
+
+<p>Here are some power queries to help you get started.</p>
+
+<h4 id="sharepoint-query">SharePoint query</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">let
+    </span>Source <span class="o">=</span> SharePoint.Files<span class="o">(</span><span class="s2">"https://purple.sharepoint.com/sites/example/"</span>, <span class="o">[</span>ApiVersion <span class="o">=</span> 15]<span class="o">)</span>,
+    <span class="c">#"Filtered Rows" = Table.SelectRows(Source, each ([Folder Path] = "https://purple.sharepoint.com/sites/example/Shared Documents/AzMigrateData/")),</span>
+    Navigation1 <span class="o">=</span> <span class="c">#"Filtered Rows"{0}[Content]</span>
+<span class="k">in
+    </span>Navigation1
+</code></pre></div></div>
+
+<h3 id="local-folder-query">Local Folder query</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">let
+    </span>Source <span class="o">=</span> Folder.Files<span class="o">(</span><span class="s2">"D:</span><span class="se">\D</span><span class="s2">ownloads"</span><span class="o">)</span>
+<span class="k">in
+    </span>Source
+</code></pre></div></div>
+
+<p>In my experience, the OData query with the SharePoint data source is incredibly slow, so I’d recommend keeping it locally sourced. That way, you shouldn’t face any query timeout issues l initially faced building out this solution.</p>
+
+<h2 id="transform-and-combine">Transform and Combine</h2>
+
+<p>Once you have the sources right and can see the excel files in Power BI, you need to transform and combine each worksheet inside each assessment workbook. For each Azure Migrate workbook, there are four worksheets we need to get data from. These are:</p>
+
+<ul>
+  <li>
+    <p>Assessment\Summary</p>
+  </li>
+  <li>
+    <p>All\Assessed\Disks</p>
+  </li>
+  <li>
+    <p>All\Assessed\Machines</p>
+  </li>
+  <li>
+    <p>Assessment\Properties</p>
+  </li>
+</ul>
+
+<p><a href="/assets/images/from_wordpress/1-1.png"><img src="/assets/images/from_wordpress/1-1-1024x728.png" alt="" /></a></p>
+
+<p>To make this easy, Power BI gives us a “Combine Data” process when looking at source files from the local/SharePoint folder source. To make use of this, open up the Power Query editor for the source folder and use the combine button (see the screenshot below) on the Content column.</p>
+
+<p><a href="/assets/images/from_wordpress/2-1.png"><img src="/assets/images/from_wordpress/2-1-1024x544.png" alt="" /></a></p>
+
+<p>In the transformation wizard, you are only given the option to combine just one of the four worksheets. To get all of them, there are two paths you can take.</p>
+
+<ol>
+  <li>
+    <p>Firstly, you could repeat this process four times for each worksheet. This works fine but does make a mess with sample files and parameters. Or,</p>
+  </li>
+  <li>
+    <p>Secondly, you could do this for just one worksheet and then make multiple copies of the first function. Then all you need to do is make some tiny edits to get the desired worksheet in the four functions.</p>
+  </li>
+</ol>
+
+<p>If the second option is the path you want to take, here are the function queries for your reference.</p>
+
+<h4 id="all-asssed-machines">All Asssed Machines</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">let
+    </span>Source <span class="o">=</span> <span class="o">(</span>Parameter1<span class="o">)</span> <span class="o">=&gt;</span> <span class="nb">let
+        </span>Source <span class="o">=</span> Excel.Workbook<span class="o">(</span>Parameter1, null, <span class="nb">true</span><span class="o">)</span>,
+        All_Assessed_Machines_Sheet <span class="o">=</span> Source<span class="o">{[</span><span class="nv">Item</span><span class="o">=</span><span class="s2">"All_Assessed_Machines"</span>,Kind<span class="o">=</span><span class="s2">"Sheet"</span><span class="o">]}[</span>Data],
+        <span class="c">#"Promoted Headers" = Table.PromoteHeaders(All_Assessed_Machines_Sheet, [PromoteAllScalars=true])</span>
+    <span class="k">in</span>
+        <span class="c"># “Promoted Headers”</span>
+<span class="k">in
+    </span>Source
+</code></pre></div></div>
+
+<h4 id="all-assessed-disks">All Assessed Disks</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">let
+    </span>Source <span class="o">=</span> <span class="o">(</span>Parameter1<span class="o">)</span> <span class="o">=&gt;</span> <span class="nb">let
+        </span>Source <span class="o">=</span> Excel.Workbook<span class="o">(</span>Parameter1, null, <span class="nb">true</span><span class="o">)</span>,
+        All_Assessed_Disks_Sheet <span class="o">=</span> Source<span class="o">{[</span><span class="nv">Item</span><span class="o">=</span><span class="s2">"All_Assessed_Disks"</span>,Kind<span class="o">=</span><span class="s2">"Sheet"</span><span class="o">]}[</span>Data],
+        <span class="c">#"Promoted Headers" = Table.PromoteHeaders(All_Assessed_Disks_Sheet, [PromoteAllScalars=true])</span>
+    <span class="k">in</span>
+</code></pre></div></div>
+
+<h4 id="assessment-properties">Assessment Properties</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">let
+    </span>Source <span class="o">=</span> <span class="o">(</span>Parameter1<span class="o">)</span> <span class="o">=&gt;</span> <span class="nb">let
+        </span>Source <span class="o">=</span> Excel.Workbook<span class="o">(</span>Parameter1, null, <span class="nb">true</span><span class="o">)</span>,
+        Assessment_Properties_Sheet <span class="o">=</span> Source<span class="o">{[</span><span class="nv">Item</span><span class="o">=</span><span class="s2">"Assessment_Properties"</span>,Kind<span class="o">=</span><span class="s2">"Sheet"</span><span class="o">]}[</span>Data],
+        <span class="c">#"Promoted Headers" = Table.PromoteHeaders(Assessment_Properties_Sheet, [PromoteAllScalars=true])</span>
+    <span class="k">in</span>
+        <span class="c">#"Promoted Headers"</span>
+<span class="k">in
+    </span>Source
+</code></pre></div></div>
+
+<h4 id="assessment-summary">Assessment Summary</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+let
+    Source = (Parameter1 as binary) =&gt; let
+    Source = Excel.Workbook(Parameter1, null, true),
+    Assessment_Summary_Sheet = Source{[Item="Assessment_Summary",Kind="Sheet"]}[Data],
+    #"Promoted Headers" = Table.PromoteHeaders(Assessment_Summary_Sheet, [PromoteAllScalars=true])
+in
+    #"Promoted Headers"
+in
+    Source
+</code></pre></div></div>
+
+<p>As you can see in these power queries, the Source is referring to a Parameter called Parameter1. Because there are potentially multiple Azure Migrate assessment workbooks in the folder, we need to filter on one of them to define the custom function query. Then, when we used this custom function in the power query for each table, all the worksheets will be merged. Here is what you need for the Parameter1 and the supporting Sample File query if you’re having trouble making these custom functions work.</p>
+
+<h4 id="parameter1">Parameter1</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#"Sample File" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File", Type="Binary", IsParameterQueryRequired=true]
+</code></pre></div></div>
+
+<h4 id="sample-file">Sample File</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">let
+    </span>Source <span class="o">=</span> Folder.Files<span class="o">(</span><span class="s2">"D:</span><span class="se">\D</span><span class="s2">ownloads"</span><span class="o">)</span>,
+    Navigation1 <span class="o">=</span> Source<span class="o">{</span>0<span class="o">}[</span>Content]
+<span class="k">in
+    </span>Navigation1
+</code></pre></div></div>
+
+<p>As you can see, Sample File will use the first file in the directory by using the Source index of 0. This does not mean we’ll only pull the worksheets from just one file. As the name implies, it’s only a sample.</p>
+
+<h2 id="summary">Summary</h2>
+
+<p><a href="/assets/images/from_wordpress/3-1.png"><img src="/assets/images/from_wordpress/3-1-1024x547.png" alt="" /></a></p>
+
+<p>With the custom functions and sample file parameter created, you should now be able to make the necessary tables by calling the right custom function in the table query to get all the data. If you’re unsure how to do this, keep an eye out for part two, where I’ll provide the power queries needed for the tables, build out the data model and create some reports. Stay tuned!</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Take Azure Migrate data and visualise it in Power BI - Part 1&amp;url=http://localhost:4000/2021/02/25/take-azure-migrate-data-and-visualise-it-in-power-bi-part-1&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2021/02/25/take-azure-migrate-data-and-visualise-it-in-power-bi-part-1"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

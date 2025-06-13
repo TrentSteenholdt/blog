@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adopting the Cloud with a design-led approach | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Adopting the Cloud with a design-led approach | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Adopting the Cloud with a design-led approach" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="This was originally posted here while working for Telstra Purple." />
+<meta property="og:description" content="This was originally posted here while working for Telstra Purple." />
+<link rel="canonical" href="http://localhost:4000/2021/02/26/adopting-the-cloud-with-a-design-led-approach" />
+<meta property="og:url" content="http://localhost:4000/2021/02/26/adopting-the-cloud-with-a-design-led-approach" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/double-diamond.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-02-26T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/double-diamond.png" />
+<meta property="twitter:title" content="Adopting the Cloud with a design-led approach" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2021-02-26T00:00:00+08:00","datePublished":"2021-02-26T00:00:00+08:00","description":"This was originally posted here while working for Telstra Purple.","headline":"Adopting the Cloud with a design-led approach","image":"http://localhost:4000/assets/images/from_wordpress/double-diamond.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2021/02/26/adopting-the-cloud-with-a-design-led-approach"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2021/02/26/adopting-the-cloud-with-a-design-led-approach"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Adopting the Cloud with a design-led approach</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  February 26, 2021
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  8 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#cloud">cloud</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#design">design</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#design-led-approach">design-led-approach</a></div>
+    <p><strong><em>This was originally posted <a href="https://purple.telstra.com/blog/adopting-the-cloud-with-a-design-led-approach">here while working for Telstra Purple</a>.</em></strong></p>
+
+<p>Adopting any new technology can be a daunting challenge in the IT industry. Cloud, however, is at another level and is always fraught with unique challenges and complexities that are typically misunderstood. Some would blame this on the amazing marketing spin that makes it sound like it’s only a few clicks to transition, but in reality, it’s more about getting the right skills in the team that will plan out the adoption journey. Ultimately, cloud adoptions are often mistaken as a technical challenge, when really, it’s more a business strategy or organisational framing activity. Organisations don’t typically see this and task the wrong people to devise the plan, and sadly, this usually ends in disaster.</p>
+
+<p>When organisations don’t get this right, it can result in significant financial loss, reduced business productivity and even increased staff attrition. This is where a design-led approach can help manage these pressures and demands, particularly on key IT personnel, and get unanimous buy-in from all parties, such as the executive. Nothing helps a strategy more by having everyone understand the direction being taken and their role and responsibility from getting from A to B.</p>
+
+<h2 id="introducing-the-double-diamond-model">Introducing the double-diamond model</h2>
+
+<p>A design-led approach to Cloud adoption needs a way to tackle the unique challenges. This is where the double-diamond model steps in.</p>
+
+<p><a href="/assets/images/from_wordpress/double-diamond.png"><img src="/assets/images/from_wordpress/double-diamond-1024x532.png" alt="" /></a></p>
+
+<p>If you’re not familiar with the double-diamond model, consider reading <a href="https://www.justinmind.com/blog/double-diamond-model-what-is-should-you-use/">Double Diamond Model: what is it?</a></p>
+
+<h2 id="discover---the-start">Discover - The start</h2>
+
+<p>Typically, when an organisation considers adopting or transitioning to the Cloud, their mind is set that it’s somehow a done deal. However, is that really the case? It’s common for a decision to adopt to be quite bullish without first thinking about what the actual root problems are. This is where the double-diamond model makes the most sense by holistically taking a step back and asking the questions, and collecting the right data to get a deeper understanding of organisational pain points.  </p>
+
+<p>As a starting point, here are some questions that are often missed:</p>
+
+<ul>
+  <li>
+    <p>Is the Cloud actually the most cost-effective solution for this organisation?</p>
+  </li>
+  <li>
+    <p>What alternatives are there to a cloud adoption or transition?</p>
+  </li>
+  <li>
+    <p>Is this workload/application even suitable for the Cloud?</p>
+  </li>
+  <li>
+    <p>Can the organisation afford migration fatigue and the additional project work it creates? If no, who do we need to support the transition properly?</p>
+  </li>
+  <li>
+    <p>Are we considering all the possible options out there?</p>
+  </li>
+</ul>
+
+<p>Organisations that inevitably miss these questions ultimately pay the price for it in the end either by not surfacing potential impacts and difficulties that come with Cloud adoptions. For example, Cloud adoption is not the most cost-effective option if the organisation is still running suitable hardware on-premises or needs to address a skill-gap in the IT team before managing a new eco-system! So why move now when these problems still exist?</p>
+
+<p>When collecting data on the <a href="https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/digital-estate/">digital estate (IT footprint)</a>, there are several ways to achieve this, but it’s important not to rule out any data sources that may derail a Cloud adoption strategy. The fact that there could be data that disproves Cloud adoption is a problem in its own right, and it could even be a problem that may be solvable with the right solution.</p>
+
+<h2 id="define---the-problems">Define - The problems</h2>
+
+<p>When all the data is gathered, and the right questions are asked, it’s now time to review. Here is where filtering is important, and getting the business onboarded with the problems identified. You can do this a couple of ways, but leveraging something like the <a href="https://docs.aws.amazon.com/whitepapers/latest/aws-migration-whitepaper/the-6-rs-6-application-migration-strategies.html">six R’s of Cloud rationalisation</a> is a great starting point. Consider each workload/application on its own merit for Cloud adoption. Some workloads are just better off remaining on-premises even if the marketing material says otherwise!</p>
+
+<p>It’s worth keeping in mind that there may be multiple problems found for organisations with an extensive digital estate. Examples of some identified problems could be:</p>
+
+<ul>
+  <li>
+    <p>End of life hardware/software,</p>
+  </li>
+  <li>
+    <p>Lack of knowledge to support the workload/application,</p>
+  </li>
+  <li>
+    <p>Cost management issues,</p>
+  </li>
+  <li>
+    <p>Insecure systems and services.</p>
+  </li>
+</ul>
+
+<p>Ultimately, multiple problems are okay, and looping back through the double-diamond approach should be promoted as good behaviour to narrow in on the problems most important to the organisation. Each time this is done, consider keeping an eye on the commonalities present in all the identified problems so the technical people in the organisation can start diverging on potential solutions.</p>
+
+<p>The organisation executive is also an important stakeholder in the define phase. They should be presented with all the findings so their feedback can be taken on board. A way to do this would be to run a couple of interactive workshops as they provide a great way to articulate connections between the findings and the root problems. This also helps with thought leadership and building a healthy collaborative culture, aligning Cloud adoption with business strategy.</p>
+
+<p>A word of warning though, a Cloud adoption plan should not be an ‘ugly’ five-year roadmap! In a matter of a year, or even less, at today’s pace, the organisation digital estate will change, technology will evolve, stakeholders will move on, so inevitably, the roadmap will be out of date. Considering repeating the first diamond regularly, at least every three months (horizon roadmap), to create the necessary feedback loops needed to continue with Cloud adoption.</p>
+
+<h2 id="develop---possible-solutions">Develop - Possible solutions</h2>
+
+<p>After completing the first pass of discovering and defining the digital estate (first diamond), organisations should now have enough information to take on a more standard approach to Cloud adoption.</p>
+
+<p>Fully equipped with the problems that need to be solved, technical experts can begin working on experiments and building potential solutions. This could be using third-party tools, scripting, automation, documented processes, or anything that make sense to solve the right problem cost-effectively and securely.</p>
+
+<p>From an organisation perspective, solving problems is about choosing the right strategy and finding the right motivations to drive business justification. An excellent way to do this is to take low hanging fruit (workloads) in the digital estate and work on them. This will help in understanding the processes that will need to be repeated for future workloads so they can be accelerated in the future.</p>
+
+<h2 id="deliver---the-outcome">Deliver - The outcome</h2>
+
+<p>Once a few robust and well-documented developed approaches are understood and accepted by parts of the organisation like change control, the executive and architecture, the organisation’s Cloud adoption strategy will move to delivery. This would likely be iterative, taking small slices of the digital estate and moving them to the cloud provider of choice.</p>
+
+<p>When organisations move into this phase, they should consider picking a delivery lifecycle that provides agility at scale, something like an agile approach (<a href="https://www.pmi.org/disciplined-agile/lifecycle">Full Delivery Life Cycles – Disciplined Agile</a>). Each organisation will do this differently and have its lifecycle evolve over time. When that happens, supporting documentation should be updated and made visible to the entire organisation. That way, everyone can understand the path being taken and the next steps on the adoption journey.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>While it’s sold that the Cloud can improve organisation agility, reduce costs, deliver quicker to market, and enable expansion, careful consideration should be taken on the motivations. Cloud adoption is often fraught with not finding the problems that actually need to be solved!  </p>
+
+<p>A design-led thinking approach using the double-diamond model should help uncover these real problems and find fit-for-purpose solutions to achieve the right outcomes for any Cloud adoption strategy.</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Adopting the Cloud with a design-led approach&amp;url=http://localhost:4000/2021/02/26/adopting-the-cloud-with-a-design-led-approach&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2021/02/26/adopting-the-cloud-with-a-design-led-approach"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

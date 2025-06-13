@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home IoT - Part 2 - Putting it together and integration | Cortana Design</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b681124c99.js" crossorigin="anonymous"></script>
+  <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon" />
+  <link href="/assets/css/main.css" rel="stylesheet" />
+  <link href="/assets/css/rouge-github.css" rel="stylesheet" />
+  <link href="/assets/css/custom.css" rel="stylesheet" />
+
+  <link rel="alternate" type="application/atom+xml" title="Cortana Design" href="/feed.xml" />
+
+  <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Home IoT - Part 2 - Putting it together and integration | Cortana Design</title>
+<meta name="generator" content="Jekyll v4.3.4" />
+<meta property="og:title" content="Home IoT - Part 2 - Putting it together and integration" />
+<meta name="author" content="Trent Steenholdt" />
+<meta property="og:locale" content="en_AU" />
+<meta name="description" content="This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!" />
+<meta property="og:description" content="This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!" />
+<link rel="canonical" href="http://localhost:4000/2020/09/02/home-iot-part-2-putting-it-together-and-integration" />
+<meta property="og:url" content="http://localhost:4000/2020/09/02/home-iot-part-2-putting-it-together-and-integration" />
+<meta property="og:site_name" content="Cortana Design" />
+<meta property="og:image" content="http://localhost:4000/assets/images/from_wordpress/image-10.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-02T00:00:00+08:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="http://localhost:4000/assets/images/from_wordpress/image-10.png" />
+<meta property="twitter:title" content="Home IoT - Part 2 - Putting it together and integration" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Trent Steenholdt"},"dateModified":"2020-09-02T00:00:00+08:00","datePublished":"2020-09-02T00:00:00+08:00","description":"This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!","headline":"Home IoT - Part 2 - Putting it together and integration","image":"http://localhost:4000/assets/images/from_wordpress/image-10.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2020/09/02/home-iot-part-2-putting-it-together-and-integration"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/CortanaDesign-logo.svg"},"name":"Trent Steenholdt"},"url":"http://localhost:4000/2020/09/02/home-iot-part-2-putting-it-together-and-integration"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <header>
+  <div class="container-fluid text-center">
+    <!-- Logo Row -->
+    <div class="row mb-3 mt-3">
+      <a href="/" title="Cortana Design">
+        <img src="/assets/images/cortanadesign.png" alt="Cortana Design Logo" class="img-fluid"
+          style="max-height: 155px;">
+      </a>
+    </div>
+
+    <!-- Buttons Row -->
+    <div class="row mb-5">
+      <div class="d-flex justify-content-center gap-3">
+        <a class="btn btn-dark btn-rounded" href="https://twitter.com/CortannDesign" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span class="sr-only">Twitter</span>
+        </a>
+        <a class="btn btn-linkedin btn-rounded" href="https://www.linkedin.com/company/CortanaDesign/" target="_blank"
+          rel="noopener noreferrer" title="Cortana Design on LinkedIn">
+          <i class="fa-brands fa-linkedin-in"></i>
+          <span class="sr-only">LinkedIn</span>
+        </a>
+        <a class="btn btn-rss btn-rounded" href="/feed.xml" target="_blank" title="RSS">
+          <i class="fa-solid fa-rss"></i>
+          <span class="sr-only">RSS</span>
+        </a>
+        <a class="btn btn-cortana-dark btn-rounded" href="/search" title="Search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span class="sr-only">Search</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Blog Title/Description Row -->
+    <div class="row mb-2 justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6 mx-auto"></div>
+      <h3 class="text-center">Trent Steenholdt's Blog</h3>
+      <p class="text-center" style="max-width: 550px;">
+        A simple blog sharing my findings, interests, and work in the Information Technology industry, as well as
+        anything else that interests me.
+      </p>
+    </div>
+  </div>
+  </div>
+  </div>
+</header> <nav class="container-fluid mt-3 d-flex justify-content-center">
+  <div class="btn-group" role="group" aria-label="Navigation">
+    <a href="/" class="btn btn-cortana-dark btn-lg px-4">Home</a>
+    <a href="/author/trentsteenholdt/" class="btn btn-cortana-dark btn-lg px-4">About Me</a>
+    <a href="/tags" class="btn btn-cortana-dark btn-lg px-4">Tags</a>
+    <a href="https://www.cortanadesign.com.au" class="btn btn-cortana-dark btn-lg px-4">Cortana Design</a>
+  </div>
+</nav>
+  <main><div class="container">
+  <article>
+    <h1>Home IoT - Part 2 - Putting it together and integration</h1>
+    <p class="publish-date">
+  
+  
+
+  <!-- Profile Image -->
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+<p>
+  <img class="img-profile-small" src="/assets/images/profile/trentsteenholdt.jpeg" alt="trentsteenholdt" />
+  <a rel="author" href="/author/trentsteenholdt" title="Trent Steenholdt">
+    Trent Steenholdt
+  </a>
+  <br />
+  September 2, 2020
+  
+</p>
+
+
+
+<!-- No Profile Image -->
+
+<p class="bio">
+  
+  
+  6 minutes to read
+  
+</p>
+</p>
+    <div class="tag-container"><span class="tags">Tags: </span><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#arduino">arduino</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#css">css</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#esp32">esp32</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#html-2">html-2</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#iot">iot</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#js">js</a><a class="badge bg-CortanaDesign-blue-dark" href="/tags/#powershell">powershell</a></div>
+    <p>This blog post is part of a series of posts were I’ve automated, and Internet of Things (IoT) enabled my garage door, swing gate and Bluetooth enabled garden irrigation system. Links below to each part!</p>
+
+<ul>
+  <li>
+    <p>Part 1 – <a href="/2020/09/01/home-iot-part-1-the-start-of-the-journey/">The start of the IoT journey</a></p>
+  </li>
+  <li>
+    <p>Part 2 – This post</p>
+  </li>
+  <li>
+    <p>Part 3 – <a href="/2020/09/19/home-iot-part-3-what-about-my-garden-irrigation-system/">What about my garden irrigation system</a></p>
+  </li>
+  <li>
+    <p>Part 4 – <a href="/2020/09/20/home-iot-part-4-the-final-solution-and-the-things-i-learned/">The ‘final’ solution and the things I learned</a></p>
+  </li>
+</ul>
+
+<h3 id="okay-time-to-put-this-together">Okay, time to put this together</h3>
+
+<p>So not long after following Rui Santos’s blog post and video (see <a href="/2020/09/01/home-iot-part-1-the-start-of-the-journey/">part 1</a>), I had my ESP32 controller on our home Wi-Fi network and running a webserver that would switch on/off a relay with a toggle function.</p>
+
+<p>To start, I had only wired up the first relay to the appropriate GPIO, but I had compiled the C++ code to make use of all four relays. Yep, I only have the garage and gate to automate, but why not think big!</p>
+
+<p><img src="/assets/images/from_wordpress/image-5.png" alt="" /></p>
+
+<p><sup>ESP32 dev-board wired to one relay</sup></p>
+
+<p><img src="/assets/images/from_wordpress/image-6.png" alt="" /></p>
+
+<p><sup>Webserver on the ESP32</sup></p>
+
+<p>The first problem with the example code is that I needed my gate and garage door buttons to be a momentary press rather than a switch. A necessary change because I planned to hook up the relay to the normally open (NO) loop of both the garage and gate and with it potentially stuck in the closed position, they were essentially locked out from any other action from the conventional remotes. It also didn’t make sense to turn on and then immediately off the switch to get the functionality I needed. So with a bit of HTML, JS and CSS changes plus giving the GPIOs nicer labels in the C++ code, I had what I was after.</p>
+
+<p>At this point, I was pretty excited. I had a web server that gave me the ability to control my gate and garage when on the network. However, I faced another problem the very next day. A bit more back story, the gate I’ve installed blocks any access to the front of the house and subsequently, the meter boxes. This design decision became a sticking point when the meter reader rang my Ring doorbell on the gate, and I couldn’t let him in because no one was home or on the network. At that point, I was like huh, maybe I could connect my Ring Doorbell to this? Perhaps get it to send a push notification to my phone when it’s rung, that I can acknowledge, and make the call to trigger the momentary button press on the gate?!</p>
+
+<p><img src="/assets/images/from_wordpress/image-7.png" alt="" /></p>
+
+<p><sup>The gate in question</sup></p>
+
+<p>In comes Azure IoT Hub and the power of MQTT. Essentially, I needed my ESP32 to be listening to Azure IoT Hub for the call to action and do the thing I needed it to do.</p>
+
+<p><img src="/assets/images/from_wordpress/image-8.png" alt="" /></p>
+
+<p><sup>Azure IoT Hub integration with the ESP32</sup></p>
+
+<p>The best way to describe this is a boy (the ESP32) constantly nagging for the chocolate bar (the action) at the exit aisle by pestering mum (Azure IoT Hub). When Azure IoT Hub says yes after persistently saying no, as in changes from 0 to 1, little Jimmy ESP32 gets his chocolate (opens the gate).</p>
+
+<p>To call it out, as it’s sometimes misunderstood, there is no backdoor (inbound access) to the ESP32 from the outside world. MQTT is all about subscribing and publishing messages, so by nature of that principle; it’s always outbound traffic.</p>
+
+<p>Setting up the subscribing and publishing of values was relatively straight forward. In my C++ code, all I needed to do was to connect to the Azure IoT Hub and set up a function in the loop() that checked if the value had changed, do the function to open the gate and then, have another function then publish back after write HIGH (back to LOW) 0 again.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void publishAzuredata(char* event, unsigned int value){
+  client.publish(event, value);
+}
+void subscibeAzuredata(char* event){
+  client.subscribe(iothub_subscribe_endpoint);
+}
+
+void reconnect() {
+   while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    if (client.connect(iothub_deviceid, iothub_user, iothub_sas_token)) {
+      Serial.println("connected");
+  
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println("try again in 5 seconds");
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  if (String(topic) == "device/deviceID/gate") {
+    if (value == "1") {
+      digitalWrite(gatePin, HIGH);
+      delay(/2000);
+      client.publish(topic, 0);
+      digitalWrite(gatePin, LOW);
+    }
+    else if (value == "0") {
+      //do nothing really
+      //digitalWrite(gatePin, LOW);
+    }
+  }
+}
+
+void setup(){
+  client.setServer(mqttServer, mqttPort);
+  client.setCallback(callback);
+  subscibeAzuredata("device/deviceID/gate");
+  subscibeAzuredata("device/deviceID/garage");
+  connect_mqtt();
+}
+void loop(){
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
+}
+</code></pre></div></div>
+
+<p>To interface with Azure IoT Hub itself and change the value of 0 to 1, I had a few options like a Logic App or Function App in Azure. However, to keep it simple, I decided to stick with what I know and write a PowerShell script hosted in a Runbook that I could call with a WebHook. That way I could do an HTTP Post with a JSON body that could say open the gate or garage or even both at the same time.</p>
+
+<p>Now that I have the WebHook, I could theoretically call it from anywhere in the world, but I wanted to have a nice way of doing it besides using Postman. Here is where I leveraged IFTTT applets, one for my phone (push notification with IFTTT app), and another for Google Assistant.</p>
+
+<p><img src="/assets/images/from_wordpress/image-9.png" alt="" /></p>
+
+<p><sup>Integration with IFTTT and the WebHook</sup></p>
+
+<p>The end result of it all coming together…</p>
+
+<p><img src="/assets/images/from_wordpress/image-10.png" alt="" /></p>
+
+<p><sup>ESP32 dev-board and the 4ch relay in a box to be installed</sup></p>
+
+<p><a href="https://youtu.be/BZeTJtz9crE">https://youtu.be/BZeTJtz9crE</a></p>
+
+<p>Stay tuned for the next part where I integrate my Bluetooth garden irrigation system with my ESP32 so I can smarten up my irrigation system!</p>
+
+    <div class="social-share">
+  <a href="https://twitter.com/intent/tweet?text=Home IoT - Part 2 - Putting it together and integration&amp;url=http://localhost:4000/2020/09/02/home-iot-part-2-putting-it-together-and-integration&amp;via=CortanaDesigntechapac"
+    class="btn btn-twitter mb-1">
+    <i class="fa-brands fa-x-twitter me-1"></i>Share on Twitter (X)
+  </a>
+  <a href=" https://www.linkedin.com/shareArticle?mini=true&url=http://localhost:4000/2020/09/02/home-iot-part-2-putting-it-together-and-integration"
+    class="btn btn-linkedin mb-1">
+    <i class="fa-brands fa-linkedin-in me-1"></i>Share on LinkedIn
+  </a>
+  <a href="/feed.xml" class="btn btn-rss mb-1">
+    <i class="fa-solid fa-rss me-1"></i>RSS Feed
+  </a>
+</div>
+  </article>
+</div></main>
+  <footer class="footer mt-auto py-3">
+  <div class="row">
+    <div class="col">
+      <p class="small mb-0">© 2025 Cortana Design</p>
+    </div>
+    <div class="col">
+      <ul class="list-inline mb-0">
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://www.cortanadesign.com.au">Cortana Design</a>
+        </li>
+        <li class="list-inline-item mx-3">
+          <a class="small text-white" href="https://lainrobertson.wordpress.com/">Lain Robertson's
+            Blog</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

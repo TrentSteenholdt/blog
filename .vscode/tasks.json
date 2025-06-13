@@ -1,0 +1,66 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Encrypt Posts",
+      "type": "shell",
+      "command": "bash scripts/encrypt_posts.sh",
+      "options": {
+        "env": {
+          "POST_DECRYPT_PASSPHRASE": "${input:passphrase}"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Decrypt + Build + Serve",
+      "dependsOn": ["Decrypt Posts", "Serve Jekyll Site"],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "Decrypt Posts",
+      "type": "shell",
+      "command": "bash scripts/decrypt_posts.sh",
+      "options": {
+        "env": {
+          "POST_DECRYPT_PASSPHRASE": "${input:passphrase}"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Build Site",
+      "type": "shell",
+      "command": "bundle exec jekyll build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Serve Jekyll Site",
+      "type": "shell",
+      "command": "bundle exec jekyll serve --livereload --future",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "owner": "jekyll",
+          "pattern": {
+            "regexp": "^(.*)$",
+            "file": 1
+          },
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": ".*Server address:.*",
+            "endsPattern": ".*Server running.*"
+          }
+        }
+      ]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "passphrase",
+      "type": "promptString",
+      "description": "Enter post encryption/decryption passphrase",
+      "password": true
+    }
+  ]
+}

@@ -44,7 +44,9 @@ pagination:
                 <a class="badge text-bg-CortanaDesign-blue-dark" href="/tags/#{{ tag }}">{{ tag }}</a>
               {% endfor %}
             </p>
-            <p class="card-text">{{ post.content | strip_html | truncatewords: 50 }}</p>
+            <p class="card-text">
+              {{ post.excerpt | default: post.content | strip_html | truncatewords: 50 }}
+            </p>
           </div>
           <div class="card-footer">
             <small class="text-muted">

@@ -335,7 +335,7 @@ article h2 {
 Posts
 ========================================================================== */
 .posts {
-  border-left: 1px dashed #aeaeae;
+  border-left: 1px dotted #021a3d;
   list-style: none;
   padding-left: 1.25rem;
 }
@@ -359,9 +359,9 @@ Posts
 }
 
 .publish-date::after {
-  border: 1px solid #bdbbbb;
+  border: 1px solid #021a3d;
   border-radius: 50%;
-  background-color: white;
+  background-color: #0f5096;
   content: "";
   height: 0.5rem;
   left: -1.5rem;
